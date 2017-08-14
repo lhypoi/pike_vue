@@ -7,7 +7,13 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      component: require('@/components/Hello')
+      name: 'Index',
+      component: require('@/view/Index')
+    },
+    {
+      path: '/follow',
+      name: 'Follow',
+      component: require('@/view/follow')
     },
     {
       path: '/works',
