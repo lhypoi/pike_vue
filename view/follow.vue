@@ -2,7 +2,7 @@
 	<div>
 		<headbox title="关注"></headbox>
 		<list></list>
-		<footbox></footbox>
+		<footbox active=1></footbox>
 	</div>
 </template>
 
