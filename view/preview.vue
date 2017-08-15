@@ -1,9 +1,9 @@
 <template>
 	<div class="pre_box">
-    <img src="../../assets/img/320426.jpg" class="bg">
+    <img src="../assets/img/320426.jpg" class="bg">
 
     <div class="title">
-     <img src="../../assets/img/wenzi.png">
+     <img src="../assets/img/wenzi.png">
      <div class="detail">中国领先时尚摄影平台</div>
    </div>
    <div class="menu">
@@ -17,7 +17,7 @@
 
 </script>
 <style lang="scss">
-  @import "../../assets/common.scss";
+  @import "../assets/common.scss";
   html{
    background: #f3f3f3;
    font-size: 62.5%;
