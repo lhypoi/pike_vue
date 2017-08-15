@@ -26,6 +26,16 @@ const router = new Router({
       component: require('@/view/search')
     },
     {
+      path: '/comment',
+      name: 'Comment',
+      component: require('@/view/comment')
+    },
+    {
+      path: '/detail',
+      name: 'Detail',
+      component: require('@/view/detail')
+    },
+    {
       path: '/works',
       component: require('@/view/works')
     }

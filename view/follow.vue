@@ -1,7 +1,11 @@
 <template>
 	<div>
 		<headbox title="关注"></headbox>
-		<list></list>
+		<ul v-infinite-scroll="load" infinite-scroll-distance="10">
+			<li v-for="item in follow_list">
+				<list item="item"></list>
+			</li>
+		</ul>
 		<footbox active=1></footbox>
 	</div>
 </template>
@@ -10,9 +14,27 @@
 import headbox from '../components/header'
 import footbox from '../components/footer'
 import list from '../components/list'
+import Axiox from 'axios'
 export default {
+  data() {
+    return {
+	  follow_list: [],
+	  page: 1
+	}
+  },
   components: {
     headbox, list, footbox
+  },
+  mounted() {
+    
+  },
+  methods: {
+    load: function() {
+	  Axios.get('/api/works', {params:{page:this.page}}).then((rtnData) => {
+	    this.list.push(...rtnData.data.data)
+		this.page ++
+	  })
+	}
   }
 }
 </script>

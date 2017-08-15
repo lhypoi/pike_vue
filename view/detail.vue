@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<headbox title="作品详情"></headbox>
 		<div class="list">
 			<div class="title clearfix">
 				<div class="head_photo">
@@ -9,11 +10,11 @@
 				<span>08-09</span>
 			</div>
 			<div class="img_box">
-				<img src="../assets/img/photo.jpg" />
+				
 			</div>
 			<div class="content">
 				<h5>《醉玲珑》</h5>
-				<p>{{item.works_profile|substr}}</p>
+				<p>。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。</p>
 				<div class="tags clearfix">
 					<span>光影霓裳</span>
 					<span>光影霓裳</span>
@@ -21,39 +22,51 @@
 			</div>
 			<div class="foot_box clearfix">
 				<p class="comment_box">
-					<img src="../assets/img/comment_icon.jpg" />&nbsp;8
+					<img src="../assets/img/comment_icon.jpg" />&nbsp;&nbsp;8
 				</p>
 				<p class="like_box">
-					<img :src=like_icon v-on:click="do_like(state)" :class=active />&nbsp;8
+					<img :src=like_icon v-on:click="do_like(state)" :class=active />&nbsp;&nbsp;8
 				</p>
 				<p class="share_box">
 					<img src="../assets/img/share_icon.jpg" />&nbsp;&nbsp;&nbsp;&nbsp;分享
 				</p>
 			</div>
 		</div>
+		<ul>
+			<li v-for="item in comment_list">
+				<commentlist item="item"></commentlist>
+			</li>
+		</ul>
+		<send like="true"></send>
 	</div>
 </template>
 
 <script type="es6">
-import Vue from 'vue'
+import headbox from '../components/header'
+import commentlist from '../components/comment_list'
+import send from '../components/send_comment'
 export default {
   data() {
     return{
 	  like_icon: require('../assets/img/like_icon.jpg'),
       state: 0,
-      active: ''
+      active: '',
+	  comment_list: []
     }
   },
-  props:['item'],
-  mounted() {
-  	var content = document.getElementsByTagName('p');
-	for(var i = 0; i < content.length; i ++) {
-  		limit(content[i].innerText, content[i]);
-	}
-	
-	
+  components: {
+    headbox, list, send
+  },
+  created() {
+    
   },
   methods: {
+    load: function() {
+      Axios.get('/api/works', {params:{page:1}}).then((rtnData) => {
+        this.comment_list.push(...rtnData.data.data)
+        this.page ++
+      })
+    },
     do_like: function(state) {
       if(state == 0) {
         this.like_icon = require('../assets/img/heart_icon.png')
@@ -67,15 +80,16 @@ export default {
     }
   }
 }
-Vue.filter('substr', function(str) {
-	return str.substr(0, 35) + '...';
-})
-
 </script>
 
 <style lang="scss" scoped>
 *{margin: 0; padding: 0;}
 .clearfix:after{content:"."; display:block; height:0; clear:both; visibility:hidden;}
+@keyframes change{
+	0% {transform: scale(1);}
+	50% {transform: scale(1.2);}
+	100% {transform: scale(1);}
+}
 .list{border-bottom: 1px solid #999;}
 .title{
 	height: 56px;
@@ -85,6 +99,7 @@ Vue.filter('substr', function(str) {
 }
 .img_box{
 	width: 100%;
+	ul{list-style: none;}
 	img{width: 100%; display: block;}
 }
 .content{
