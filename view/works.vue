@@ -24,39 +24,42 @@
     </mt-navbar>
     <!-- 作品列表 -->
     <div class="content">
-      <mt-tab-container v-model="selected">
-        <!-- 热门栏目 -->
-        <mt-tab-container-item id="0">
-          <ul class="worksList clearfix" v-show="seeType.first">
-            <li v-for="photo in photoList.first">
-              <router-link v-bind:to="'works/work/'+photo.id">
-                <img v-bind:src="'http://localhost:86'+photo.pic" alt="">
-              </router-link>
-            </li>
-          </ul>
-          <div class="seeList" v-if="!seeType.first" v-for="photo in photoList.first">
-            <list v-bind:photo="photo"></list>
-          </div>
-        </mt-tab-container-item>
-        <!-- 最新栏目 -->
-        <mt-tab-container-item id="1">
-          <ul class="worksList clearfix" v-show="seeType.second">
-            <li v-for="photo in photoList.second">
-              <router-link v-bind:to="'works/work/'+photo.id">
-                <img v-bind:src="'http://localhost:86'+photo.pic" alt="">
-              </router-link>
-            </li>
-          </ul>
-          <div class="seeList" v-if="!seeType.second" v-for="photo in photoList.second">
-            <list v-bind:photo="photo"></list>
-          </div>
-        </mt-tab-container-item>
-      </mt-tab-container>
+      <mt-loadmore :bottom-method="getImg">
+        <img src="../assets/img/photo.jpg" height="239" width="360" alt="">
+        <mt-tab-container v-model="selected">
+          <!-- 热门栏目 -->
+          <mt-tab-container-item id="0">
+            <ul class="worksList clearfix" v-show="seeType.first">
+              <li v-for="photo in photoList.first">
+                <router-link v-bind:to="'works/work/'+photo.id">
+                  <img v-bind:src="'http://localhost:86'+photo.pic" alt="">
+                </router-link>
+              </li>
+            </ul>
+            <div class="seeList" v-if="!seeType.first" v-for="photo in photoList.first">
+              <list v-bind:photo="photo"></list>
+            </div>
+          </mt-tab-container-item>
+          <!-- 最新栏目 -->
+          <mt-tab-container-item id="1">
+            <ul class="worksList clearfix" v-show="seeType.second">
+              <li v-for="photo in photoList.second">
+                <router-link v-bind:to="'works/work/'+photo.id">
+                  <img v-bind:src="'http://localhost:86'+photo.pic" alt="">
+                </router-link>
+              </li>
+            </ul>
+            <div class="seeList" v-if="!seeType.second" v-for="photo in photoList.second">
+              <list v-bind:photo="photo"></list>
+            </div>
+          </mt-tab-container-item>
+        </mt-tab-container>
+      </mt-loadmore>
     </div>
   </div>
 </template>
 <script>
-  import axios from 'axios'
+  // import axios from 'axios'
   import NProgress from 'nprogress'
   import {mapState} from 'vuex'
   import list from './common/list.vue'
@@ -99,14 +102,6 @@
       // 加载第一页数据
       this.getImg()
       this.getImg(1)
-      // 监听滚动事件
-      window.addEventListener('scroll', this.loadMore)
-      axios.get('/api/works', {
-        params: {
-        }
-      }).then(function (response) {
-        console.log(response)
-      })
     },
     methods: {
       getImg: function (selected = '0', classify = 'index', pageStart = 1, seeType = true) {
@@ -117,7 +112,7 @@
         if (!pageChange && !seeTypeChange) {
           return false
         }
-
+        console.log(selected)
         // axios.get('/api/works/:id', {
         //   params: {
         //     classify,
@@ -233,6 +228,7 @@
 .content{
   margin-top: 130px;
   width: 100%;
+  background-color: #101010;
     .worksList{
       list-style-type: none;
       margin: 0;
