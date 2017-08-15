@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <!-- 顶部返回和分类固定栏 -->
-    <mt-header fixed title="摄影作品" class="header">
+    <mt-header fixed title="摄影作品" class="mt_header">
       <router-link to="/" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
@@ -172,26 +172,24 @@
   }
 </script>
 <style lang="scss">
-@import "../assets/common.scss";
-
 /* 顶部返回和分类固定栏 */
-.header{
+.mt_header{
   font-size: 1.5em;
   line-height: 2.5em;
   background-color: rgb(3, 3, 3);
-  color: #ccc;
+  color: #fff;
   height: 2.5em;
   a{
     line-height: 1em;
     font-size: 1em;
-    color: #ccc;
+    color: #fff;
   }
   i{
     font-size: 1em;
-    color: #ccc;
+    color: #fff;
   }
-  .mint-header-title{
-    color: #ccc;
+  h1.mint-header-title{
+    color: #fff;
   }
   .mint-button{
     height: auto !important;
