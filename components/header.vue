@@ -2,7 +2,11 @@
 	<div>
 		<div class="header">
 			<h1 v-if="title!=''">{{title}}</h1>
-			<div class="fl icon-box"><i class="fa fa-search" style="color: #fff; font-size: 22px; font-weight: 100;"></i></div>
+			<div v-if="search=='true'" class="fl icon-box">
+				<router-link to="/search">
+					<i class="fa fa-search" style="color: #fff; font-size: 22px; font-weight: 100;"></i>
+				</router-link>
+			</div>
 		</div>
 		<div class="empty"></div>
 	</div>
@@ -10,7 +14,7 @@
 
 <script type="es6">
 export default{
-  props:['title']
+  props:['title','search']
 }
 </script>
 

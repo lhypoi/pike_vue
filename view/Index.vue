@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<headbox title="首页"></headbox>
+		<headbox title="首页" search="true"></headbox>
 		<div class="banner">
 			<ul>
 				<li v-for='sd in swapData' :style="'z-index:'+ sd.index+ '; opacity:'+ sd.opacity">
@@ -198,7 +198,7 @@
 				</ul>
 			</div>
 		</div>
-		<footbox></footbox>
+		<footbox active=0></footbox>
 	</div>
 </template>
 

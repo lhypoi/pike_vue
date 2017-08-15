@@ -4,16 +4,22 @@
 	<div class="footer">
 		<ul>
 			<li>
-				<img src="../assets/img/home_active.jpg" />
+				<router-link to="/">
+					<img :src="active==0?require('../assets/img/home_active.jpg'):require('../assets/img/home_nonactive.jpg')" />
+				</router-link>
 			</li>
 			<li>
-				<img src="../assets/img/collect_nonactive.jpg" />
+				<router-link to="/follow">
+					<img :src="active==1?require('../assets/img/collect_active.jpg'):require('../assets/img/collect_nonactive.jpg')" />
+				</router-link>
 			</li>
 			<li>
 				<img src="../assets/img/send_btn.jpg" class="send_btn" />
 			</li>
 			<li>
-				<img src="../assets/img/message_nonactive.jpg" />
+				<router-link to="/message">
+					<img :src="active==2?require('../assets/img/message_active.jpg'):require('../assets/img/message_nonactive.jpg')" />
+				</router-link>
 			</li>
 			<li>
 				<img src="../assets/img/personal_nonactive.jpg" />
@@ -23,14 +29,9 @@
   </div>
 </template>
 
-<script>
+<script type="es6">
 export default {
-  name: 'hello',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
+  props:['active']
 }
 </script>
 
