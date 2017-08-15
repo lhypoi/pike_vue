@@ -11,10 +11,10 @@
 		<div class="nav" id="nav">
 			<ul class="clearfix" v-touchmmh="slide" style="transition:all 0.1s linear">
 				<li>
-					<a>
+					<router-link to="/works">
 						<img src="../assets/img/menu_icon_1.jpg" />
 						<p>作品</p>
-					</a>
+					</router-link>
 				</li>
 				<li>
 					<a>
@@ -219,7 +219,7 @@ Vue.directive('touchmmh', function (el, binding) {
 	left = oDiv.offsetLeft
     x = e.touches[0].clientX + Math.abs(left)
 	y = e.touches[0].clientY
-    e.preventDefault()
+    // e.preventDefault()
   }, false)
   oDiv.addEventListener('touchmove', function (e) {
 	var touch = e.touches[0]
@@ -283,7 +283,7 @@ export default {
 						clearInterval(o_timer);
 					}
 				}, 200);
-				
+
 				_this.swapData[i].index = 1;
 				_this.swapData[i].opacity = 1;
 				for(var j = 0; j < DataLength; j ++) {
@@ -348,13 +348,13 @@ export default {
 		}
 		p{font-size: 14px; margin-top: 25px; font-weight: bold;}
 	}
-	
+
 	h3{
 		margin-top: 20px; padding: 15px 10px; background-color: #fff; display: block; line-height: 14px; font-size: 16px; border-bottom: 1px solid #f3f3f3; font-weight: bold;
 		span{float: left;}
 		a{color: #2c72ac; float: right;}
 	}
-	
+
 	.index_limit_list{
 		background-color: #fff;
 		ul{
@@ -371,7 +371,7 @@ export default {
 			}
 		}
 	}
-	
+
 	.index_impress_list{
 		background-color: #fff; overflow: hidden;
 		ul{
