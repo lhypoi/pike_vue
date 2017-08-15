@@ -76,12 +76,14 @@
 			<div class="index_limit_list">
 				<ul>
 					<li class="clearfix">
-						<div class="img_box">图片</div>
-						<div class="content_box clearfix">
-							<h4>培养摄影眼的4个核心要点</h4>
-							<div class="date">2017-08-08</div>
-							<div class="view">97674</div>
-						</div>
+						<router-link to="/article">
+							<div class="img_box">图片</div>
+							<div class="content_box clearfix">
+								<h4>培养摄影眼的4个核心要点</h4>
+								<div class="date">2017-08-08</div>
+								<div class="view">97674</div>
+							</div>
+						</router-link>
 					</li>
 					<li class="clearfix">
 						<div class="img_box">图片</div>
@@ -327,7 +329,7 @@ export default {
 		li{
 			float: left; padding: 0 20px;
 			a{
-				display: block; font-size: 14px;
+				display: block; font-size: 0.9em;
 				img{margin-bottom: 10px;}
 			}
 		}
@@ -346,11 +348,11 @@ export default {
 			width: 100%; height: 100px; position: relative; background-color: #ccc;
 			img{position: absolute; display: block; border: 3px solid #fff; border-radius: 25px; width: 20%; left: 0; right: 0; margin: 0 auto; top: 84px;}
 		}
-		p{font-size: 14px; margin-top: 25px; font-weight: bold;}
+		p{font-size: 0.9em; margin-top: 25px; font-weight: bold;}
 	}
 
 	h3{
-		margin-top: 20px; padding: 15px 10px; background-color: #fff; display: block; line-height: 14px; font-size: 16px; border-bottom: 1px solid #f3f3f3; font-weight: bold;
+		margin-top: 20px; padding: 15px 10px; background-color: #fff; display: block; line-height: 14px; font-size: 1em; border-bottom: 1px solid #f3f3f3; font-weight: bold;
 		span{float: left;}
 		a{color: #2c72ac; float: right;}
 	}
@@ -360,13 +362,13 @@ export default {
 		ul{
 			padding: 5px 0;
 			li{
-				padding: 5px 2.5%; display: block; width: 95;
+				padding: 5px 2.5%; display: block; width: 95%;
 				.img_box{width: 69px; height: 69px; background-color: #ccc; float: left;}
 				.content_box{
-					width: 76%; float:left; padding: 10px 0 0 10px;
-					h4{font-size: 14px; width: 100%; text-align: left; margin-bottom: 26px;}
-					.date{float: left; color: #bcbcbc; font-size: 12px;}
-					.view{float: right; height: 16px; padding-left: 20px; background: url(../assets/img/eye_icon.jpg) no-repeat; font-size: 12px;}
+					width: 76%; float:left; padding: 5px 0 0 10px;
+					h4{font-size: 0.9em; width: 100%; text-align: left; margin-bottom: 26px;}
+					.date{float: left; color: #bcbcbc; font-size: 0.75em;}
+					.view{float: right; height: 16px; padding-left: 20px; background: url(../assets/img/eye_icon.jpg) no-repeat 0 -2px; font-size: 0.75em;}
 				}
 			}
 		}
@@ -378,7 +380,7 @@ export default {
 			padding: 10px 0; width: 860px; position: relative; left: 0;
 			li{
 				width: 200px; height: 115px; background-color: #ccc; float: left; margin-right: 20px; position: relative;
-				span{font-size: 14px; color: #fff; display: block; position: absolute; left: 10px; bottom: 10px; text-align: left;}
+				span{font-size: 0.9em; color: #fff; display: block; position: absolute; left: 10px; bottom: 10px; text-align: left;}
 			}
 			li.last{margin-right: 0;}
 		}

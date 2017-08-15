@@ -55,7 +55,7 @@ export default {
     }
   },
   components: {
-    headbox, list, send
+    headbox, commentlist, send
   },
   created() {
     

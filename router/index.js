@@ -36,6 +36,11 @@ const router = new Router({
       component: require('@/view/detail')
     },
     {
+      path: '/article',
+      name: 'Article',
+      component: require('@/view/article')
+    },
+    {
       path: '/works',
       component: require('@/view/works')
     }
