@@ -38,6 +38,10 @@ const router = new Router({
     {
       path: '/works',
       component: require('@/view/works')
+    },
+    {
+      path: '/classify',
+      component: require('@/view/classify')
     }
   ]
 })

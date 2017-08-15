@@ -14,7 +14,7 @@
 import headbox from '../components/header'
 import footbox from '../components/footer'
 import list from '../components/list'
-import Axiox from 'axios'
+import Axios from 'axios'
 export default {
   data() {
     return {
@@ -26,7 +26,7 @@ export default {
     headbox, list, footbox
   },
   mounted() {
-    
+
   },
   methods: {
     load: function() {
