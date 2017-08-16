@@ -3,7 +3,9 @@
 		<headbox title="关注"></headbox>
 		<ul v-infinite-scroll="load" infinite-scroll-distance="10">
 			<li v-for="item in follow_list">
-				<list item="item"></list>
+				<router-link to="/detail">
+					<list item="item"></list>
+				</router-link>
 			</li>
 		</ul>
 		<footbox active=1></footbox>

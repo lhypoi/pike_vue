@@ -153,8 +153,6 @@
   }
 </script>
 <style lang="scss">
-@import "../assets/common.scss";
-
 /* 顶部返回和分类固定栏 */
 .mt_header{
   font-size: 1.5em;

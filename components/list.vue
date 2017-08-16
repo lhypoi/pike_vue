@@ -80,7 +80,7 @@ Vue.filter('substr', function(str) {
 .title{
 	height: 56px;
 	.head_photo{width: 36px; height: 36px; border-radius: 50px; overflow: hidden; margin: 10px; float: left;}
-	h4{width: 70%; height: 56px; line-height: 56px; font-size: 16px; color: #fff; text-align: left; float: left;}
+	h4{width: 70%; height: 56px; line-height: 56px; font-size: 1em; color: #fff; text-align: left; float: left;}
 	span{display: block; color: #ccc; height: 56px; line-height: 56px; float: left;}
 }
 .img_box{
@@ -89,8 +89,8 @@ Vue.filter('substr', function(str) {
 }
 .content{
 	padding: 5%; width: 90%;
-	h5{color: #fff; font-size: 16px; text-align: left; height: 20px; line-height: 20px;}
-	p{width: 100%; display: block; word-wrap: break-word; word-break: normal; text-align: left; color: #ccc; line-height: 20px; font-size: 14px;}
+	h5{color: #fff; font-size: 1em; text-align: left; height: 20px; line-height: 20px;}
+	p{width: 100%; display: block; word-wrap: break-word; word-break: normal; text-align: left; color: #ccc; line-height: 20px; font-size: 0.9em;}
 	.tags{
 		width: 100%; margin-top: 14px;
 		span{display: block; padding: 3px; background-color: #666; color: #eee; float: left; margin-right: 10px; border-radius: 5px;}

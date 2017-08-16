@@ -7,7 +7,17 @@
       </router-link>
     </mt-header>
     <div class="classify_list">
-      <mt-button type="primary" @click.native="changeClassify">primary</mt-button>
+      <ul>
+          <li v-for="n in 5">
+            <router-link to="works">
+              <img src="../assets/works/classify1.jpg" alt="">
+              <span>
+                <p>人像</p>
+                <p>Portrait</p>
+              </span>
+            </router-link>
+          </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -62,6 +72,33 @@
   .classify_list{
     font-size: 1.5em;
     margin-top: 2.5em;
+    ul{
+      width: 100%;
+      li{
+        width: 100%;
+        overflow: hidden;
+        height: 10rem;
+        position: relative;
+        a{
+          img{
+          width: 100%;
+          height: 15rem;
+          opacity: 0.5;
+          position: absolute;
+          top: 0;
+          left: 0;
+          }
+          span{
+            p{
+              text-align: center;
+              color: #fff;
+              font-size: 1em;
+              line-height: 1.5em;
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style>

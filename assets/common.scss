@@ -1,7 +1,6 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #000;
 }
 a {
   text-decoration: none;
@@ -9,6 +8,9 @@ a {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
   outline: none
+}
+.bg{
+  opacity:0.7;
 }
 .clearfix:before, .clearfix:after {
   content: "";
