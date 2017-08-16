@@ -23,7 +23,7 @@
       </mt-tab-item>
     </mt-navbar>
     <!-- 作品列表 -->
-    <div class="content">
+    <div class="works_content">
       <mt-tab-container v-model="selected">
         <!-- 热门栏目 -->
         <mt-tab-container-item id="0">
@@ -228,7 +228,7 @@
   }
 }
 /* 作品列表 */
-.content{
+.works_content{
   margin-top: 130px;
   width: 100%;
     .worksList{
