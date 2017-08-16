@@ -1,8 +1,8 @@
 <template>
 <div>
 	<div class="head">
-		<router-link to="/"><mt-button icon="back" class="back_for"></mt-button></router-link>
-		<img src="../../assets/img/reghead.jpg" height="100%" width="100%">
+		<router-link to="/preview"><mt-button icon="back" class="back_for"></mt-button></router-link>
+		<img src="../assets/img/reghead.jpg" height="100%" width="100%">
 		<div class="wenzi">欢迎来到POCO摄影</div>
 	</div>
 	<div class="reg_box">
@@ -13,7 +13,7 @@
 		  <a href="#" class="captcha">获取验证码</a>
 		</mt-field>
 		<mt-field placeholder="设置登录密码(6-32位数字和字母)" type="password" v-model="user_pwd">
-		  <img src="../../assets/img/biyan.png" height="25" width="35">
+		  <img src="../assets/img/biyan.png" height="25" width="35">
 		</mt-field>
 		<mt-button type="primary" size="large" style="margin:4.3% 10%;font-weight: bold;" :disabled="user_name=='' || user_pwd=='' || user_name_state!='success'" v-on:click="doReg()">
 			注册
@@ -59,7 +59,7 @@ import {Toast} from 'mint-ui'
 	}
 </script>
 <style lang="scss">
-@import "../../assets/common.scss";
+@import "../assets/common.scss";
 html{
 	position: relative;
 	font-size: 62.5%;

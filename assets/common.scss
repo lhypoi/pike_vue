@@ -18,6 +18,7 @@ a {
   clear: both;
 }
 $topic_css: #688A8B;
+$theme_color: #2d78f4;
 
 @mixin btn_like($float:left, $bg-color:$topic_css, $color:#fff) {
   background-color: $bg-color;

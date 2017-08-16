@@ -7,8 +7,8 @@
       </router-link>
     </mt-header>
     <div class="classify_list">
-      <ul>
-          <li v-for="n in 5">
+      <ul v-touchClassify>
+          <li v-for="n in 10">
             <router-link to="works">
               <img src="../assets/works/classify1.jpg" alt="">
               <span>
@@ -23,7 +23,14 @@
 </template>
 <script>
   import {mapState, mapMutations} from 'vuex'
+  import Vue from 'vue'
 
+  Vue.directive('touchClassify', function (el) {
+    console.log(el)
+    el.addEventListener('touchstart', function (e) {
+      console.log(e)
+    }, false)
+  })
   export default {
     name: 'classify_box',
     data () {
@@ -92,8 +99,16 @@
             p{
               text-align: center;
               color: #fff;
+              font-size: 2em;
+              line-height: 2em;
+              height: 6rem;
+              opacity: 1;
+            }
+            p:nth-child(2){
               font-size: 1em;
-              line-height: 1.5em;
+              line-height: 1em;
+              height: 4rem;
+              opacity: 0.5;
             }
           }
         }

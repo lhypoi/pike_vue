@@ -6,19 +6,19 @@
 		</router-link>
 	</mt-header>
 	<div class="reg_box">
-		<mt-field label="+86" placeholder="请输入你的手机号" type="tel" v-model="phone"></mt-field>
+		<mt-field label="+86" placeholder="请输入你的手机号" type="tel"></mt-field>
 		<mt-field v-model="captcha" placeholder="图形验证码" class="yanzheng">
 		  <a href="#" class="captcha">获取验证码</a>
 		</mt-field>
-		<mt-field placeholder="设置登录密码(6-32位数字和字母)" type="password" v-model="password">
-		  <img src="../../assets/img/biyan.png" height="25" width="35">
+		<mt-field placeholder="设置登录密码(6-32位数字和字母)" type="password">
+		  <img src="../assets/img/biyan.png" height="25" width="35">
 		</mt-field>
 		<mt-button type="primary" size="large" style="margin:4.3% 10%;font-weight: bold;">重置密码</mt-button>
 	</div>
 </div>
 </template>
 <style lang="scss">
-@import "../../assets/common.scss";
+@import "../assets/common.scss";
 .mint-header{
 	background-color: #000;
 }

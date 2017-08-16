@@ -2,16 +2,16 @@
 <div>
 	<div class="head">
 		<!-- 背景图 -->
-		<img src="../../assets/img/perhead.jpg" height="100%" width="100%" class="bg">
-		<img src="../../assets/img/more1.png" class="more" @click="moreInfo()">
+		<img src="../assets/img/perhead.jpg" height="100%" width="100%" class="bg">
+		<img src="../assets/img/more1.png" class="more" @click="moreInfo()">
 		<!-- 用户信息轮播图 -->
 		<div class="info">
-			<router-link to="#"><img src="../../assets/img/userimg.jpg" height="11.2%" width="20%" class="userimg"></router-link>
+			<router-link to="#"><img src="../assets/img/userimg.jpg" height="11.2%" width="20%" class="userimg"></router-link>
 			<div class="wenzi">用户名{{$route.params.uid}}</div>
 		</div>
 		<!-- 用户关注 -->
 		<div class="about">
-			<img src="../../assets/img/gendar1.png"><span>广州市</span>
+			<img src="../assets/img/gendar1.png"><span>广州市</span>
 			<div class="follow">
 				关注 0&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;粉丝 0
 			</div>
@@ -33,26 +33,26 @@
 		</div>
 		<!-- 作品列表 -->
 		<div class="list">
-			<div><img src="../../assets/img/file.jpg" height="121" width="120"></div>
+			<div><img src="../assets/img/file.jpg" height="121" width="120"></div>
 			<div>还没有任何作品哦</div>
 			<div>赶紧去发布自己的作品吧</div>
 		</div>
 		<div class="footer">
 			<ul>
 				<li>
-					<img src="../../assets/img/home_nonactive.jpg" />
+					<img src="../assets/img/home_nonactive.jpg" />
 				</li>
 				<li>
-					<img src="../../assets/img/collect_nonactive.jpg" />
+					<img src="../assets/img/collect_nonactive.jpg" />
 				</li>
 				<li>
-					<img src="../../assets/img/send_btn.jpg" class="send_btn" />
+					<img src="../assets/img/send_btn.jpg" class="send_btn" />
 				</li>
 				<li>
-					<img src="../../assets/img/message_nonactive.jpg" />
+					<img src="../assets/img/message_nonactive.jpg" />
 				</li>
 				<li>
-					<img src="../../assets/img/personal_active.jpg" />
+					<img src="../assets/img/personal_active.jpg" />
 				</li>
 			</ul>
 		</div>
@@ -61,11 +61,11 @@
 			<div class="mint-actionsheet" style="z-index: 2025;">
 				<div class="mint-actionsheet-list">
 					<router-link to="#">
-						<div class="number"><img src="../../assets/img/set.jpg" height="56" width="56"></div>
+						<div class="number"><img src="../assets/img/set.jpg" height="56" width="56"></div>
 						<div class="title">设置</div>
 					</router-link>
 					<router-link to="#">
-						<div class="number"><img src="../../assets/img/edit_data.jpg" height="58" width="56"></div>
+						<div class="number"><img src="../assets/img/edit_data.jpg" height="58" width="56"></div>
 						<div class="title">编辑资料</div>
 					</router-link>
 				</div>
@@ -85,7 +85,7 @@ import { Actionsheet } from 'mint-ui';
 	}
 </script>
 <style lang="scss">
-@import "../../assets/common.scss";
+@import "../assets/common.scss";
 html{
 	background-color: #f5f5f5;
 	font-size: 62.5%;

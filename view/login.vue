@@ -1,15 +1,15 @@
 <template>
 <div>
 	<div class="head">
-		<router-link to="/"><mt-button icon="back" class="back_for"></mt-button></router-link>
-		<img src="../../assets/img/reghead.jpg" height="100%" width="100%">
+		<router-link to="/preview"><mt-button icon="back" class="back_for"></mt-button></router-link>
+		<img src="../assets/img/reghead.jpg" height="100%" width="100%">
 		<div class="wenzi">欢迎来到POCO摄影</div>
 	</div>
 	<!-- 登录盒子 -->
 	<div class="log_box">
 		<mt-field placeholder="手机号、邮箱或POCO账号" :state="user_name_state"  @keyup.native="checkName()" type="tel" v-model="user_name"></mt-field>
 		<mt-field placeholder="密码" type="password" v-model="user_pwd">
-		  <img src="../../assets/img/biyan.png" height="25" width="35">
+		  <img src="../assets/img/biyan.png" height="25" width="35">
 		</mt-field>
 		<mt-button type="primary" size="large" :disabled="user_name=='' || user_pwd==''" v-on:click="doLog()" style="margin:4.3% 10%;font-weight: bold;">登录</mt-button>
 	</div>
@@ -54,7 +54,7 @@ import {Toast} from 'mint-ui'
 	}
 </script>
 <style lang="scss">
-@import "../../assets/common.scss";
+@import "../assets/common.scss";
 html{
 	font-size: 62.5%;
 }
