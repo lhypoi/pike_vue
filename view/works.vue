@@ -6,7 +6,7 @@
         <mt-button icon="back"></mt-button>
       </router-link>
       <router-link to="classify" slot="right">
-        分类
+        {{classify}}
       </router-link>
     </mt-header>
     <!-- 顶部最热和最新和视图切换栏 -->
@@ -158,7 +158,7 @@
   font-size: 1.5em;
   line-height: 2.5em;
   background-color: #222 !important;
-  height: 2.5em;
+  height: 3.75rem;
   a{
     line-height: 1em;
     font-size: 1em;
@@ -178,8 +178,8 @@
 /* 顶部最热和最新和视图切换栏 */
 .menu_tab{
   font-size: 1.5em;
-  margin-top: 2.5em;
-  height: 2.5em;
+  margin-top: 3.75rem;
+  height: 3.75rem;
   background-color: #222;
   border-top: 1px solid #888;
   color: #fff;
@@ -209,7 +209,7 @@
 }
 /* 作品列表 */
 .works_content{
-  margin-top: 130px;
+  margin-top: 7.5rem;
   width: 100%;
     .worksList{
       list-style-type: none;
