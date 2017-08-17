@@ -23,10 +23,10 @@
 					</a>
 				</li>
 				<li>
-					<a>
+					<router-link to="/skills">
 						<img src="../assets/img/menu_icon_3.jpg" />
 						<p>技巧</p>
-					</a>
+					</router-link>
 				</li>
 				<li>
 					<a>
@@ -49,7 +49,7 @@
 				<li>
 					<a>
 						<img src="../assets/img/menu_icon_7.jpg" />
-						<p>红人</p>
+						<p>商城</p>
 					</a>
 				</li>
 			</ul>
@@ -294,7 +294,6 @@ export default {
 		return{
 			slide:'',
 			img_adjust:'',
-			swap_1:'',
 			swapData:[{
 				title: '图片1',
 				index: 1,
@@ -348,26 +347,8 @@ export default {
 		}, 7000)
 	},
 	mounted() {
-		//this.adjust(document.getElementsByClassName('icon_box')[0].firstChild)
 	},
 	methods: {
-		adjust: function(i) {
-		console.log(i)
-			let img = new Image()
-			img.src = i.getAttribute('src')
-			let width = img.width
-			let height = img.height
-			let parent = i.parentNode
-			if((width - parent.clientWidth) > (height - parent.clientHeight)) {
-				i.style.height = parent.clientHeight;
-				let rate = this.height / height;
-				i.style.width = width * rate
-			}else{
-				i.style.width = parent.clientWidth;
-				let rate = this.width / width;
-				i.style.height = height * rate
-			}
-		}
 	}
 }
 

@@ -22,7 +22,9 @@
 				</router-link>
 			</li>
 			<li>
-				<img src="../assets/img/personal_nonactive.jpg" />
+				<router-link to="/personal">
+					<img src="../assets/img/personal_nonactive.jpg" />
+				</router-link>
 			</li>
 		</ul>
 	</div>

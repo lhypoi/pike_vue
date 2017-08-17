@@ -41,6 +41,16 @@ const router = new Router({
       component: require('@/view/article')
     },
     {
+      path: '/skills',
+      name: 'Skills',
+      component: require('@/view/skills')
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: require('@/view/cart')
+    },
+    {
       path: '/works',
       component: require('@/view/works')
     },

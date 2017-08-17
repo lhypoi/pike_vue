@@ -30,7 +30,7 @@ export default {
 
 <style lang="scss">
 body{margin: 0;}
-*{margin: 0; padding: 0; text-decoration: none; color: #333; list-style: none;}
+*{margin: 0; padding: 0; text-decoration: none; list-style: none;}
 .clearfix:after{content:"."; display:block; height:0; clear:both; visibility:hidden;}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
