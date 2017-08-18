@@ -8,12 +8,14 @@
 		<div class="info">
 			<router-link to="#"><img src="../assets/img/userimg.jpg" height="11.2%" width="20%" class="userimg"></router-link>
 			<div class="wenzi">用户名{{$route.params.uid}}</div>
-		</div>
-		<!-- 用户关注 -->
-		<div class="about">
-			<img src="../assets/img/gendar1.png"><span>广州市</span>
+			<!-- 用户关注 -->
+			<div class="about">
+				<img src="../assets/img/gendar1.png">
+				<span>广州市</span>
+			</div>
 			<div class="follow">
-				关注 0&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;粉丝 0
+				<span>关注 0</span>
+				<span>粉丝 0</span>
 			</div>
 		</div>
 		<!-- 作品 -->
@@ -37,51 +39,47 @@
 			<div>还没有任何作品哦</div>
 			<div>赶紧去发布自己的作品吧</div>
 		</div>
-		<div class="footer">
-			<ul>
-				<li>
-					<img src="../assets/img/home_nonactive.jpg" />
-				</li>
-				<li>
-					<img src="../assets/img/collect_nonactive.jpg" />
-				</li>
-				<li>
-					<img src="../assets/img/send_btn.jpg" class="send_btn" />
-				</li>
-				<li>
-					<img src="../assets/img/message_nonactive.jpg" />
-				</li>
-				<li>
-					<img src="../assets/img/personal_active.jpg" />
-				</li>
-			</ul>
-		</div>
+		<!-- 底部 -->
+		<footbox active=3></footbox>
 		<!-- 弹出框 -->
-		<!-- <mt-actionsheet :actions="actions" v-model="sheetVisible"> -->
-			<div class="mint-actionsheet" style="z-index: 2025;">
-				<div class="mint-actionsheet-list">
-					<router-link to="#">
-						<div class="number"><img src="../assets/img/set.jpg" height="56" width="56"></div>
-						<div class="title">设置</div>
-					</router-link>
-					<router-link to="#">
-						<div class="number"><img src="../assets/img/edit_data.jpg" height="58" width="56"></div>
-						<div class="title">编辑资料</div>
-					</router-link>
-				</div>
-				<a class="mint-actionsheet-button">取消</a></div>
-			</div>
-		<!-- </mt-actionsheet> -->
+		<mt-popup v-model="popupVisible" position="bottom" popup-transition="popup-fade" class="actionsheet" style="z-index: 2025;">
+	        <div class="actionsheet-list">
+	       		<router-link to="#">
+					<img src="../assets/img/set.jpg" height="56" width="56">
+					<div class="title">设置</div>
+				</router-link>
+				<router-link to="#">
+					<img src="../assets/img/edit_data.jpg" height="56" width="56">
+					<div class="title">编辑资料</div>
+				</router-link>
+	        </div>
+	        <a class="actionsheet-button" @click="moreInfo()">取消</a>
+    	</mt-popup>
+
+    </div>
 </div>
 </template>
 <script type="es6">
+import footbox from '../components/footer'
 import { Actionsheet } from 'mint-ui';
 	export default{
 		data(){
 			return{
-				// actions:[name:"more"]
+				popupVisible: false,
 			}
-		}
+		},
+		components: {
+	        footbox
+	    },
+		methods: {
+			moreInfo: function() {
+				if(this.popupVisible==false){
+					this.popupVisible = true;
+				} else {
+					this.popupVisible = false;
+				}
+        	}
+    	}
 	}
 </script>
 <style lang="scss">
@@ -120,27 +118,49 @@ html{
 	position: absolute;
     top: 16%;
     left: 50%;
+    color: #fff;
     transform: translate(-50%, -50%);
     font-size: 2rem;
 }
 .about{
 	position: absolute;
-    top: 24%;
-    left: 16%;
-    transform: translate(-50%, -50%);
+    top: 20%;
+    width: 50%;
     font-size: 1.4rem;
     vertical-align: middle;
     img{
     	margin-left: 5%;
+    	float: left;
+    	width: 1.6rem;
     }
     span{
 		display: block;
 	    height: 16%;
-	    float: right;
-	    margin: 4% 20% 0 0;
-	    font-size: 1.4rem;
+	    float: left;
+    	color: #fff;
+	    font-size: 1.2rem;
 	    text-align: center;
+	    margin-left: 1rem;
     }
+}
+.follow{
+	float: left;
+	position: absolute;
+    top: 24%;
+    // left: 3%;
+    width: 50%;
+	span{
+		display: block;
+		width: 30%;
+		float: left;
+		color: #fff;
+		font-size: 1.1rem;
+		text-align: center;
+		padding: 0 5%;
+	}
+	span:first-child{
+		border-right: 1px solid #ccc;
+	}
 }
 .work{
 	width: 100%;
@@ -149,7 +169,7 @@ html{
 	font-size: 1.2rem;
 	a{
 		float: left;
-		margin-top: 1%;
+		margin-top: 2%;
 		width: 33%;
 		color: #7d7d7d;
 		.number{
@@ -158,7 +178,7 @@ html{
 		}
 	}
 	a:not(:last-child){
-		border-right: 1px solid #e5e5e5;
+		border-right: 1px solid #ccc;
 	}
 }
 .list{
@@ -174,25 +194,35 @@ html{
     }
 }
 *{margin: 0; padding: 0; text-decoration: none; list-style: none;}
-.footer{width: 100%; height: 50px; background-color: #222222; text-align: center; position: relative; position: fixed; z-index: 999;}
-.footer{bottom: 0;}
-ul li{width: 20%; float: left; height: 50px;}
-ul li img{margin-top: 11px;}
-ul li img.send_btn{margin-top: 4px;}
-.mint-actionsheet{
+.mt-swipe{
+	position: absolute;
+	top: 60%;
+	left: 50%;
+	height: 50px;
+}
+.actionsheet{
+	width: 100%;
+	height: 21%;
 	background-color: #fff;
-	.mint-actionsheet-list a{
+	.actionsheet-list a{
 		float: left;
 		margin: 3%;
 		color: #979797;
 		text-align: center;
+		img{
+			width: 56px;
+			height: 56px;
+		}
 	}
-	.mint-actionsheet-button{
+	.actionsheet-button{
 		float: left;
-		color: #000;
-		width: 100%;
-		border-top: 5px solid #f5f5f5;
-		text-align: center;
+	    color: #000;
+	    width: 100%;
+	    height: 100%;
+	    padding: 0.4rem 0;
+	    font-size: 1.4rem;
+	    border-top: 5px solid #f5f5f5;
+	    text-align: center;
 	}
 }
 </style>

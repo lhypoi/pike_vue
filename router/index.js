@@ -65,7 +65,7 @@ const router = new Router({
       component: require('@/view/resetpwd')
     },
     {
-      path: '/personal',
+      path: '/personal/:uid',
       component: require('@/view/personal')
     }
   ]
