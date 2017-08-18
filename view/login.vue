@@ -11,7 +11,7 @@
 		<mt-field placeholder="密码" type="password" v-model="user_pwd">
 		  <img src="../assets/img/biyan.png" height="25" width="35">
 		</mt-field>
-		<mt-button type="primary" size="large" :disabled="user_name=='' || user_pwd==''" v-on:click="doLog()" style="margin:4.3% 10%;font-weight: bold;">登录</mt-button>
+		<mt-button type="default" size="large" :disabled="user_name=='' || user_pwd==''" v-on:click="doLog()" style="margin:4.3% 10%;font-weight: bold;">登录</mt-button>
 	</div>
 	<div class="sign"><router-link to="/resetpwd">忘记密码</router-link></div>
 </div>
@@ -55,8 +55,9 @@ import {Toast} from 'mint-ui'
 </script>
 <style lang="scss">
 @import "../assets/common.scss";
-html{
+html,body{
 	font-size: 62.5%;
+	background-color: #000;
 }
 .head{
 	width: 100%;
@@ -75,7 +76,7 @@ html{
 }
 .wenzi{
 	position: absolute;
-    top: 20%;
+    top: 15%;
     left: 50%;
     width: 80%;
     transform: translate(-50%, -50%);

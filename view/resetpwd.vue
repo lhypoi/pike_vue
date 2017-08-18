@@ -13,7 +13,7 @@
 		<mt-field placeholder="设置登录密码(6-32位数字和字母)" type="password">
 		  <img src="../assets/img/biyan.png" height="25" width="35">
 		</mt-field>
-		<mt-button type="primary" size="large" style="margin:4.3% 10%;font-weight: bold;">重置密码</mt-button>
+		<mt-button type="default" size="large" style="margin:4.3% 10%;font-weight: bold;">重置密码</mt-button>
 	</div>
 </div>
 </template>
@@ -21,6 +21,9 @@
 @import "../assets/common.scss";
 .mint-header{
 	background-color: #000;
+}
+.mint-header-title{
+	color: #888;
 }
 .mint-cell-wrapper{
 	background-color: #fafafa;
