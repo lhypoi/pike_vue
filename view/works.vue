@@ -5,7 +5,7 @@
       <router-link to="/" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
-      <router-link to="classify" slot="right">
+      <router-link to="/classify" slot="right">
         {{classify}}
       </router-link>
     </mt-header>
@@ -57,7 +57,7 @@
 </template>
 <script>
   // import axios from 'axios'
-  import {mapState} from 'vuex'
+  import {mapState, mapMutations} from 'vuex'
   import list from './common/list.vue'
 
   export default {
@@ -95,12 +95,21 @@
       }
     },
     mounted () {
+      if (this.classify === this.$route.params.classify) {
+        console.log('显示原来数据')
+      } else if (this.$route.params.classify) {
+        this.setClassify(this.$route.params.classify)
+        console.log('清除原来数据')
+        console.log(this.classify)
+      } else if (this.classify) {
+
+      }
       // 加载第一页数据
       this.getImg()
       this.getImg(1)
-      console.log(this.classify)
     },
     methods: {
+      ...mapMutations(['setClassify', 'setClassifyEvent']),
       getImg: function (selected = '0', classify = this.classify, pageStart = 1, seeType = true) {
         // 保存vue对象
         let _this = this
