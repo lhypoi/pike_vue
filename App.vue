@@ -29,14 +29,13 @@ export default {
 </script>
 
 <style lang="scss">
-body{margin: 0;}
+body{margin: 0; background-color: #ccc;}
 *{margin: 0; padding: 0; text-decoration: none; list-style: none;}
 .clearfix:after{content:"."; display:block; height:0; clear:both; visibility:hidden;}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #000;
   text-align: center;
 }
 </style>

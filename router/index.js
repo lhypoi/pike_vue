@@ -47,12 +47,21 @@ const router = new Router({
     },
     {
       path: '/cart',
-      name: 'cart',
+      name: 'Cart',
       component: require('@/view/cart')
+    },
+    {
+      path: '/order',
+      name: 'Order',
+      component: require('@/view/order')
     },
     {
       path: '/works',
       component: require('@/view/works')
+    },
+    {
+      path: '/classify',
+      component: require('@/view/classify')
     },
     {
       path: '/preview',

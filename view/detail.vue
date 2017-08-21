@@ -10,7 +10,7 @@
 				<span>08-09</span>
 			</div>
 			<div class="img_box">
-				
+
 			</div>
 			<div class="content">
 				<h5>《醉玲珑》</h5>
@@ -58,7 +58,7 @@ export default {
     headbox, commentlist, send
   },
   created() {
-    
+
   },
   methods: {
     load: function() {

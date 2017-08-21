@@ -9,53 +9,31 @@
 			<div v-if="empty==false">
 				<div class="edit_box clearfix">
 					<div class="check_box">
-						<input type="checkbox" id="checkbox0" value="0" />
-						<label for="checkbox0" v-on:click="check(0)"></label>
+						<label for="checkbox0" v-on:click="check(0)" :style="'background-color: '+select_all_color">
+							<input type="checkbox" id="checkbox0" value="0" :checked="select_all.length >= numbers.length" v-model=llo />
+						</label>
 					</div>
-					<p v-on:click="do_edit">编辑</p>
+					<p v-on:click="do_edit">{{state}}</p>
 				</div>
 				<ul>
-					<li class="clearfix">
+					<li class="clearfix" v-for="(item, index) in numbers">
 						<div class="check_box">
-							<input type="checkbox" id="checkbox1" value="1" />
-							<label for="checkbox1" v-on:click="check(1)"></label>
+							<input type="checkbox" :id="'checkbox' + item.index" :value="item"  v-model="select_all" />
+							<label :for="'checkbox' + item.index" :style="'background-color:'+check_style[index]" v-on:click="check(index+1)"></label>
 						</div>
 						<div class="img_box">
 							<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
 						</div>
 						<div class="content_box clearfix">
 							<h4>培养摄影眼的4个核心要点</h4>
-							<div class="price" v-if="edit==false">￥{{numbers[0].price}}</div>
-							<p v-if="edit==false">x{{numbers[0].nums}}</p>
+							<div class="price" v-if="edit==false">￥{{item.price}}</div>
+							<p v-if="edit==false">x{{item.nums}}</p>
 							<div class="nums clearfix">
-								<div class="fl icon-box" v-if="edit==true" v-on:click="minus(0)">
+								<div class="fl icon-box" v-if="edit==true" v-on:click="minus(item.index-1)">
 									<i class="fa fa-minus-circle"></i>
 								</div>
-								<input type="text" v-if="edit==true" :value=numbers[0].nums disabled />
-								<div class="fl icon-box" v-if="edit==true" v-on:click="plus(0)">
-									<i class="fa fa-plus-circle"></i>
-								</div>
-							</div>
-						</div>
-					</li>
-					<li class="clearfix">
-						<div class="check_box">
-							<input type="checkbox" id="checkbox2" value="2" />
-							<label for="checkbox2" v-on:click="check(2)"></label>
-						</div>
-						<div class="img_box">
-							<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						</div>
-						<div class="content_box clearfix">
-							<h4>培养摄影眼的4个核心要点</h4>
-							<div class="price" v-if="edit==false">￥{{numbers[1].price}}</div>
-							<p v-if="edit==false">x{{numbers[1].nums}}</p>
-							<div class="nums clearfix">
-								<div class="fl icon-box" v-if="edit==true" v-on:click="minus(1)">
-									<i class="fa fa-minus-circle"></i>
-								</div>
-								<input type="text" v-if="edit==true" :value=numbers[1].nums disabled />
-								<div class="fl icon-box" v-if="edit==true" v-on:click="plus(1)">
+								<input type="text" v-if="edit==true" :value=item.nums disabled />
+								<div class="fl icon-box" v-if="edit==true" v-on:click="plus(item.index-1)">
 									<i class="fa fa-plus-circle"></i>
 								</div>
 							</div>
@@ -118,17 +96,25 @@ export default {
 		return{
 			empty: false,
 			edit: false,
+			llo: false,
 			img_adjust:'',
 			length: 2,
 			numbers: [{
 				nums: 1,
-				price: 100
+				price: 100,
+				index: 1
 			},{
 				nums: 2,
-				price: 200
+				price: 200,
+				index: 2
 			}],
 			max_store: 4,
-			total: 0
+			total: 0,
+			state: '编辑',
+			check_list: [],
+			check_style: [],
+			select_all: [],
+			select_all_color: '#fff',
 		}
 	},
 	components:{
@@ -138,12 +124,21 @@ export default {
 		if(this.length < 0) {
 			this.empty = true
 		}
+		this.init()
 	},
 	methods: {
+		init: function() {
+			for(let i = 0; i < this.numbers.length; i ++) {
+				this.check_list.push(false)
+				this.check_style.push('#fff')
+			}
+		},
 		do_edit: function() {
 			if(!this.edit) {
+				this.state = '完成'
 				this.edit = true
 			}else {
+				this.state = '编辑'
 				this.edit = false
 			}
 		},
@@ -174,60 +169,59 @@ export default {
 				this.empty = true
 			}
 		},
+		all_select: function() {
+			if(this.select_all.length >= this.numbers.length) {
+				this.total = 0
+				this.select_all_color= '#fff'
+				this.select_all = []
+				for(let i = 1; i <= this.numbers.length; i ++) {
+					this.check_style[i-1] = '#fff'
+					this.check_list[i-1] = false
+				}
+				this.llo = false
+			}else{
+				var total = 0
+				this.numbers.forEach(function(val, index, arr) {
+					total += arr[index].nums * arr[index].price
+				})
+				this.total = total
+				this.select_all_color = '#4876FF'
+				this.numbers.forEach((item)=> {
+					this.select_all.push(item)
+				})
+				for(let i = 1; i <= this.numbers.length; i ++) {
+					this.check_style[i-1] ='#4876FF'
+					this.check_list[i-1] = true
+				}
+				this.llo = true
+			}
+		},
 		check: function(num) {
 			if(num == 0) {
-				let check_id = 'checkbox' + num
-				let check_box = document.getElementById(check_id)
-				if(!check_box.checked) {
-					var total = 0
-					this.numbers.forEach(function(val, index, arr) {
-						total += arr[index].nums * arr[index].price
-					})
-					this.total = total
-					check_box.nextElementSibling.style.backgroundColor='#4876FF'
-					for(let i = 1; i <= this.length; i ++) {
-						let id = 'checkbox' + i
-						let box = document.getElementById(id)
-						box.checked = "checked"
-						box.nextElementSibling.style.backgroundColor='#4876FF'
-					}
-				}else{
-					this.total = 0
-					check_box.nextElementSibling.style.backgroundColor='#fff'
-					for(let i = 1; i <= this.length; i ++) {
-						let id = 'checkbox' + i
-						let box = document.getElementById(id)
-						box.checked = false
-						box.nextElementSibling.style.backgroundColor='#fff'
-					}
-				}
+				this.all_select()
 			}else{
-				let check_id = 'checkbox' + num
-				let check_box = document.getElementById(check_id)
-				if(!check_box.checked) {
+				if(!this.check_list[num-1]) {
 					this.total += this.numbers[num-1].nums * this.numbers[num-1].price
-					check_box.nextElementSibling.style.backgroundColor='#4876FF'
+					this.check_list[num-1] = true
+					this.check_style[num-1] = '#4876FF'
 					let flag = 0;
-					for(let i = 1; i <= this.length; i ++) {
-						let id = 'checkbox' + i
-						let box = document.getElementById(id)
-						if(box.checked){
+					for(let i = 0; i < this.numbers.length; i ++) {
+						if(this.check_list[i]){
 							flag += 1
 						}
 					}
-					if(flag == this.length - 1) {
-						let id = 'checkbox' + 0
-						let box = document.getElementById(id)
-						box.checked = "checked"
-						box.nextElementSibling.style.backgroundColor='#4876FF'
+					
+					if(flag == this.numbers.length) {
+					console.log(333)
+						this.llo = true
+						this.select_all_color = '#4876FF'
 					}
 				}else{
 					this.total -= this.numbers[num-1].nums * this.numbers[num-1].price
-					check_box.nextElementSibling.style.backgroundColor='#fff'
-					let id = 'checkbox' + 0
-					let box = document.getElementById(id)
-					box.checked = false
-					box.nextElementSibling.style.backgroundColor='#fff'
+					this.check_list[num-1] = false
+					this.check_style[num-1] = '#fff'
+					this.select_all_color = '#fff'
+					this.llo = false
 				}
 			}
 		}
@@ -246,7 +240,7 @@ export default {
 		.check_box{
 			float: left; height: 40px; line-height: 40px; width: 15%; position: relative;
 			input[type=checkbox]{width: 1.5em; height: 1.5em; vertical-align: middle; visibility: hidden;}
-			label{position: absolute; width: 1.5em; height: 1.5em; top: 20%; left: 30%; background: #fff; border:2px solid #ccc; border-radius: 1em;}
+			label{position: absolute; width: 1.5em; height: 1.5em; top: 20%; left: 50%; background: #fff; border:2px solid #ccc; border-radius: 1em;}
 		}
 	}
 	ul{

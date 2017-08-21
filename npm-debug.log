@@ -1,36 +1,36 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'D:\\Program Files (x86)\\Nodejs\\node.exe',
-1 verbose cli   'D:\\Program Files (x86)\\Nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli [ 'D:\\nodejs\\node.exe',
+1 verbose cli   'D:\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
 1 verbose cli   'run',
 1 verbose cli   'dev' ]
-2 info using npm@3.10.10
-3 info using node@v6.10.2
+2 info using npm@3.10.8
+3 info using node@v7.0.0
 4 verbose run-script [ 'predev', 'dev', 'postdev' ]
 5 info lifecycle new_vue@1.0.0~predev: new_vue@1.0.0
 6 silly lifecycle new_vue@1.0.0~predev: no script for predev, continuing
 7 info lifecycle new_vue@1.0.0~dev: new_vue@1.0.0
 8 verbose lifecycle new_vue@1.0.0~dev: unsafe-perm in lifecycle true
-9 verbose lifecycle new_vue@1.0.0~dev: PATH: D:\Program Files (x86)\Nodejs\node_modules\npm\bin\node-gyp-bin;D:\wamp64\www\group\pike_vue\node_modules\.bin;C:\Users\Xing\bin;D:\Program Files\Git\mingw64\bin;D:\Program Files\Git\usr\local\bin;D:\Program Files\Git\usr\bin;D:\Program Files\Git\usr\bin;D:\Program Files\Git\mingw64\bin;D:\Program Files\Git\usr\bin;C:\Users\Xing\bin;D:\Program Files (x86)\Javajdk1.8\bin;D:\Program Files (x86)\Javajdk1.8\jre\bin;C:\ProgramData\Oracle\Java\javapath;D:\python27;D:\python27\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;D:\Program Files (x86)\Nodejs;D:\Program Files\Git\cmd;D:\wamp64\bin\php\php5.6.25;D:\Program Files (x86)\Ruby22-x64\bin;C:\Users\Xing\AppData\Local\Microsoft\WindowsApps;C:\Users\Xing\AppData\Roaming\npm;D:\Program Files (x86)\Javajdk1.8\bin;D:\Program Files (x86)\Javajdk1.8\jre\bin;C:\ProgramData\Oracle\Java\javapath;D:\wamp64\bin\php\php5.6.25;D:\Program Files\Git\usr\bin\vendor_perl;D:\Program Files\Git\usr\bin\core_perl
-10 verbose lifecycle new_vue@1.0.0~dev: CWD: D:\wamp64\www\group\pike_vue
+9 verbose lifecycle new_vue@1.0.0~dev: PATH: D:\nodejs\node_modules\npm\bin\node-gyp-bin;D:\wamp64\www\20170718\my-project\src\node_modules\.bin;E:\python\Scripts\;E:\python\;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Common Files\Thunder Network\KanKan\Codecs;C:\Program Files\Windows Live\Shared;D:\java\jdk\jre\bin;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;D:\nodejs\;D:\java\jdk\bin;E:\apache-tomcat-8.0.30\bin;D:\anaconda;D:\anaconda\Scripts;D:\anaconda\Library\bin;C:\Program Files (x86)\Microsoft SQL Server\90\Tools\binn\;D:\Git\cmd;D:\wamp64\bin\php\php5.6.25;D:\Tools\WinNT;D:\MSDev98\Bin;D:\Tools;D:\VC98\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\Lhy\AppData\Local\Microsoft\WindowsApps;C:\Users\Lhy\AppData\Roaming\npm;E:\apache-tomcat-8.0.30\bin;E:\apache-tomcat-8.0.30\lib
+10 verbose lifecycle new_vue@1.0.0~dev: CWD: D:\wamp64\www\20170718\my-project\src
 11 silly lifecycle new_vue@1.0.0~dev: Args: [ '/d /s /c', 'node build/dev-server.js' ]
 12 silly lifecycle new_vue@1.0.0~dev: Returned: code: 1  signal: null
 13 info lifecycle new_vue@1.0.0~dev: Failed to exec dev script
 14 verbose stack Error: new_vue@1.0.0 dev: `node build/dev-server.js`
 14 verbose stack Exit status 1
-14 verbose stack     at EventEmitter.<anonymous> (D:\Program Files (x86)\Nodejs\node_modules\npm\lib\utils\lifecycle.js:255:16)
+14 verbose stack     at EventEmitter.<anonymous> (D:\nodejs\node_modules\npm\lib\utils\lifecycle.js:255:16)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at EventEmitter.emit (events.js:191:7)
-14 verbose stack     at ChildProcess.<anonymous> (D:\Program Files (x86)\Nodejs\node_modules\npm\lib\utils\spawn.js:40:14)
+14 verbose stack     at ChildProcess.<anonymous> (D:\nodejs\node_modules\npm\lib\utils\spawn.js:40:14)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at ChildProcess.emit (events.js:191:7)
-14 verbose stack     at maybeClose (internal/child_process.js:886:16)
+14 verbose stack     at maybeClose (internal/child_process.js:877:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid new_vue@1.0.0
-16 verbose cwd D:\wamp64\www\group\pike_vue
+16 verbose cwd D:\wamp64\www\20170718\my-project\src
 17 error Windows_NT 10.0.14393
-18 error argv "D:\\Program Files (x86)\\Nodejs\\node.exe" "D:\\Program Files (x86)\\Nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "dev"
-19 error node v6.10.2
-20 error npm  v3.10.10
+18 error argv "D:\\nodejs\\node.exe" "D:\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "dev"
+19 error node v7.0.0
+20 error npm  v3.10.8
 21 error code ELIFECYCLE
 22 error new_vue@1.0.0 dev: `node build/dev-server.js`
 22 error Exit status 1
