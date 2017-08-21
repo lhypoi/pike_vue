@@ -351,32 +351,11 @@ export default {
 	mounted() {
 	},
 	methods: {
-<<<<<<< HEAD
-	}
-=======
-		adjust: function(i) {
-		console.log(i)
-			let img = new Image()
-			img.src = i.getAttribute('src')
-			let width = img.width
-			let height = img.height
-			let parent = i.parentNode
-			if((width - parent.clientWidth) > (height - parent.clientHeight)) {
-				i.style.height = parent.clientHeight;
-				let rate = this.height / height;
-				i.style.width = width * rate
-			}else{
-				i.style.width = parent.clientWidth;
-				let rate = this.width / width;
-				i.style.height = height * rate
-			}
-		}
 	},
     computed: {
       // 分类
       ...mapState(['classify'])
     }
->>>>>>> origin/master
 }
 
 </script>
