@@ -43,6 +43,7 @@
   margin-top: 4%;
   font-size: 14px;
   font-size: 1.4rem;
+  color: #fff;
 }
 .menu{
   position: absolute;

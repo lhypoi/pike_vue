@@ -11,7 +11,7 @@
 		<div class="nav" id="nav">
 			<ul class="clearfix" v-touchmmh="slide" style="transition:all 0.1s linear">
 				<li>
-					<router-link to="/works">
+					<router-link v-bind:to="'/works/' + classify">
 						<img src="../assets/img/menu_icon_1.jpg" />
 						<p>作品</p>
 					</router-link>
@@ -216,6 +216,8 @@
 import Vue from 'vue';
 import headbox from '../components/header'
 import footbox from '../components/footer'
+import {mapState, mapMutations} from 'vuex'
+
 Vue.directive('adjust', function(el, binding) {
 	//图片自适应
 	var obj = el
@@ -349,7 +351,32 @@ export default {
 	mounted() {
 	},
 	methods: {
+<<<<<<< HEAD
 	}
+=======
+		adjust: function(i) {
+		console.log(i)
+			let img = new Image()
+			img.src = i.getAttribute('src')
+			let width = img.width
+			let height = img.height
+			let parent = i.parentNode
+			if((width - parent.clientWidth) > (height - parent.clientHeight)) {
+				i.style.height = parent.clientHeight;
+				let rate = this.height / height;
+				i.style.width = width * rate
+			}else{
+				i.style.width = parent.clientWidth;
+				let rate = this.width / width;
+				i.style.height = height * rate
+			}
+		}
+	},
+    computed: {
+      // 分类
+      ...mapState(['classify'])
+    }
+>>>>>>> origin/master
 }
 
 </script>
@@ -395,7 +422,7 @@ export default {
 		.index_recommend_left{@include left_right(left)}
 		.index_recommend_right{@include left_right(right)}
 		.icon_box{
-			width: 100%; height: 100px; background-color: #ccc; overflow: hidden;	
+			width: 100%; height: 100px; background-color: #ccc; overflow: hidden;
 		}
 		img.icon{position: absolute; display: block; border: 3px solid #fff; border-radius: 25px; width: 20%; left: 0; right: 0; margin: 0 auto; top: 84px;}
 		p{font-size: 0.9em; margin-top: 25px; font-weight: bold;}

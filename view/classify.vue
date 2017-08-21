@@ -2,18 +2,27 @@
   <div id="classify_box">
     <!-- 顶部返回和分类固定栏 -->
     <mt-header fixed title="分类" class="mt_header">
-      <router-link to="/works" slot="left">
+      <router-link v-bind:to="'/works/' + classify" slot="left">
         <mt-button icon="back" ></mt-button>
       </router-link>
     </mt-header>
     <div class="classify_list">
       <ul>
-          <li v-for="n in 10">
-            <router-link to="works" v-on:click.native="changeClassify('人像')">
-              <img src="../assets/works/classify1.jpg" alt="">
+          <li v-for="n in classifyData['title1'].length">
+            <router-link v-bind:to="'/works/' + classifyData['title1'][n - 1]">
+              <img v-bind:src="'/static/works/classify' + n + '.jpg'" alt="">
               <span>
-                <p>人像</p>
-                <p>Portrait</p>
+                <p>{{classifyData['title1'][n - 1]}}</p>
+                <p>{{classifyData['title2'][n - 1]}}</p>
+              </span>
+            </router-link>
+          </li>
+          <li v-for="n in classifyData['title1'].length">
+            <router-link v-bind:to="'/works/' + classifyData['title1'][n - 1]">
+              <img v-bind:src="'/static/works/classify' + n + '.jpg'" alt="">
+              <span>
+                <p>{{classifyData['title1'][n - 1]}}</p>
+                <p>{{classifyData['title2'][n - 1]}}</p>
               </span>
             </router-link>
           </li>
@@ -28,31 +37,31 @@
     name: 'classify_box',
     data () {
       return {
+        classifyData: {
+          title1: ['人像', '风景', '生态', '纪实', '生活', 'LOMO', '观念', '商业'],
+          title2: ['Portrait', 'Scenery', 'Ecology', 'Documentary', 'Life', 'Lomo', 'Concept', 'Commerce']
+        }
       }
     },
     methods: {
-      ...mapMutations(['setClassify', 'setClassifyEvent']),
-      changeClassify: function (classify) {
-        if (this.classify === classify) {
-          console.log('显示原来数据')
-        } else {
-          this.setClassify(classify)
-          console.log('清除原来数据')
-        }
-      }
+      ...mapMutations(['setClassify', 'setClassifyEvent'])
     },
     computed: {
       ...mapState(['classify', 'classifyHasEvent'])
     },
     mounted () {
-      // 固定参数：分类栏盒子对象、每栏对象数组、屏幕高度
+      // 更改body字体大小
+      let clientWidth = document.documentElement.clientWidth
+      document.documentElement.style.fontSize = 20 * (clientWidth / 640) + 'px'
+      // 元素对象：总盒子、单栏目
       let classifyListObj = document.getElementsByClassName('classify_list')[0]
       let imgArr = classifyListObj.getElementsByTagName('img')
+      // 屏幕高度、栏目高度、标题偏移高度、栏目头部和底部栏目的临界值
       let screenHeight = window.screen.height
-      // 变化参数：栏目高度、顶部偏移距离、临界差值
-      let imgHeight = imgArr[0].parentNode.parentNode.offsetHeight * 3 / 4
-      let offsetTitle = document.getElementsByClassName('mt_header')[0].offsetHeight * 3 / 4
+      let imgHeight = imgArr[0].parentNode.parentNode.offsetHeight
+      let offsetTitle = document.getElementsByClassName('mt_header')[0].offsetHeight
       let changeHeight = screenHeight - imgHeight - offsetTitle
+      // 初始化栏目背景图片偏移
       for (var i in imgArr) {
         if (typeof (imgArr[i]) === 'object') {
           let liTop = i * imgHeight + offsetTitle
@@ -67,10 +76,12 @@
       if (!this.classifyHasEvent) {
         // 监听滚动事件、背景图片随位置滑动
         window.addEventListener('scroll', function (e) {
-          if (e.target.URL !== 'http://localhost:8080/#/classify') return false
-          let imgHeight = imgArr[0].parentNode.parentNode.offsetHeight
-          let offsetTitle = document.getElementsByClassName('mt_header')[0].clientHeight
-          let changeHeight = screenHeight - imgHeight - offsetTitle
+          // 非分类页面不进行此滚动事件
+          if (e.target.URL.indexOf('http://localhost:8080/#/classify') < 0) return false
+          // 获取更改对象
+          let classifyListObj = document.getElementsByClassName('classify_list')[0]
+          let imgArr = classifyListObj.getElementsByTagName('img')
+          // 修改栏目背景偏移距离
           for (var i in imgArr) {
             if (typeof (imgArr[i]) === 'object') {
               let liTop = imgArr[i].parentNode.parentNode.offsetTop
