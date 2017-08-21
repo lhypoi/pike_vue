@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import direct from './direct'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import 'font-awesome/css/font-awesome.min.css'
@@ -15,6 +16,7 @@ new Vue({
   el: '#app',
   router,
   store,
+  direct,
   template: '<App/>',
   components: { App }
 })
