@@ -1,21 +1,21 @@
 <template>
-<div class="body_box">
+<div>
 	<div class="head">
-		<router-link to="/preview"><mt-button icon="back" class="back_for"></mt-button></router-link>
-		<img src="../assets/img/reghead.jpg" height="100%" width="100%">
+		<router-link to="/"><mt-button icon="back" class="back_for"></mt-button></router-link>
+		<img src="../../assets/img/reghead.jpg" height="100%" width="100%">
 		<div class="wenzi">欢迎来到POCO摄影</div>
 	</div>
 	<div class="reg_box">
 		<!-- 用户名框 -->
 		<mt-field label="+86" placeholder="请输入你的手机号" type="tel" :state="user_name_state" @keyup.native="checkName()" v-model="user_name"></mt-field>
 
-		<mt-field placeholder="图形验证码" class="yanzheng" v-model="user_nickname">
+		<mt-field placeholder="图形验证码" class="yanzheng">
 		  <a href="#" class="captcha">获取验证码</a>
 		</mt-field>
 		<mt-field placeholder="设置登录密码(6-32位数字和字母)" type="password" v-model="user_pwd">
-		  <img src="../assets/img/biyan.png" height="25" width="35">
+		  <img src="../../assets/img/biyan.png" height="25" width="35">
 		</mt-field>
-		<mt-button type="default" size="large" style="margin:4.3% 10%;font-weight: bold;" :disabled="user_name=='' || user_pwd=='' || user_name_state!='success'" v-on:click="doReg()">
+		<mt-button type="primary" size="large" style="margin:4.3% 10%;font-weight: bold;" :disabled="user_name=='' || user_pwd=='' || user_name_state!='success'" v-on:click="doReg()">
 			注册
 		</mt-button>
 	</div>
@@ -32,8 +32,7 @@ import {Toast} from 'mint-ui'
 			return{
 				user_name:'',
 				user_pwd:'',
-				user_name_state:'',
-				user_nickname:'',
+				user_name_state:''
 			}
 		},
 		methods:{
@@ -49,9 +48,8 @@ import {Toast} from 'mint-ui'
 			},
 			doReg:function () {
 				this.$http.jsonp("http://localhost:86/public/api/user", {params:{
-			 		user_name:this.user_name,
-					user_pwd:this.user_pwd,
-					user_nickname:this.user_nickname
+			 	// 	user_name:this.user_name,
+					// user_pwd:this.user_pwd
 			 	}}).then(function  (rtnD) {
 			 		Toast(rtnD.data.msg)
 			 	})
@@ -61,11 +59,8 @@ import {Toast} from 'mint-ui'
 	}
 </script>
 <style lang="scss">
-@import "../assets/common.scss";
-body,html{
-	width: 100%;
-	height: 100%;
-	background-color: #000;
+@import "../../assets/common.scss";
+html{
 	position: relative;
 	font-size: 62.5%;
 }
@@ -86,9 +81,8 @@ body,html{
 }
 .wenzi{
 	position: absolute;
-    top: 15%;
+    top: 20%;
     left: 50%;
-    color: #fff;
     width: 80%;
     transform: translate(-50%, -50%);
     font-size: 2rem;
@@ -129,7 +123,6 @@ body,html{
 	color: $theme_color;
 	border-left: 1px solid #cccccc;
 	width: 100%;
-	font-size: 1.2rem;
 }
 .sign{
 	color: #ccc;

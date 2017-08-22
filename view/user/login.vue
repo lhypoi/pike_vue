@@ -1,29 +1,23 @@
 <template>
-<div class="body_box">
+<div>
 	<div class="head">
-		<router-link to="/preview"><mt-button icon="back" class="back_for"></mt-button></router-link>
-		<img src="../assets/img/reghead.jpg" height="100%" width="100%">
+		<router-link to="/"><mt-button icon="back" class="back_for"></mt-button></router-link>
+		<img src="../../assets/img/reghead.jpg" height="100%" width="100%">
 		<div class="wenzi">欢迎来到POCO摄影</div>
 	</div>
-	<div class="reg_box">
-		<!-- 用户名框 -->
-		<mt-field label="+86" placeholder="请输入你的手机号" type="tel" :state="user_name_state" @keyup.native="checkName()" v-model="user_name"></mt-field>
-
-		<mt-field placeholder="图形验证码" class="yanzheng" v-model="user_nickname">
-		  <a href="#" class="captcha">获取验证码</a>
+	<!-- 登录盒子 -->
+	<div class="log_box">
+		<mt-field placeholder="手机号、邮箱或POCO账号" :state="user_name_state"  @keyup.native="checkName()" type="tel" v-model="user_name"></mt-field>
+		<mt-field placeholder="密码" type="password" v-model="user_pwd">
+		  <img src="../../assets/img/biyan.png" height="25" width="35">
 		</mt-field>
-		<mt-field placeholder="设置登录密码(6-32位数字和字母)" type="password" v-model="user_pwd">
-		  <img src="../assets/img/biyan.png" height="25" width="35">
-		</mt-field>
-		<mt-button type="default" size="large" style="margin:4.3% 10%;font-weight: bold;" :disabled="user_name=='' || user_pwd=='' || user_name_state!='success'" v-on:click="doReg()">
-			注册
-		</mt-button>
+		<mt-button type="primary" size="large" :disabled="user_name=='' || user_pwd==''" v-on:click="doLog()" style="margin:4.3% 10%;font-weight: bold;">登录</mt-button>
 	</div>
-	<div class="sign">注册表明您已经同意POCO摄影的<a href="#">注册协议</a></div>
+	<div class="sign"><router-link to="/resetpwd">忘记密码</router-link></div>
 </div>
 </template>
 <script type="es6">
-import Axios from 'axios'
+import Axios from "axios"
 import Vue from 'vue'
 import {Toast} from 'mint-ui'
 
@@ -32,11 +26,20 @@ import {Toast} from 'mint-ui'
 			return{
 				user_name:'',
 				user_pwd:'',
-				user_name_state:'',
-				user_nickname:'',
+				user_name_state:""
 			}
 		},
 		methods:{
+			doLog:function  () {
+				// 提交登录
+ 				this.$http.jsonp('http://localhost:86/public/api/user', {params:{user_name:this.user_name,user_pwd:this.user_pwd}}).then((res) => {
+ 					if (res.data.status == 1) {
+						Toast("登录成功")
+					}else{
+						Toast("用户名和密码不正确")
+					}
+ 				})
+			},
 			checkName:function () {
 				// 获取用户名
 				var user_name=this.user_name;
@@ -46,27 +49,13 @@ import {Toast} from 'mint-ui'
 				}else{
 					this.user_name_state="error";
 				}
-			},
-			doReg:function () {
-				this.$http.jsonp("http://localhost:86/public/api/user", {params:{
-			 		user_name:this.user_name,
-					user_pwd:this.user_pwd,
-					user_nickname:this.user_nickname
-			 	}}).then(function  (rtnD) {
-			 		Toast(rtnD.data.msg)
-			 	})
 			}
-
 		}
 	}
 </script>
 <style lang="scss">
-@import "../assets/common.scss";
-body,html{
-	width: 100%;
-	height: 100%;
-	background-color: #000;
-	position: relative;
+@import "../../assets/common.scss";
+html{
 	font-size: 62.5%;
 }
 .head{
@@ -86,9 +75,8 @@ body,html{
 }
 .wenzi{
 	position: absolute;
-    top: 15%;
+    top: 20%;
     left: 50%;
-    color: #fff;
     width: 80%;
     transform: translate(-50%, -50%);
     font-size: 2rem;
@@ -129,17 +117,16 @@ body,html{
 	color: $theme_color;
 	border-left: 1px solid #cccccc;
 	width: 100%;
-	font-size: 1.2rem;
 }
 .sign{
 	color: #ccc;
-	width: 80%;
+	width: 64%;
 	text-align: center;
 	height: 2.5%;
 	margin: 2% auto;
-	font-size: 1rem;
+	font-size: 1.2rem;
 	a{
-		color: $theme_color;
+		color: #ccc;
 	}
 }
 </style>
