@@ -27,26 +27,26 @@
       <mt-tab-container v-model="selected">
         <!-- 热门栏目 -->
         <mt-tab-container-item id="0">
-          <ul class="worksList clearfix" v-show="seeType.first">
-            <li v-for="photo in photoList.first">
-              <router-link v-bind:to="'works/work/'+photo.id">
-                <img v-bind:src="'http://localhost:86'+photo.pic" alt="">
-              </router-link>
-            </li>
-          </ul>
+          <div class="worksList clearfix" v-show="seeType.first">
+            <router-link v-bind:to="'works/work/'+photo.works_id" v-for="photo in photoList.first">
+                <img v-bind:src="'http://localhost:82'+photo.works_src" alt="">
+                <br>
+                <br>
+                <p>发于： {{new Date(parseInt(photo.update_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ')}}</p>
+                <p>浏览数： {{photo.works_browse ? photo.works_browse : 0}}</p>
+            </router-link>
+          </div>
           <div class="seeList" v-if="!seeType.first" v-for="photo in photoList.first">
             <list v-bind:photo="photo"></list>
           </div>
         </mt-tab-container-item>
         <!-- 最新栏目 -->
         <mt-tab-container-item id="1">
-          <ul class="worksList clearfix" v-show="seeType.second">
-            <li v-for="photo in photoList.second">
-              <router-link v-bind:to="'works/work/'+photo.id">
-                <img v-bind:src="'http://localhost:86'+photo.pic" alt="">
-              </router-link>
-            </li>
-          </ul>
+          <div class="worksList clearfix" v-show="seeType.second">
+            <router-link v-bind:to="'works/work/'+photo.id" v-for="photo in photoList.second">
+              <img v-bind:src="'http://localhost:86'+photo.pic" alt="">
+            </router-link>
+          </div>
           <div class="seeList" v-if="!seeType.second" v-for="photo in photoList.second">
             <list v-bind:photo="photo"></list>
           </div>
@@ -56,7 +56,7 @@
   </div>
 </template>
 <script>
-  // import axios from 'axios'
+  import axios from 'axios'
   import {mapState, mapMutations} from 'vuex'
   import list from './common/list.vue'
 
@@ -106,7 +106,7 @@
       }
       // 加载第一页数据
       this.getImg()
-      this.getImg(1)
+      // this.getImg(1)
     },
     methods: {
       ...mapMutations(['setClassify', 'setClassifyEvent']),
@@ -118,41 +118,42 @@
         if (!pageChange && !seeTypeChange) {
           return false
         }
-        // axios.get('/api/works/:id', {
-        //   params: {
-        //     classify,
-        //     pageStart,
-        //     selected,
-        //     seeType
-        //   }
-        // }).then(function (response) {
-        //   if (response.data.status === 1) {
-        //     // 判断是更新哪个栏目的数据
-        //     if (selected === '0') {
-        //       _this.seeType.first = seeTypeChange ? seeType : _this.seeType.first
-        //       // 更换视图模式后，清空原来数值后重新赋值，页数回到1
-        //       if (seeTypeChange) {
-        //         _this.photoList.first = response.data.photoList.data
-        //         _this.pageStart.first = 1
-        //       } else {
-        //         // 只更新页数的情况下，仅需添加数据
-        //         _this.photoList.first.push(...response.data.photoList.data)
-        //         _this.pageStart.first = pageStart
-        //       }
-        //       _this.pageTotal.first = response.data.photoList.total
-        //     } else {
-        //       _this.seeType.second = seeTypeChange ? seeType : _this.seeType.second
-        //       if (seeTypeChange) {
-        //         _this.photoList.second = response.data.photoList.data
-        //         _this.pageStart.second = 1
-        //       } else {
-        //         _this.photoList.second.push(...response.data.photoList.data)
-        //         _this.pageStart.second = pageStart
-        //       }
-        //       _this.pageTotal.second = response.data.photoList.total
-        //     }
-        //   }
-        // })
+        axios.get('/api/qworks/news', {
+          params: {
+            classify,
+            page: pageStart,
+            selected,
+            seeType
+          }
+        }).then(function (response) {
+          if (response.data.status === '0') {
+            // 判断是更新哪个栏目的数据
+            if (selected === '0') {
+              console.log(response.data)
+              _this.seeType.first = seeTypeChange ? seeType : _this.seeType.first
+              // // 更换视图模式后，清空原来数值后重新赋值，页数回到1
+              if (seeTypeChange) {
+                _this.photoList.first = response.data.rearray
+                _this.pageStart.first = 1
+              } else {
+                // 只更新页数的情况下，仅需添加数据
+                _this.photoList.first.push(...response.data.rearray)
+                _this.pageStart.first = pageStart
+              }
+              // _this.pageTotal.first = response.data.rearray.total
+            } else {
+              // _this.seeType.second = seeTypeChange ? seeType : _this.seeType.second
+              // if (seeTypeChange) {
+              //   _this.photoList.second = response.data.photoList.data
+              //   _this.pageStart.second = 1
+              // } else {
+              //   _this.photoList.second.push(...response.redata.photoList.data)
+              //   _this.pageStart.second = pageStart
+              // }
+              // _this.pageTotal.second = response.data.photoList.total
+            }
+          }
+        })
       }
     },
     computed: {
@@ -218,29 +219,28 @@
 }
 /* 作品列表 */
 .works_content{
-  margin-top: 7.5rem;
+  margin-top: 9rem;
   width: 100%;
     .worksList{
       list-style-type: none;
       margin: 0;
       padding: 0;
-      li{
-        width: 30%;
-        height: 123px;
-        overflow: hidden;
-        margin-bottom: 2%;
-        float: left;
-        margin-right: 2.5%;
-        a img{
-          position: relative;
-          min-width: 100%;
-          max-width: 120%;
-          min-height: 100%;
-          max-height: 120%;
+      flex-flow: row wrap;
+      display: flex;
+      align-items: center;
+      a{
+        flex: 1 1 40%;
+        display:block;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        border: 1px solid #fff;
+        img{
+          width: 100%;
         }
-      }
-      li:nth-child(3n+1){
-        margin-left: 2.5%;
+        p{
+          color: #ddd;
+          text-align: left;
+        }
       }
     }
 }

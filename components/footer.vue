@@ -22,7 +22,9 @@
 				</router-link>
 			</li>
 			<li>
-				<img src="../assets/img/personal_nonactive.jpg" />
+				<router-link to="/personal/12">
+					<img :src="active==3?require('../assets/img/personal_active.jpg'):require('../assets/img/personal_nonactive.jpg')" />
+				</router-link>
 			</li>
 		</ul>
 	</div>

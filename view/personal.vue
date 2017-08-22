@@ -1,6 +1,6 @@
 <template>
 <div>
-	<div class="head">
+	<div class="personal_head">
 		<!-- 背景图 -->
 		<img src="../assets/img/perhead.jpg" height="100%" width="100%" class="bg">
 		<img src="../assets/img/more1.png" class="more" @click="moreInfo()">
@@ -82,7 +82,7 @@ import { Actionsheet } from 'mint-ui';
     	}
 	}
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../assets/common.scss";
 html{
 	background-color: #f5f5f5;
@@ -96,7 +96,7 @@ html{
     top: 1%;
     right: 1%;
 }
-.head{
+.personal_head{
 	width: 100%;
 	height: 36.6%;
 }
