@@ -32,8 +32,8 @@ import {Toast} from 'mint-ui'
 			return{
 				user_name:'',
 				user_pwd:'',
-				user_name_state:''
-				user_nickname:'';
+				user_name_state:'',
+				user_nickname:''
 			}
 		},
 		methods:{

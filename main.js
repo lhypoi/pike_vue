@@ -7,9 +7,16 @@ import store from './store'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import 'font-awesome/css/font-awesome.min.css'
+// import FastClick from 'fastclick'
+import Axios from 'axios'
 
 Vue.config.productionTip = false
 Vue.use(MintUI)
+Vue.prototype.$http = Axios
+
+// window.addEventListener('load', () => {
+//   FastClick.attach(document.body)
+// })
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
