@@ -60,7 +60,7 @@ const router = new Router({
       component: require('@/view/goods_list')
     },
     {
-      path: '/goods_detail',
+      path: '/goods_detail/:gid',
       component: require('@/view/goods_de')
     },
     {
