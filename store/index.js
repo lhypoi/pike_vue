@@ -4,9 +4,9 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    cartList: [],
     classify: '分类',
     classifyHasEvent: false,
-    cartList: []
   },
   mutations: {
     setClassify (state, classify) {
@@ -16,8 +16,18 @@ const store = new Vuex.Store({
       state.classifyHasEvent = true
     },
     setCartInfo (state, info) {
-      console.log(9)
-      state.cartList.push(info)
+      // 判断之前是否有该商品，有的话num属性+1
+      let hasGoods = false
+      state.cartList.forEach((item) => {
+        if (item.goods_info.goods_id === info.goods_info.goods_id) {
+          // +1
+          hasGoods = true
+          item.num ++
+        }
+      })
+      if (!hasGoods) {
+        state.cartList.push(info)
+      }
     }
   },
   actions: {

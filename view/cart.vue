@@ -9,9 +9,8 @@
 			<div v-if="empty==false">
 				<div class="edit_box clearfix">
 					<div class="check_box">
-						<label for="checkbox0" v-on:click="check(0)" :style="'background-color: '+select_all_color">
-							<input type="checkbox" id="checkbox0" value="0" :checked="select_all.length >= numbers.length" v-model=llo />
-						</label>
+						<input type="checkbox" id="checkbox0" value="0" :checked="select_all.length >= numbers.length" v-model=llo />
+						<label for="checkbox0" v-on:click="check(0)" :style="'background-color: '+select_all_color"></label>
 					</div>
 					<p v-on:click="do_edit">{{state}}</p>
 				</div>
@@ -53,8 +52,10 @@
 </template>
 
 <script type="es6">
+import {mapMutations, mapState} from 'vuex'
 import headbox from '../components/header'
 import Vue from 'vue'
+import {Toast} from 'mint-ui'
 Vue.directive('adjust', function(el, binding) {
 	//图片自适应
 	var obj = el
@@ -120,6 +121,9 @@ export default {
 	components:{
 		headbox
 	},
+	computed: {
+		...mapState(['cartList'])
+	},
 	mounted() {
 		if(this.length < 0) {
 			this.empty = true
@@ -172,13 +176,13 @@ export default {
 		all_select: function() {
 			if(this.select_all.length >= this.numbers.length) {
 				this.total = 0
-				this.select_all_color= '#fff'
+				this.select_all_color = '#fff'
 				this.select_all = []
 				for(let i = 1; i <= this.numbers.length; i ++) {
 					this.check_style[i-1] = '#fff'
 					this.check_list[i-1] = false
 				}
-				this.llo = false
+				this.llo = true
 			}else{
 				var total = 0
 				this.numbers.forEach(function(val, index, arr) {
@@ -190,10 +194,10 @@ export default {
 					this.select_all.push(item)
 				})
 				for(let i = 1; i <= this.numbers.length; i ++) {
-					this.check_style[i-1] ='#4876FF'
+					this.check_style[i-1] = '#4876FF'
 					this.check_list[i-1] = true
 				}
-				this.llo = true
+				this.llo = false
 			}
 		},
 		check: function(num) {
@@ -212,7 +216,6 @@ export default {
 					}
 					
 					if(flag == this.numbers.length) {
-					console.log(333)
 						this.llo = true
 						this.select_all_color = '#4876FF'
 					}

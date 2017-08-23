@@ -8,14 +8,18 @@ import direct from './direct'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import 'font-awesome/css/font-awesome.min.css'
-// import Axios from 'axios'
+import Axios from 'axios'
 import VueResource from 'vue-resource'
 
 Vue.config.productionTip = false
 // Vue.prototype.$http = Axios
 
 Vue.use(MintUI)
+
+Vue.prototype.$http = Axios
+
 Vue.use(VueResource)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
