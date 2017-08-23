@@ -6,10 +6,9 @@
           <mt-button icon="back" ></mt-button>
         </router-link>
       </mt-header>
-      <transition name="fade">
-        <div class="classify_list" v-show="show" transiton="fade">
+        <div class="classify_list">
           <ul>
-            <li v-for="n in classifyData['title1'].length">
+            <li v-for="n in classifyData['title1'].length" >
               <router-link v-bind:to="'/works/' + classifyData['title1'][n - 1]">
                 <img  v-bind:src="'/static/works/classify' + n + '.jpg'" alt="">
                 <span>
@@ -20,7 +19,6 @@
             </li>
           </ul>
         </div>
-      </transition>
     </div>
 </template>
 <script>
@@ -33,8 +31,7 @@
         classifyData: {
           title1: ['人像', '风景', '生态', '纪实', '生活', 'LOMO', '观念'],
           title2: ['Portrait', 'Scenery', 'Ecology', 'Documentary', 'Life', 'Lomo', 'Concept']
-        },
-        show: false
+        }
       }
     },
     methods: {

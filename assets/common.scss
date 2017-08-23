@@ -36,10 +36,10 @@ $theme_color: #2d78f4;
 }
 
 /*淡入淡出*/
-.fade-enter {
+.fade-enter, .fade-leave {
   opacity: 0;
 }
-.fade-enter-active {
+.fade-enter-active, .fade-leave-active  {
   transition: all 1s;
 }
 /*从下至上*/

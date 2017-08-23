@@ -1,72 +1,70 @@
 <template>
-  <transition name="fade">
-    <div id="main">
-      <!-- 顶部返回和分类固定栏 -->
-      <mt-header fixed title="摄影作品" class="mt_header">
-        <router-link to="/" slot="left">
-          <mt-button icon="back"></mt-button>
-        </router-link>
-        <router-link to="/classify" slot="right">
-          {{classify}}
-        </router-link>
-      </mt-header>
-      <!-- 顶部最热和最新和视图切换栏 -->
-      <mt-navbar fixed v-model="selected" class="menu_tab">
-        <mt-tab-item id="0" v-on:click.native="getImg(selected, classify, pageStart.first, seeType.first)">
-          热门
-        </mt-tab-item>
-        <mt-tab-item id="1" v-on:click.native="getImg(selected, classify, pageStart.second, seeType.second)">
-          最新
-        </mt-tab-item>
-        <mt-tab-item v-bind:id="selected" v-on:click.native="getImg(selected, classify, selected == '0' ? pageStart.first : pageStart.second, selected == '0' ? !seeType.first : !seeType.second)">
-          <img src="../assets/list.png" alt="" v-show="selected == '0' ? seeType.first : seeType.second">
-          <img src="../assets/detail.png" alt="" v-show="selected == '0' ? !seeType.first : !seeType.second">
-        </mt-tab-item>
-      </mt-navbar>
-      <!-- 作品列表 -->
-      <div class="works_content">
-        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded">
-          <mt-tab-container v-model="selected">
-          <!-- 热门栏目 -->
-          <mt-tab-container-item id="0">
-              <div class="worksList clearfix" v-show="seeType.first">
-                <router-link v-bind:to="'works/work/'+photo.works_id" v-for="photo in photoList.first">
-                    <img v-lazy="'http://localhost:82'+photo.works_src" alt="">
-                    <br>
-                    <br>
-                    <p>发于： {{new Date(parseInt(photo.update_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ')}}</p>
-                    <p>浏览数： {{photo.works_browse ? photo.works_browse : 0}}</p>
-                </router-link>
-              </div>
-            <div class="seeList" v-if="!seeType.first" v-for="photo in photoList.first">
-              <list v-bind:photo="photo"></list>
-            </div>
-          </mt-tab-container-item>
-          <!-- 最新栏目 -->
-          <mt-tab-container-item id="1">
-              <div class="worksList clearfix" v-show="seeType.second">
-                <router-link v-bind:to="'works/work/'+photo.works_id" v-for="photo in photoList.second">
+  <div id="main">
+    <!-- 顶部返回和分类固定栏 -->
+    <mt-header fixed title="摄影作品" class="mt_header">
+      <router-link to="/" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+      <router-link to="/classify" slot="right">
+        {{classify}}
+      </router-link>
+    </mt-header>
+    <!-- 顶部最热和最新和视图切换栏 -->
+    <mt-navbar fixed v-model="selected" class="menu_tab">
+      <mt-tab-item id="0" v-on:click.native="getImg(selected, classify, pageStart.first, seeType.first)">
+        热门
+      </mt-tab-item>
+      <mt-tab-item id="1" v-on:click.native="getImg(selected, classify, pageStart.second, seeType.second)">
+        最新
+      </mt-tab-item>
+      <mt-tab-item v-bind:id="selected" v-on:click.native="getImg(selected, classify, selected == '0' ? pageStart.first : pageStart.second, selected == '0' ? !seeType.first : !seeType.second)">
+        <img src="../assets/list.png" alt="" v-show="selected == '0' ? seeType.first : seeType.second">
+        <img src="../assets/detail.png" alt="" v-show="selected == '0' ? !seeType.first : !seeType.second">
+      </mt-tab-item>
+    </mt-navbar>
+    <!-- 作品列表 -->
+    <div class="works_content">
+      <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded">
+        <mt-tab-container v-model="selected">
+        <!-- 热门栏目 -->
+        <mt-tab-container-item id="0">
+            <div class="worksList clearfix" v-show="seeType.first">
+              <router-link v-bind:to="'works/work/'+photo.works_id" v-for="photo in photoList.first">
                   <img v-lazy="'http://localhost:82'+photo.works_src" alt="">
                   <br>
                   <br>
                   <p>发于： {{new Date(parseInt(photo.update_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ')}}</p>
                   <p>浏览数： {{photo.works_browse ? photo.works_browse : 0}}</p>
-                </router-link>
-              </div>
-            <div class="seeList" v-if="!seeType.second" v-for="photo in photoList.second">
-              <list v-bind:photo="photo"></list>
+              </router-link>
             </div>
-          </mt-tab-container-item>
-          </mt-tab-container>
-        </mt-loadmore>
-      </div>
+            <div class="seeList" v-show="!seeType.first" v-for="photo in photoList.first">
+              <list v-bind:item="photo"></list>
+            </div>
+        </mt-tab-container-item>
+        <!-- 最新栏目 -->
+        <mt-tab-container-item id="1">
+            <div class="worksList clearfix" v-show="seeType.second">
+              <router-link v-bind:to="'works/work/'+photo.works_id" v-for="photo in photoList.second">
+                <img v-lazy="'http://localhost:82'+photo.works_src" alt="">
+                <br>
+                <br>
+                <p>发于： {{new Date(parseInt(photo.update_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ')}}</p>
+                <p>浏览数： {{photo.works_browse ? photo.works_browse : 0}}</p>
+              </router-link>
+            </div>
+            <div class="seeList" v-show="!seeType.second" v-for="photo in photoList.second">
+              <list v-bind:item="photo"></list>
+            </div>
+        </mt-tab-container-item>
+        </mt-tab-container>
+      </mt-loadmore>
     </div>
-  </transition>
+  </div>
 </template>
 <script>
   import axios from 'axios'
   import {mapState, mapMutations} from 'vuex'
-  import list from './common/list.vue'
+  import list from '../components/list.vue'
 
   export default {
     name: 'main',
@@ -115,7 +113,7 @@
         console.log('意外的数据出现！！！！！')
       }
       // 加载第一页数据
-      this.getImg()
+      this.getImg('0')
       this.getImg('1')
     },
     methods: {
@@ -125,9 +123,17 @@
         let _this = this
         let pageChange = selected === '0' ? (_this.pageStart.first !== pageStart) : (_this.pageStart.second !== pageStart)
         let seeTypeChange = selected === '0' ? (_this.seeType.first !== seeType) : (_this.seeType.second !== seeType)
-        if (!pageChange && !seeTypeChange) {
+        if (seeTypeChange) {
+          if (selected === '0') {
+            _this.seeType.first = seeTypeChange ? seeType : _this.seeType.first
+          } else {
+            _this.seeType.second = seeTypeChange ? seeType : _this.seeType.second
+          }
+          return false
+        } else if (!pageChange) {
           return false
         }
+
         if (selected === '0') {
           _this.pageLock.first = true
         } else {
@@ -143,27 +149,13 @@
           if (response.data.status === '0') {
             // 判断是更新哪个栏目的数据
             if (selected === '0') {
-              _this.seeType.first = seeTypeChange ? seeType : _this.seeType.first
-              // // 更换视图模式后，清空原来数值后重新赋值，页数回到1
-              if (seeTypeChange) {
-                _this.photoList.first = response.data.rearray.data
-                _this.pageStart.first = 1
-              } else {
-                // 只更新页数的情况下，仅需添加数据
-                _this.photoList.first.push(...response.data.rearray.data)
-                _this.pageStart.first = pageStart
-              }
+              _this.photoList.first.push(...response.data.rearray.data)
+              _this.pageStart.first = pageStart
               _this.pageTotal.first = response.data.rearray.last_page
               _this.pageLock.first = false
             } else {
-              _this.seeType.second = seeTypeChange ? seeType : _this.seeType.second
-              if (seeTypeChange) {
-                _this.photoList.second = response.data.photoList.data
-                _this.pageStart.second = 1
-              } else {
-                _this.photoList.second.push(...response.data.rearray.data)
-                _this.pageStart.second = pageStart
-              }
+              _this.photoList.second.push(...response.data.rearray.data)
+              _this.pageStart.second = pageStart
               _this.pageTotal.second = response.data.rearray.last_page
               _this.pageLock.second = false
             }
@@ -171,16 +163,12 @@
         })
       },
       loadBottom: function () {
-        console.log('------下拉函数begin-------')
-        console.log(this.allLoaded.first + '是否加载完' + this.allLoaded.second)
-        console.log(this.selected + '发起下拉')
         let lock = this.selected === '0' ? this.pageLock.first : this.pageLock.second
         if (!lock) {
           this.getImg(this.selected, this.classify, this.selected === '0' ? this.pageStart.first + 1 : this.pageStart.second + 1, this.selected === '0' ? this.seeType.first : this.seeType.second)
         } else {
           console.log('第' + this.selected + '试图通过下拉加载数据，被锁住啦啦啦啦')
         }
-        console.log('------下拉函数end-------')
       }
     },
     computed: {
@@ -277,6 +265,9 @@
           text-align: left;
         }
       }
+    }
+    .mint-tab-container-item > div:nth-child(2) {
+      margin-top: -1rem;
     }
 }
 </style>

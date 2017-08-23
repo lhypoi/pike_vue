@@ -3,23 +3,27 @@
 		<div class="list">
 			<div class="title clearfix">
 				<div class="head_photo">
-					<img src="../assets/img/head_photo.jpg" />
+					<img v-bind:src="item.user_photo ? item.user_photo : defaultUserPhoto" />
 				</div>
-				<h4>大大脸夏子</h4>
-				<span>08-09</span>
+				<h4>{{item.user_name}}</h4>
+				<span>{{new Date(parseInt(item.update_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ')}}</span>
 			</div>
 			<div class="img_box">
-				<img src="../assets/img/photo.jpg" />
+				<img v-lazy="'http://localhost:82' + item.works_src" alt="">
 			</div>
 			<div class="content">
-				<h5>《醉玲珑》</h5>
+				<h5>{{item.works_title}}</h5>
 				<p>{{item.works_profile|substr}}</p>
 				<div class="tags clearfix">
-					<span>光影霓裳</span>
-					<span>光影霓裳</span>
+					<span>{{item.works_tags}}</span>
 				</div>
 			</div>
 			<div class="foot_box clearfix">
+                <div class="para clearfix">
+                    <span v-for="(item, index) in item.works_para.split(',')">
+                        <b>{{paraKey[index]}}:</b>{{item}}
+                    </span>
+                </div>
 				<p class="comment_box">
 					<img src="../assets/img/comment_icon.jpg" />&nbsp;8
 				</p>
@@ -41,17 +45,14 @@ export default {
     return{
 	  like_icon: require('../assets/img/like_icon.jpg'),
       state: 0,
-      active: ''
+      active: '',
+      defaultUserPhoto: require('../assets/img/head_photo.jpg'),
+      paraKey: ['相机', '光圈', '快门' ,'感光度']
     }
   },
   props:['item'],
   mounted() {
-  	var content = document.getElementsByTagName('p');
-	for(var i = 0; i < content.length; i ++) {
-  		limit(content[i].innerText, content[i]);
-	}
-	
-	
+
   },
   methods: {
     do_like: function(state) {
@@ -76,32 +77,56 @@ Vue.filter('substr', function(str) {
 <style lang="scss" scoped>
 *{margin: 0; padding: 0;}
 .clearfix:after{content:"."; display:block; height:0; clear:both; visibility:hidden;}
-.list{border-bottom: 1px solid #999;}
+.list{margin-top: 1rem;background-color: #fff}
 .title{
-	height: 56px;
-	.head_photo{width: 36px; height: 36px; border-radius: 50px; overflow: hidden; margin: 10px; float: left;}
-	h4{width: 70%; height: 56px; line-height: 56px; font-size: 1em; color: #fff; text-align: left; float: left;}
-	span{display: block; color: #ccc; height: 56px; line-height: 56px; float: left;}
+	height: 4.5rem;
+    .head_photo {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 3rem;
+        overflow: hidden;
+        margin: 0.75rem;
+        float: left;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+	h4{width: 12rem; line-height: 3em; font-size: 1.5em; color: #000; text-align: left; float: left;}
+	span{display: block; color: #888; line-height: 3em; font-size: 1.5em; float: right; margin-right: 0.75rem;}
 }
 .img_box{
 	width: 100%;
 	img{width: 100%; display: block;}
 }
 .content{
-	padding: 5%; width: 90%;
-	h5{color: #fff; font-size: 1em; text-align: left; height: 20px; line-height: 20px;}
-	p{width: 100%; display: block; word-wrap: break-word; word-break: normal; text-align: left; color: #ccc; line-height: 20px; font-size: 0.9em;}
+	padding: 0.5rem 1.5rem;
+	h5{color: #111; font-size: 1.2em; text-align: left; line-height: 2em;}
+	p{width: 100%; display: block; word-wrap: break-word; word-break: normal; text-align: left; color: #222; line-height: 2em; font-size:1em;}
 	.tags{
-		width: 100%; margin-top: 14px;
-		span{display: block; padding: 3px; background-color: #666; color: #eee; float: left; margin-right: 10px; border-radius: 5px;}
+		width: 100%;
+		span{display: block; padding: 0.5em; line-height: 1em; background-color: #666; color: #eee; float: left; margin-right: 2em; border-radius: 0.5em;}
 	}
 }
 .foot_box{
-	margin-top: 24px; padding-bottom: 30px;
+    background-color: #000;
+    padding: 0.5rem 1.5rem 1rem 1.5rem;
 	p.comment_box, p.like_box, p.share_box{
-		position: relative; height: 22px; display: block; width: 20%; float: left; color: #ccc; line-height: 22px;
-		img{width: 20px; position: absolute; left: 15%;}
+		position: relative; height: 2em; display: block; width: 20%; float: left; color: #ccc; line-height: 2em;
+		img{width:2em; position: absolute; left: 0em}
 		.active{animation: change 1s ease;}
 	}
+    .para{
+        width: 100%;
+        margin-bottom: 1rem;
+        span{
+            line-height: 2em;
+            display: block;
+            width: 50%;
+            color: #ccc;
+            float: left;
+            text-align: left;
+        }
+    }
 }
 </style>
