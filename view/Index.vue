@@ -23,10 +23,10 @@
 					</a>
 				</li>
 				<li>
-					<a>
+					<router-link to="/skills">
 						<img src="../assets/img/menu_icon_3.jpg" />
 						<p>技巧</p>
-					</a>
+					</router-link>
 				</li>
 				<li>
 					<a>
@@ -49,7 +49,7 @@
 				<li>
 					<a>
 						<img src="../assets/img/menu_icon_7.jpg" />
-						<p>红人</p>
+						<p>商城</p>
 					</a>
 				</li>
 			</ul>
@@ -254,49 +254,13 @@ Vue.directive('adjust', function(el, binding) {
 		}
 	})
 })
-Vue.directive('touchmmh', function (el, binding) {
-  var oDiv = el
-  var x = 0
-  var y = 0
-  var left
-  var mx
-  oDiv.addEventListener('touchstart', function (e) {
-    if (e.touches.length > 1) {
-      return false
-    }
-	left = oDiv.offsetLeft
-    x = e.touches[0].clientX + Math.abs(left)
-	y = e.touches[0].clientY
-    // e.preventDefault()
-  }, false)
-  oDiv.addEventListener('touchmove', function (e) {
-	var touch = e.touches[0]
-    mx = touch.clientX - x
-	var my = touch.clientY - y
-	var isScrolling = Math.abs(mx) < Math.abs(my) ? 1:0;
-	if(isScrolling == 0) {
-	  e.preventDefault()
-      if(oDiv.offsetWidth + mx <= oDiv.parentNode.offsetWidth) {
-	    oDiv.style.left = oDiv.parentNode.offsetWidth - oDiv.offsetWidth + 'px'
-	    return;
-	  } else if(mx >= 0) {
-	    oDiv.style.left = 0 + 'px'
-	    return
-	  } else {
-        oDiv.style.left = mx + 'px'
-	  }
-	}
-  }, false)
-  oDiv.addEventListener('touchend', function (e) {
-  }, false)
-})
+
 
 export default {
 	data() {
 		return{
 			slide:'',
 			img_adjust:'',
-			swap_1:'',
 			swapData:[{
 				title: '图片1',
 				index: 1,
@@ -350,26 +314,8 @@ export default {
 		}, 7000)
 	},
 	mounted() {
-		//this.adjust(document.getElementsByClassName('icon_box')[0].firstChild)
 	},
 	methods: {
-		adjust: function(i) {
-		console.log(i)
-			let img = new Image()
-			img.src = i.getAttribute('src')
-			let width = img.width
-			let height = img.height
-			let parent = i.parentNode
-			if((width - parent.clientWidth) > (height - parent.clientHeight)) {
-				i.style.height = parent.clientHeight;
-				let rate = this.height / height;
-				i.style.width = width * rate
-			}else{
-				i.style.width = parent.clientWidth;
-				let rate = this.width / width;
-				i.style.height = height * rate
-			}
-		}
 	},
     computed: {
       // 分类

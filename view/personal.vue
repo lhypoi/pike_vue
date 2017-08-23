@@ -99,6 +99,7 @@ html{
 .personal_head{
 	width: 100%;
 	height: 36.6%;
+	color: #fff;
 }
 .userimg{
 	position: absolute;

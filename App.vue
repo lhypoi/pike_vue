@@ -1,6 +1,8 @@
 <template>
   <div id="app">
+    <!-- <transition name="fade"> -->
     <router-view></router-view>
+    <!-- </transition> -->
   </div>
 </template>
 
@@ -29,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss">
-body{margin: 0;background-color: #000;}
+body{margin: 0; background-color: #ccc;}
 *{margin: 0; padding: 0; text-decoration: none; list-style: none;}
 .clearfix:after{content:"."; display:block; height:0; clear:both; visibility:hidden;}
 #app {

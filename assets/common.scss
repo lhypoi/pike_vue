@@ -40,5 +40,14 @@ $theme_color: #2d78f4;
   opacity: 0;
 }
 .fade-enter-active {
-  transition: all 0.5s;
+  transition: all 1s;
+}
+/*从下至上*/
+.fade2-enter-active{
+  transition: all 0.5s linear;
+  transform: translate3d(0, 0, 0);
+}
+.fade2-enter {
+  transform: translate3d(0, 100%, 0);
+  opacity: 0;
 }
