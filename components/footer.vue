@@ -17,13 +17,13 @@
 				<img src="../assets/img/send_btn.jpg" class="send_btn" />
 			</li>
 			<li>
-				<router-link to="/message">
+				<router-link to="/goods_list">
 					<img :src="active==2?require('../assets/img/message_active.jpg'):require('../assets/img/message_nonactive.jpg')" />
 				</router-link>
 			</li>
 			<li>
-				<router-link to="/personal">
-					<img src="../assets/img/personal_nonactive.jpg" />
+				<router-link to="/personal/12">
+					<img :src="active==3?require('../assets/img/personal_active.jpg'):require('../assets/img/personal_nonactive.jpg')" />
 				</router-link>
 			</li>
 		</ul>

@@ -4,24 +4,28 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import direct from './direct'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import 'font-awesome/css/font-awesome.min.css'
-// import FastClick from 'fastclick'
 import Axios from 'axios'
+import VueResource from 'vue-resource'
 
 Vue.config.productionTip = false
+// Vue.prototype.$http = Axios
+
 Vue.use(MintUI)
+
 Vue.prototype.$http = Axios
 
-// window.addEventListener('load', () => {
-//   FastClick.attach(document.body)
-// })
+Vue.use(VueResource)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
+  direct,
   template: '<App/>',
   components: { App }
 })
