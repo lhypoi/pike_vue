@@ -24,12 +24,12 @@
     </mt-navbar>
     <!-- 作品列表 -->
     <div class="works_content">
-      <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded">
+      <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
         <mt-tab-container v-model="selected">
         <!-- 热门栏目 -->
-        <mt-tab-container-item id="0">
+        <mt-tab-container-item id="0" :class="{'works_allload' : !allLoaded}">
             <div class="worksList clearfix" v-show="seeType.first">
-              <router-link v-bind:to="'works/work/'+photo.works_id" v-for="photo in photoList.first">
+              <router-link v-bind:to="'works/work/'+photo.works_id" v-for="photo in photoList.first"  :key="photo.works_id">
                   <img v-lazy="'http://localhost:82'+photo.works_src" alt="">
                   <br>
                   <br>
@@ -37,14 +37,14 @@
                   <p>浏览数： {{photo.works_browse ? photo.works_browse : 0}}</p>
               </router-link>
             </div>
-            <div class="seeList" v-show="!seeType.first" v-for="photo in photoList.first">
-              <list v-bind:item="photo"></list>
+            <div class="seeList" v-show="!seeType.first">
+              <list v-bind:item="photo" v-for="photo in photoList.first" :key="photo.works_id"></list>
             </div>
         </mt-tab-container-item>
         <!-- 最新栏目 -->
-        <mt-tab-container-item id="1">
+        <mt-tab-container-item id="1" :class="{'works_allload' : !allLoaded}">
             <div class="worksList clearfix" v-show="seeType.second">
-              <router-link v-bind:to="'works/work/'+photo.works_id" v-for="photo in photoList.second">
+              <router-link v-bind:to="'works/work/'+photo.works_id" v-for="photo in photoList.second" :key="photo.works_id">
                 <img v-lazy="'http://localhost:82'+photo.works_src" alt="">
                 <br>
                 <br>
@@ -52,8 +52,8 @@
                 <p>浏览数： {{photo.works_browse ? photo.works_browse : 0}}</p>
               </router-link>
             </div>
-            <div class="seeList" v-show="!seeType.second" v-for="photo in photoList.second">
-              <list v-bind:item="photo"></list>
+            <div class="seeList" v-show="!seeType.second">
+              <list v-bind:item="photo" v-for="photo in photoList.second" :key="photo.works_id"></list>
             </div>
         </mt-tab-container-item>
         </mt-tab-container>
@@ -105,19 +105,24 @@
     mounted () {
       if (this.classify === this.$route.params.classify) {
         console.log('显示原来数据')
+        this.photoList = this.worksContent.photoList
+        this.pageStart = this.worksContent.pageStart
+        this.pageTotal = this.worksContent.pageTotal
       } else if (this.$route.params.classify) {
-        this.setClassify(this.$route.params.classify)
         console.log('清除原来数据')
-        console.log(this.classify)
+        this.setClassify(this.$route.params.classify)
+        this.getImg('0')
+        this.getImg('1')
       } else if (this.classify) {
-        console.log('意外的数据出现！！！！！')
+        console.log('强制为分类全部')
+        this.setClassify('分类')
+        this.getImg('0')
+        this.getImg('1')
       }
-      // 加载第一页数据
-      this.getImg('0')
-      this.getImg('1')
+      console.log(this.worksContent)
     },
     methods: {
-      ...mapMutations(['setClassify', 'setClassifyEvent']),
+      ...mapMutations(['setClassify', 'setClassifyEvent', 'setWorksContent']),
       getImg: function (selected = '0', classify = this.classify, pageStart = 1, seeType = true) {
         // 保存vue对象
         let _this = this
@@ -169,17 +174,24 @@
         } else {
           console.log('第' + this.selected + '试图通过下拉加载数据，被锁住啦啦啦啦')
         }
+        this.$refs.loadmore.onBottomLoaded()
       }
     },
     computed: {
       // 分类
-      ...mapState(['classify']),
+      ...mapState(['classify', 'worksContent']),
       allLoaded: function () {
         return this.selected === '0' ? this.pageStart.first === this.pageTotal.first : this.pageStart.second === this.pageTotal.second
       }
     },
     beforeDestroy: function () {
       scrollTo(0, 0)
+      let worksContent = {
+        photoList: this.photoList,
+        pageStart: this.pageStart,
+        pageTotal: this.pageTotal
+      }
+      this.setWorksContent(worksContent)
     }
   }
 </script>
@@ -241,6 +253,9 @@
   }
 }
 /* 作品列表 */
+.works_allload{
+  margin-bottom: 1rem;
+}
 .works_content{
   margin-top: 9rem;
   width: 100%;

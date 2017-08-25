@@ -102,7 +102,7 @@
 					<dd>自动</dd>
 					<dd>自动</dd>
 					<dd>自动</dd>
-				</dl>     
+				</dl>
 				<dl>
 					<dt>闪光灯</dt>
 					<dd>自动</dd>
@@ -122,14 +122,14 @@
 					<div class="version">已选：{{spec_list[0].goods_name}}</div>
 					<div class="num" >{{cart}}件</div>
 		        </div>
-				
+
 				<div class="kuang_choose">
 					<b>版本</b>
 					<span>D3400 M3</span>
 					<span>D3400 M3</span>
 					<span>D3400 M3</span>
 					<span>D3400 M3</span>
-				</div>					
+				</div>
 				<div class="num_box clearfix">数量：<b @click="jian()">-</b>
 					<input type="text" :value="cart"> <b @click="jia()">+</b>
 				</div>
@@ -208,7 +208,7 @@ export default {
 		},
 		chushi:function () {
 			let goods_id = this.$route.params.gid
-			this.$http.jsonp(cube+'/public/api/goods/getgoodslist', {params:{id:goods_id}})
+			this.$http.jsonp(cube+'/public/api/goods/getgoodsdetail', {params:{id:goods_id}})
 				.then((rtnD)=>{
 					this.spec_list = rtnD.data.goods_attr
 				})
@@ -223,7 +223,7 @@ export default {
 				totPrice:this.zPrice,
 				num:this.cart
 			}
-			
+
 			this.setCartInfo(cartInfo)
 			Toast('加入购物车成功')
 
