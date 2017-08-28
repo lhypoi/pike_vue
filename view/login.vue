@@ -7,7 +7,7 @@
 	</div>
 	<!-- 登录盒子 -->
 	<div class="log_box">
-		<mt-field placeholder="手机号、邮箱或POCO账号" :state="user_name_state"  @keyup.native="checkName()" type="tel" v-model="user_name"></mt-field>
+		<mt-field placeholder="手机号" :state="user_name_state"  @keyup.native="checkName()" type="tel" v-model="user_name"></mt-field>
 		<mt-field placeholder="密码" type="password" v-model="user_pwd">
 		  <img src="../assets/img/biyan.png" height="25" width="35">
 		</mt-field>
@@ -24,21 +24,34 @@ import {Toast} from 'mint-ui'
 	export default{
 		data(){
 			return{
-				user_name:'',
-				user_pwd:'',
+				user_name:'18826102321',
+				user_pwd:'11111111',
 				user_name_state:""
 			}
 		},
 		methods:{
 			doLog:function  () {
 				// 提交登录
- 				this.$http.jsonp('http://localhost:86/public/api/user', {params:{user_name:this.user_name,user_pwd:this.user_pwd}}).then((res) => {
- 					if (res.data.status == 1) {
-						Toast("登录成功")
-					}else{
-						Toast("用户名和密码不正确")
+				this.$http.post("/api/quser/log", {
+			 		user_phone:this.user_name,
+					user_pwd:this.user_pwd,
+			 	}).then(function  (rtnD) {
+			 		if (rtnD.data.status === '1') {
+						Toast({
+							message: rtnD.data.msg,
+						  	iconClass: 'icon icon-success'
+						})
+			 		} else {
+						Toast({
+						  	message: rtnD.data.msg,
+						  	iconClass: 'icon icon-success'
+						})
+						setTimeout(() => {
+							localStorage.setItem('userInfo', JSON.stringify(rtnD.data.rearray))
+							this.$router.push({path: '/personal/'+rtnD.data.rearray.user_id});
+						}, 500);
 					}
- 				})
+			 	})
 			},
 			checkName:function () {
 				// 获取用户名
@@ -53,7 +66,7 @@ import {Toast} from 'mint-ui'
 		}
 	}
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../assets/common.scss";
 html,body{
 	font-size: 62.5%;
@@ -104,7 +117,7 @@ html,body{
 		.yanzheng{
 		}
 	}
-	
+
 }
 .mint-button--large {
     display: block;

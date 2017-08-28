@@ -22,7 +22,7 @@
 				</router-link>
 			</li>
 			<li>
-				<router-link to="/personal/12">
+				<router-link :to="'/personal/'+user_id">
 					<img :src="active==3?require('../assets/img/personal_active.jpg'):require('../assets/img/personal_nonactive.jpg')" />
 				</router-link>
 			</li>
@@ -33,7 +33,12 @@
 
 <script type="es6">
 export default {
-  props:['active']
+  props:['active'],
+  computed: {
+  	user_id: function () {
+  		return localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).user_id : null
+  	}
+  }
 }
 </script>
 

@@ -2,10 +2,13 @@
 	<div>
 		<div class="list">
 			<div class="title clearfix">
-				<div class="head_photo">
-					<img v-bind:src="item.user_photo ? item.user_photo : defaultUserPhoto" />
-				</div>
-				<h4>{{item.user_name}}</h4>
+        <router-link :to="'/personal/'+item.user_id">
+          <div class="head_photo">
+            <img v-bind:src="item.user_photo ? item.user_photo : defaultUserPhoto" />
+          </div>
+          <h4>{{item.user_name}}</h4>
+        </router-link>
+
 				<span>{{new Date(parseInt(item.update_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ')}}</span>
 			</div>
 			<div class="img_box">

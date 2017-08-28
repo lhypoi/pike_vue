@@ -3,7 +3,7 @@
 		<headbox title="首页" search="true"></headbox>
 		<div class="banner">
 			<ul>
-				<li v-for='sd in swapData' :style="'z-index:'+ sd.index+ '; opacity:'+ sd.opacity">
+				<li v-for='sd in swapData' :style="'z-index:'+ sd.index+ '; opacity:'+ sd.opacity+';background:url('+ sd.src +'); background-size: 100%;'" :key="sd.id">
 					<a>{{sd.title}}</a>
 				</li>
 			</ul>
@@ -217,6 +217,7 @@ import Vue from 'vue';
 import headbox from '../components/header'
 import footbox from '../components/footer'
 import {mapState, mapMutations} from 'vuex'
+import axios from 'axios'
 
 Vue.directive('adjust', function(el, binding) {
 	//图片自适应
@@ -261,23 +262,7 @@ export default {
 		return{
 			slide:'',
 			img_adjust:'',
-			swapData:[{
-				title: '图片1',
-				index: 1,
-				opacity: 1
-			},{
-				title: '图片2',
-				index: 2,
-				opacity: 1
-			},{
-				title: '图片3',
-				index: 3,
-				opacity: 1
-			},{
-				title: '图片4',
-				index: 4,
-				opacity: 1
-			}],
+			swapData:[],
 			width: '',
 			height: ''
 		}
@@ -286,36 +271,56 @@ export default {
 	  headbox,footbox
 	},
 	created() {
-		var _this = this;
-		var DataLength = _this.swapData.length;
-		var i = 3;
-		var timer = setInterval(()=> {
-			if(_this.swapData[i].index >= DataLength) {
-				var o_timer = setInterval(()=> {
-					if(_this.swapData[i].opacity > 0) {
-						_this.swapData[i].opacity -= 0.2;
-					} else {
-						clearInterval(o_timer);
-					}
-				}, 200);
 
-				_this.swapData[i].index = 1;
-				_this.swapData[i].opacity = 1;
-				for(var j = 0; j < DataLength; j ++) {
-					if(j != i) {
-						_this.swapData[j].index += 1;
-					}
-				}
-			}
-			i --;
-			if(i < 0) {
-				i = 3;
-			}
-		}, 7000)
 	},
 	mounted() {
+		axios.get('/api/qworks/hot', {
+			params: {
+				page: 1
+			}
+		})
+		.then((response) => {
+			var i = 1
+			for(let item of response.data.rearray) {
+				this.swapData.push({
+					title: item.works_title,
+					index: i++,
+					opacity: 1,
+					src: 'http://localhost:82'+item.works_src,
+					id: item.works_id
+				})
+			}
+
+			var DataLength = this.swapData.length;
+			i = 3;
+			var timer = setInterval(()=> {
+				if(this.swapData[i].index >= DataLength) {
+					var o_timer = setInterval(()=> {
+						if(this.swapData[i].opacity > 0) {
+							this.swapData[i].opacity -= 0.2;
+						} else {
+							clearInterval(o_timer);
+						}
+					}, 200);
+
+					this.swapData[i].index = 1;
+					this.swapData[i].opacity = 1;
+					for(var j = 0; j < DataLength; j ++) {
+						if(j != i) {
+							this.swapData[j].index += 1;
+						}
+					}
+				}
+				i --;
+				if(i < 0) {
+					i = 3;
+				}
+			}, 7000)
+		})
+
 	},
 	methods: {
+
 	},
     computed: {
       // 分类
@@ -336,10 +341,8 @@ export default {
 		width: 100%; position: relative;
 		li{
 			width: 100%; background-color: #ccc; position: absolute; height: 125px;
-			a{width: 100%; height: 125px;}
+			a{width: 100%; height: 125px;color: #fff;font-size: 1.2em;line-height: 2em}
 		}
-		li:first-child{background-color: #f00;}
-		li:last-child{background-color: #87CEFA;}
 	}
 }
 /*导航*/

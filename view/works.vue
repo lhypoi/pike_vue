@@ -1,5 +1,5 @@
 <template>
-  <div id="main">
+  <div id="work_page">
     <!-- 顶部返回和分类固定栏 -->
     <mt-header fixed title="摄影作品" class="mt_header">
       <router-link to="/" slot="left">
@@ -198,91 +198,94 @@
 <style lang="scss">
 @import "../assets/common.scss";
 
-/* 顶部返回和分类固定栏 */
-.mt_header{
-  font-size: 1.5em;
-  line-height: 2.5em;
-  background-color: #222 !important;
-  height: 3.75rem;
-  a{
-    line-height: 1em;
-    font-size: 1em;
-    color: #fff !important;
-  }
-  i{
-    font-size: 1em;
-    color: #fff !important;
-  }
-  .mint-header-title{
-    color: #fff !important;
-  }
-  .mint-button{
-    height: auto !important;
-  }
-}
-/* 顶部最热和最新和视图切换栏 */
-.menu_tab{
-  font-size: 1.5em;
-  margin-top: 3.75rem;
-  height: 3.75rem;
-  background-color: #222;
-  border-top: 1px solid #888;
-  color: #fff;
-  .mint-tab-item {
-    font-size: 1em;
-    padding: 0;
-    img{
-      height: 1em;
+#work_page{
+  /* 顶部返回和分类固定栏 */
+  .mt_header{
+    font-size: 1.5em;
+    line-height: 2.5em;
+    background-color: #222 !important;
+    height: 3.75rem;
+    a{
+      line-height: 1em;
+      font-size: 1em;
+      color: #fff !important;
+    }
+    i{
+      font-size: 1em;
+      color: #fff !important;
+    }
+    .mint-header-title{
+      color: #fff !important;
+    }
+    .mint-button{
+      height: auto !important;
     }
   }
-  .mint-tab-item-label{
-    font-size: 1em;
-    line-height: 2.5em;
-  }
-  a{
-    color: #888;
-  }
-  a.is-selected{
-    color: #fff !important;
-    border-bottom: 2px solid #fff !important;
-    margin-bottom: 2px !important;
-  }
-  a.mint-tab-item:nth-child(3){
-    border-bottom: 0px solid #ccc !important;
-    margin-bottom: 0px !important;
-  }
-}
-/* 作品列表 */
-.works_allload{
-  margin-bottom: 1rem;
-}
-.works_content{
-  margin-top: 9rem;
-  width: 100%;
-    .worksList{
-      list-style-type: none;
-      margin: 0;
+  /* 顶部最热和最新和视图切换栏 */
+  .menu_tab{
+    font-size: 1.5em;
+    margin-top: 3.75rem;
+    height: 3.75rem;
+    background-color: #222;
+    border-top: 1px solid #888;
+    color: #fff;
+    .mint-tab-item {
+      font-size: 1em;
       padding: 0;
-      flex-flow: row wrap;
-      display: flex;
-      align-items: center;
-      a{
-        flex: 1 1 40%;
-        display:block;
-        padding: 0.5rem;
-        margin: 0.5rem;
-        border: 1px solid #000;
-        img{
-          width: 100%;
-        }
-        p{
-          color: #222;
-          text-align: left;
-        }
+      img{
+        height: 1em;
       }
     }
-    .mint-tab-container-item > div:nth-child(2) {
-      margin-top: -1rem;
+    .mint-tab-item-label{
+      font-size: 1em;
+      line-height: 2.5em;
     }
+    a{
+      color: #888;
+    }
+    a.is-selected{
+      color: #fff !important;
+      border-bottom: 2px solid #fff !important;
+      margin-bottom: 2px !important;
+    }
+    a.mint-tab-item:nth-child(3){
+      border-bottom: 0px solid #ccc !important;
+      margin-bottom: 0px !important;
+    }
+  }
+  /* 作品列表 */
+  .works_allload{
+    margin-bottom: 1rem;
+  }
+  .works_content{
+    margin-top: 9rem;
+    width: 100%;
+      .worksList{
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        flex-flow: row wrap;
+        display: flex;
+        align-items: center;
+        a{
+          flex: 1 1 40%;
+          display:block;
+          padding: 0.5rem;
+          margin: 0.5rem;
+          border: 1px solid #000;
+          img{
+            width: 100%;
+          }
+          p{
+            color: #222;
+            text-align: left;
+          }
+        }
+      }
+      .mint-tab-container-item > div:nth-child(2) {
+        margin-top: -1rem;
+      }
+  }
 }
+
 </style>

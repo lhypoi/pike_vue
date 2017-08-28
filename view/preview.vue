@@ -10,13 +10,13 @@
      <router-link to="/reg">立即注册</router-link>
      <router-link to="/login">账号登录</router-link>
    </div>
-   <div class="bro"><router-link to="#">浏览精选</router-link></div>
+   <div class="bro"><router-link to="/works">浏览精选</router-link></div>
  </div>
 </template>
 <script type="es6">
 
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   @import "../assets/common.scss";
   html{
    background: #f3f3f3;

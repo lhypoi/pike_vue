@@ -1,5 +1,5 @@
 <template>
-<div class="body_box">
+<div class="reg_page">
 	<div class="head">
 		<router-link to="/preview"><mt-button icon="back" class="back_for"></mt-button></router-link>
 		<img src="../assets/img/reghead.jpg" height="100%" width="100%">
@@ -7,15 +7,12 @@
 	</div>
 	<div class="reg_box">
 		<!-- 用户名框 -->
-		<mt-field label="+86" placeholder="请输入你的手机号" type="tel" :state="user_name_state" @keyup.native="checkName()" v-model="user_name"></mt-field>
-
-		<mt-field placeholder="图形验证码" class="yanzheng" v-model="user_nickname">
-		  <a href="#" class="captcha">获取验证码</a>
+		<mt-field label="+86" placeholder="请输入你的手机号" type="tel" :state="user_name_state" @keyup.native="user_name_state =  /^\d{11}$/.test(user_name) ? 'success' : 'error'" v-model="user_name"></mt-field>
+		<mt-field placeholder="请输入昵称" v-model="user_nickname" :state="user_nickname_state" @keyup.native="user_nickname_state = user_nickname.trim() ? 'success' : 'error'" >
 		</mt-field>
-		<mt-field placeholder="设置登录密码(6-32位数字和字母)" type="password" v-model="user_pwd">
-		  <img src="../assets/img/biyan.png" height="25" width="35">
+		<mt-field placeholder="设置登录密码(8-20位数字和字母)" type="password" v-model="user_pwd" :state="user_pwd_state" @keyup.native="user_pwd_state = /^(\w){8,20}$/.test(user_pwd)  ? 'success' : 'error'">
 		</mt-field>
-		<mt-button type="default" size="large" style="margin:4.3% 10%;font-weight: bold;" :disabled="user_name=='' || user_pwd=='' || user_name_state!='success'" v-on:click="doReg()">
+		<mt-button type="primary" size="large" style="margin:4.3% 10%;font-weight: bold;" :disabled="user_nickname_state!='success' || user_pwd_state!='success' || user_name_state!='success'" v-on:click="doReg()">
 			注册
 		</mt-button>
 	</div>
@@ -31,31 +28,39 @@ import {Toast} from 'mint-ui'
 		data(){
 			return{
 				user_name:'',
-				user_pwd:'',
 				user_name_state:'',
-				user_nickname:''
+				user_pwd:'',
+				user_pwd_state:'',
+				user_nickname:'',
+				user_nickname_state: ''
 			}
 		},
 		methods:{
-			checkName:function () {
-				// 获取用户名
-				var user_name=this.user_name;
-				if (/^\d{11}$/.test(user_name)) {
-					this.user_name_state="success";
-					console.log('用户名校验成功');
-				}else{
-					this.user_name_state="error";
-				}
-			},
 			doReg:function () {
-				this.$http.jsonp("http://localhost:86/public/api/user", {params:{
-			 		user_name:this.user_name,
+				this.$http.post("/api/quser/reg", {
+			 		user_phone:this.user_name,
 					user_pwd:this.user_pwd,
-					user_nickname:this.user_nickname
-			 	}}).then(function  (rtnD) {
-			 		Toast(rtnD.data.msg)
+					user_name:this.user_nickname
+			 	}).then(function  (rtnD) {
+			 		if (rtnD.data.status === '1') {
+						Toast({
+							message: rtnD.data.msg,
+						  	iconClass: 'icon icon-success'
+						})
+			 		} else {
+						Toast({
+						  	message: rtnD.data.msg,
+						  	iconClass: 'icon icon-success'
+						})
+						setTimeout(() => {
+							localStorage.setItem('userInfo', JSON.stringify(rtnD.data.rearray))
+							this.$router.push({path: '/personal/'+rtnD.data.rearray.user_id});
+						}, 500);
+			 		}
 			 	})
 			}
+		},
+		mounted () {
 
 		}
 	}
@@ -65,81 +70,75 @@ import {Toast} from 'mint-ui'
 body,html{
 	width: 100%;
 	height: 100%;
-	background-color: #000;
+	background-color: #000 !important;
 	position: relative;
 	font-size: 62.5%;
 }
-.head{
-	width: 100%;
-	height: 28%;
-	margin-bottom: 4.5%;
-}
-.back_for{
-	position: absolute;
-	top: 0%;
-	left: 0%;
-	background-color: rgba(255,255,255,0);
-	color: #fff;
-}
-.mint-button--default{
-	box-shadow: 0 0 0px rgba(0,0,0,0) !important;
-}
-.wenzi{
-	position: absolute;
-    top: 15%;
-    left: 50%;
-    color: #fff;
-    width: 80%;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
-}
-.mint-cell-wrapper{
-	background-color: #fafafa;
-}
-.mint-field-core{
-	background-color: #fafafa;
-}
-.mint-field{
-	color: #3a99d9;
-	margin: 3.3% 10%;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	.mint-cell-title{
-		width: 65px;
-	}
-	.mint-cell-text{
-		display: block;
-		width: 42px;
-		padding:5%;
-		border-right: 1px solid #cccccc;
-		.yanzheng{
+.reg_page{
+	.head{
+		width: 100%;
+		height: 28%;
+		margin-bottom: 4.5%;
+		.back_for{
+			position: absolute;
+			top: 0%;
+			left: 0%;
+			background-color: rgba(255,255,255,0);
+			color: #fff;
+		}
+		.wenzi{
+			position: absolute;
+		    top: 15%;
+		    left: 50%;
+		    color: #fff;
+		    width: 80%;
+		    transform: translate(-50%, -50%);
+		    font-size: 2rem;
 		}
 	}
-
-}
-.mint-button--large {
-    display: block;
-    width: 80.5%;
-    margin-top: 2%;
-}
-.captcha{
-	display: block;
-	margin: 0 20px;
-	text-decoration: none;
-	color: $theme_color;
-	border-left: 1px solid #cccccc;
-	width: 100%;
-	font-size: 1.2rem;
-}
-.sign{
-	color: #ccc;
-	width: 80%;
-	text-align: center;
-	height: 2.5%;
-	margin: 2% auto;
-	font-size: 1rem;
-	a{
-		color: $theme_color;
+	.reg_box{
+		.mint-button--default{
+			box-shadow: 0 0 0px rgba(0,0,0,0) !important;
+		}
+		.mint-cell-wrapper{
+			background-color: #fafafa;
+		}
+		.mint-field-core{
+			background-color: #fafafa;
+		}
+		.mint-field{
+			color: #3a99d9;
+			margin: 3.3% 10%;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			.mint-cell-title{
+				width: 65px;
+			}
+			.mint-cell-text{
+				display: block;
+				width: 42px;
+				padding:5%;
+				border-right: 1px solid #cccccc;
+				.yanzheng{
+				}
+			}
+		}
+		.mint-button--large {
+		    display: block;
+		    width: 80.5%;
+		    margin-top: 2%;
+		}
+	}
+	.sign{
+		color: #fff;
+		width: 80%;
+		text-align: center;
+		height: 2.5%;
+		margin: 2% auto;
+		font-size: 1rem;
+		a{
+			color: $theme_color;
+		}
 	}
 }
 </style>
