@@ -9,30 +9,30 @@
 			<div v-if="empty==false">
 				<div class="edit_box clearfix">
 					<div class="check_box">
-						<input type="checkbox" id="checkbox0" value="0" :checked="select_all.length >= numbers.length" v-model=llo />
+						<input type="checkbox" id="checkbox0" value="0" :checked="select_all.length >= cartList.length" v-model=llo />
 						<label for="checkbox0" v-on:click="check(0)" :style="'background-color: '+select_all_color"></label>
 					</div>
 					<p v-on:click="do_edit">{{state}}</p>
 				</div>
 				<ul>
-					<li class="clearfix" v-for="(item, index) in numbers">
+					<li class="clearfix" v-for="(cart, index) in cartList">
 						<div class="check_box">
-							<input type="checkbox" :id="'checkbox' + item.index" :value="item"  v-model="select_all" />
-							<label :for="'checkbox' + item.index" :style="'background-color:'+check_style[index]" v-on:click="check(index+1)"></label>
+							<input type="checkbox" :id="'checkbox' + (index + 1)" :value="cart"  v-model="select_all" />
+							<label :for="'checkbox' + (index + 1)" :style="'background-color:'+check_style[index]" v-on:click="check(index+1)"></label>
 						</div>
 						<div class="img_box">
-							<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
+							<img :src="imgList[index].goods_img" v-adjust="img_adjust" />
 						</div>
 						<div class="content_box clearfix">
-							<h4>培养摄影眼的4个核心要点</h4>
-							<div class="price" v-if="edit==false">￥{{item.price}}</div>
-							<p v-if="edit==false">x{{item.nums}}</p>
+							<h4 v-text="limit(cart.goods_name)"></h4>
+							<div class="price" v-if="edit==false">￥{{cart.goods_price}}</div>
+							<p v-if="edit==false">x{{cart.goods_num}}</p>
 							<div class="nums clearfix">
-								<div class="fl icon-box" v-if="edit==true" v-on:click="minus(item.index-1)">
+								<div class="fl icon-box" v-if="edit==true" v-on:click="minus(cart)">
 									<i class="fa fa-minus-circle"></i>
 								</div>
-								<input type="text" v-if="edit==true" :value=item.nums disabled />
-								<div class="fl icon-box" v-if="edit==true" v-on:click="plus(item.index-1)">
+								<input type="text" v-if="edit==true" :value=cart.goods_num disabled />
+								<div class="fl icon-box" v-if="edit==true" v-on:click="plus(cart)">
 									<i class="fa fa-plus-circle"></i>
 								</div>
 							</div>
@@ -44,7 +44,7 @@
 		<div class="cart_foot clearfix" v-if="empty==false">
 			<p class="clearfix">
 				合计：￥{{total}}
-				<mt-button type="primary" size="small" v-if="edit==false">结算</mt-button>
+				<mt-button type="primary" size="small" v-if="edit==false" v-on:click="confirm">结算</mt-button>
 				<mt-button type="danger" size="small" v-if="edit==true" v-on:click="del">删除</mt-button>
 			</p>
 		</div>
@@ -56,6 +56,7 @@ import {mapMutations, mapState} from 'vuex'
 import headbox from '../components/header'
 import Vue from 'vue'
 import {Toast} from 'mint-ui'
+import cube from '../router/kuayu.js'
 Vue.directive('adjust', function(el, binding) {
 	//图片自适应
 	var obj = el
@@ -98,102 +99,136 @@ export default {
 			empty: false,
 			edit: false,
 			llo: false,
-			img_adjust:'',
-			length: 2,
-			numbers: [{
-				nums: 1,
-				price: 100,
-				index: 1
-			},{
-				nums: 2,
-				price: 200,
-				index: 2
-			}],
-			max_store: 4,
+			img_adjust: '',
 			total: 0,
 			state: '编辑',
-			check_list: [],
-			check_style: [],
-			select_all: [],
-			select_all_color: '#fff',
+			cartList: [],
+			imgList: [],
+			check_list: [],  //复选框状态
+			check_style: [],  //复选框样式
+			select_all: [],  //全选的状态
+			select_all_color: '#fff',  //全选的样式
+			check_goods: []  //存放商品信息
 		}
 	},
 	components:{
 		headbox
 	},
 	computed: {
-		...mapState(['cartList'])
+		//...mapState(['cartList']),
+		totalPrice: function() {
+			let tPrice=0
+			this.checkGoods.forEach((item)=>{
+				tPrice += Number(item.cur_attr_info.price) * Number(item.num)
+			})
+			return tPrice
+		},
+		totalNum:function  () {
+			let tNum=0
+			this.checkGoods.forEach((item)=>{
+					tNum+=Number(item.num)
+			})
+			return tNum
+		},
 	},
 	mounted() {
-		if(this.length < 0) {
-			this.empty = true
-		}
 		this.init()
 	},
 	methods: {
+		...mapMutations(['setBuyList']),
 		init: function() {
-			for(let i = 0; i < this.numbers.length; i ++) {
-				this.check_list.push(false)
-				this.check_style.push('#fff')
-			}
+			let u_id = localStorage.user_id
+			this.$http.jsonp(cube+'/public/api/goods/getCartInfo', {params:{id:u_id}}).then((rtnD)=>{
+				this.cartList = rtnD.body.goods_attr
+				this.imgList = JSON.parse(JSON.stringify(this.cartList))
+				for(let i = 0; i < this.cartList.length; i ++) {
+					let img = this.cartList[i].goods_img
+					if(this.imgList[i].goods_img.indexOf(cube) < 0) {
+						this.imgList[i].goods_img = cube + img
+					}
+				}
+				for(let i = 0; i < this.cartList.length; i ++) {
+					this.check_list.push(false)
+					this.check_style.push('#fff')
+				}
+				if(this.cartList.length == 0) {
+					this.empty = true
+				}
+			})
 		},
 		do_edit: function() {
 			if(!this.edit) {
 				this.state = '完成'
 				this.edit = true
 			}else {
-				this.state = '编辑'
-				this.edit = false
+				let u_id = localStorage.user_id
+				for(let i = 0; i < this.cartList.length; i ++) {
+					let g_id = this.cartList[i].goods_id
+					let nums = this.cartList[i].goods_num
+					this.$http.jsonp(cube+'/public/api/goods/updateCart', {params:{u_id:u_id, g_id: g_id, nums: nums}}).then((rtnD)=>{
+						this.state = '编辑'
+						this.edit = false
+					})
+				}
 			}
 		},
-		minus: function(index) {
-			if(this.numbers[index].nums > 1) {
-				this.numbers[index].nums -= 1
+		minus: function(info) {
+			if(info.goods_num > 1) {
+				info.goods_num -= 1
 			}
 		},
-		plus: function(index) {
-			if(this.numbers[index].nums < this.max_store) {
-				this.numbers[index].nums += 1
+		plus: function(info) {
+			if(info.goods_num < info.goods_number) {
+				info.goods_num += 1
 			}
 		},
 		del: function() {
-			let total_num = this.length;
-			for(let i = 1; i <= this.length; i ++) {
-				let id = 'checkbox' + i
-				let box = document.getElementById(id)
-				if(box.checked) {
-					box.parentNode.parentNode.parentNode.removeChild(box.parentNode.parentNode)
-					total_num -= 1
-					this.numbers.splice(i-1, 1)
+			for(let i = 0; i <= this.cartList.length; i ++) {
+				let index = this.get_index(this.cartList[i])
+				if(index > -1) {
+					let id = 'checkbox' + (i + 1)
+					let box = document.getElementById(id)
+					if(box.checked) {
+						box.parentNode.parentNode.parentNode.removeChild(box.parentNode.parentNode)
+						let u_id = localStorage.user_id
+						let g_id = this.cartList[i].goods_id
+						this.$http.jsonp(cube+'/public/api/goods/delGoods', {params:{u_id:u_id, goods_id: g_id}}).then((rtnD)=>{
+							console.log(rtnD)
+							if(rtnD) {
+								this.cartList.splice(i-1, 1)
+								this.total = 0
+								if(this.cartList.length == 0) {
+									this.empty = true
+								}
+							}
+						})
+					}
 				}
-			}
-			this.total = 0
-			this.length = total_num
-			if(this.length == 0) {
-				this.empty = true
 			}
 		},
 		all_select: function() {
-			if(this.select_all.length >= this.numbers.length) {
+			if(this.select_all.length >= this.cartList.length) {
 				this.total = 0
 				this.select_all_color = '#fff'
 				this.select_all = []
-				for(let i = 1; i <= this.numbers.length; i ++) {
+				for(let i = 1; i <= this.cartList.length; i ++) {
 					this.check_style[i-1] = '#fff'
 					this.check_list[i-1] = false
 				}
+				this.check_goods = []
 				this.llo = true
 			}else{
 				var total = 0
-				this.numbers.forEach(function(val, index, arr) {
-					total += arr[index].nums * arr[index].price
+				this.cartList.forEach(function(val, index, arr) {
+					total += arr[index].goods_num * arr[index].goods_price
 				})
 				this.total = total
 				this.select_all_color = '#4876FF'
-				this.numbers.forEach((item)=> {
+				this.cartList.forEach((item)=> {
 					this.select_all.push(item)
+					this.check_goods.push(item)
 				})
-				for(let i = 1; i <= this.numbers.length; i ++) {
+				for(let i = 1; i <= this.cartList.length; i ++) {
 					this.check_style[i-1] = '#4876FF'
 					this.check_list[i-1] = true
 				}
@@ -205,28 +240,78 @@ export default {
 				this.all_select()
 			}else{
 				if(!this.check_list[num-1]) {
-					this.total += this.numbers[num-1].nums * this.numbers[num-1].price
+					this.total += this.cartList[num-1].goods_num * this.cartList[num-1].goods_price
 					this.check_list[num-1] = true
 					this.check_style[num-1] = '#4876FF'
 					let flag = 0;
-					for(let i = 0; i < this.numbers.length; i ++) {
+					for(let i = 0; i < this.cartList.length; i ++) {
 						if(this.check_list[i]){
 							flag += 1
 						}
 					}
 					
-					if(flag == this.numbers.length) {
+					if(flag == this.cartList.length) {
 						this.llo = true
 						this.select_all_color = '#4876FF'
 					}
+					this.check_goods.push(this.cartList[num-1])
 				}else{
-					this.total -= this.numbers[num-1].nums * this.numbers[num-1].price
+					this.total -= this.cartList[num-1].goods_num * this.cartList[num-1].goods_price
 					this.check_list[num-1] = false
 					this.check_style[num-1] = '#fff'
 					this.select_all_color = '#fff'
 					this.llo = false
+					let index = this.get_index(this.cartList[num-1])
+					if(index > -1) {
+						this.check_goods.splice(index, 1)
+					}
 				}
 			}
+		},
+		get_index: function(val) {
+			for(let i = 0; i < this.check_goods.length; i ++) {
+				if(this.check_goods[i] == val) {
+					return i
+				}
+			}
+			return -1
+		},
+		confirm: function() {
+			let check_goods = this.check_goods
+			if(check_goods.length) {
+				let user_id = this.cartList[0].user_id
+				let time = (new Date()).valueOf()
+				let sn = time.toString() + user_id
+				let total_num = 0
+				let total_price = 0
+				for(let i = 0; i < check_goods.length; i ++) {
+					total_num += check_goods[i].goods_num
+					total_price += check_goods[i].goods_num * this.check_goods[i].goods_price
+				}
+				let data = {}
+				data.order_sn = sn
+				data.total_num = total_num
+				data.total_price = total_price
+				data.time = time
+				data.receive_id = user_id
+				console.log(check_goods)
+				this.$http.post(cube+'/public/api/goods/submitOrder', {data: data}).then((rtnD)=>{
+					if(rtnD.body.result) {
+						this.$http.post(cube+'/public/api/goods/submitOrderGoods', {data: check_goods, sn: sn}).then((rtn)=>{
+							this.$router.push({path: '/cart/confirm/' + sn})
+						})
+					}
+				})
+			}else{
+				Toast('未选择结算商品')
+			}
+		},
+		limit: function(txt) {
+			if(txt.length > 20) {
+				var str = txt
+				str = str.substr(0, 20) + '...'
+			}
+			return str
 		}
 	}
 }
@@ -270,10 +355,10 @@ export default {
 	}
 }
 .cart_foot{
-	height: 40px; line-height: 40px; background-color: #fff; border-top: 1px solid #999;
+	height: 45px; line-height: 45px; background-color: #fff; border-top: 1px solid #999;
 	p{
 		text-align: left; text-indent: 5%; font-size: 1.5em;
-		button{width: 20%; height: 30px; color: #fff; float: right; margin: 5px 5% 0 0;}
+		button{width: 25%; height: 35px; color: #fff; float: right; margin: 5px 5% 0 0; font-size: 1em;}
 	}
 }
 </style>

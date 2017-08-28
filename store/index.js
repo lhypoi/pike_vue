@@ -5,8 +5,9 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     cartList: [],
+    buyList: [],
     classify: '分类',
-    classifyHasEvent: false,
+    classifyHasEvent: false
   },
   mutations: {
     setClassify (state, classify) {
@@ -28,6 +29,9 @@ const store = new Vuex.Store({
       if (!hasGoods) {
         state.cartList.push(info)
       }
+    },
+    setBuyList (state, info) {
+      state.buyList.push(...info)
     }
   },
   actions: {

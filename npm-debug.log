@@ -1,36 +1,36 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'D:\\nodejs\\node.exe',
-1 verbose cli   'D:\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli [ 'D:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'D:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
 1 verbose cli   'run',
 1 verbose cli   'dev' ]
-2 info using npm@3.10.8
-3 info using node@v7.0.0
+2 info using npm@3.10.10
+3 info using node@v6.9.5
 4 verbose run-script [ 'predev', 'dev', 'postdev' ]
 5 info lifecycle new_vue@1.0.0~predev: new_vue@1.0.0
 6 silly lifecycle new_vue@1.0.0~predev: no script for predev, continuing
 7 info lifecycle new_vue@1.0.0~dev: new_vue@1.0.0
 8 verbose lifecycle new_vue@1.0.0~dev: unsafe-perm in lifecycle true
-9 verbose lifecycle new_vue@1.0.0~dev: PATH: D:\nodejs\node_modules\npm\bin\node-gyp-bin;D:\wamp64\www\20170718\my-project\src\node_modules\.bin;E:\python\Scripts\;E:\python\;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Common Files\Thunder Network\KanKan\Codecs;C:\Program Files\Windows Live\Shared;D:\java\jdk\jre\bin;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;D:\nodejs\;D:\java\jdk\bin;E:\apache-tomcat-8.0.30\bin;D:\anaconda;D:\anaconda\Scripts;D:\anaconda\Library\bin;C:\Program Files (x86)\Microsoft SQL Server\90\Tools\binn\;D:\Git\cmd;D:\wamp64\bin\php\php5.6.25;D:\Tools\WinNT;D:\MSDev98\Bin;D:\Tools;D:\VC98\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\Lhy\AppData\Local\Microsoft\WindowsApps;C:\Users\Lhy\AppData\Roaming\npm;E:\apache-tomcat-8.0.30\bin;E:\apache-tomcat-8.0.30\lib
-10 verbose lifecycle new_vue@1.0.0~dev: CWD: D:\wamp64\www\20170718\my-project\src
+9 verbose lifecycle new_vue@1.0.0~dev: PATH: D:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\wamp64\www\pike_vue\src\node_modules\.bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\NetSarang;C:\Windows\System32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Windows7Master;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files (x86)\Java\jdk1.8.0_121\bin; C:\Program Files (x86)\Java\jdk1.8.0_121\jre\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;%USERPROFILE%\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\PrivateAssemblies\;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files\MATLAB\R2014a\runtime\win64;C:\Program Files\MATLAB\R2014a\bin;C:\Program Files\MATLAB\R2014a\polyspace\bin;D:\Program Files\nodejs\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\wamp64\bin\php\php5.6.25;C:\ProgramData\ComposerSetup\bin;C:\Users\Administrator.2013-20141030LB\AppData\Local\Programs\Python\Python36-32\Scripts\;C:\Users\Administrator.2013-20141030LB\AppData\Local\Programs\Python\Python36-32\;C:\AppServ\Apache2.2\bin;C:\AppServ\MySQL\bin;C:\Users\Administrator.2013-20141030LB\AppData\Local\Microsoft\WindowsApps;C:\Users\Administrator.2013-20141030LB\AppData\Roaming\npm;C:\Users\Administrator.2013-20141030LB\AppData\Roaming\Composer\vendor\bin
+10 verbose lifecycle new_vue@1.0.0~dev: CWD: C:\wamp64\www\pike_vue\src
 11 silly lifecycle new_vue@1.0.0~dev: Args: [ '/d /s /c', 'node build/dev-server.js' ]
 12 silly lifecycle new_vue@1.0.0~dev: Returned: code: 1  signal: null
 13 info lifecycle new_vue@1.0.0~dev: Failed to exec dev script
 14 verbose stack Error: new_vue@1.0.0 dev: `node build/dev-server.js`
 14 verbose stack Exit status 1
-14 verbose stack     at EventEmitter.<anonymous> (D:\nodejs\node_modules\npm\lib\utils\lifecycle.js:255:16)
+14 verbose stack     at EventEmitter.<anonymous> (D:\Program Files\nodejs\node_modules\npm\lib\utils\lifecycle.js:255:16)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at EventEmitter.emit (events.js:191:7)
-14 verbose stack     at ChildProcess.<anonymous> (D:\nodejs\node_modules\npm\lib\utils\spawn.js:40:14)
+14 verbose stack     at ChildProcess.<anonymous> (D:\Program Files\nodejs\node_modules\npm\lib\utils\spawn.js:40:14)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at ChildProcess.emit (events.js:191:7)
 14 verbose stack     at maybeClose (internal/child_process.js:877:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid new_vue@1.0.0
-16 verbose cwd D:\wamp64\www\20170718\my-project\src
-17 error Windows_NT 10.0.14393
-18 error argv "D:\\nodejs\\node.exe" "D:\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "dev"
-19 error node v7.0.0
-20 error npm  v3.10.8
+16 verbose cwd C:\wamp64\www\pike_vue\src
+17 error Windows_NT 10.0.15063
+18 error argv "D:\\Program Files\\nodejs\\node.exe" "D:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "dev"
+19 error node v6.9.5
+20 error npm  v3.10.10
 21 error code ELIFECYCLE
 22 error new_vue@1.0.0 dev: `node build/dev-server.js`
 22 error Exit status 1

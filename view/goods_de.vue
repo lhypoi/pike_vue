@@ -159,8 +159,7 @@ export default {
 		}
 	},
 	created(){
-		this.init(),
-		this.chushi()
+		
 	},
 	computed:{
 		totalprice:function () {
@@ -171,6 +170,7 @@ export default {
 		}
 	},
 	mounted(){
+		this.init(),
 		this.chushi()
 	},
 	updated(){
@@ -208,7 +208,7 @@ export default {
 		},
 		chushi:function () {
 			let goods_id = this.$route.params.gid
-			this.$http.jsonp(cube+'/public/api/goods/getgoodslist', {params:{id:goods_id}})
+			this.$http.jsonp(cube+'/public/api/goods/getgoodsdetail', {params:{id:goods_id}})
 				.then((rtnD)=>{
 					this.spec_list = rtnD.data.goods_attr
 				})
@@ -221,7 +221,7 @@ export default {
 				// cur_attr_info:this.cur_attr_info,
 				goods_info:this.spec_list,
 				totPrice:this.zPrice,
-				num:this.cart
+				nums:this.cart
 			}
 			
 			this.setCartInfo(cartInfo)

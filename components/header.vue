@@ -2,9 +2,9 @@
 	<div>
 		<div class="header">
 			<div v-if="back=='true'" class="fl icon-box_1">
-				<router-link to="/">
+				<a @click="$router.go(-1)">
 					<i class="fa fa-chevron-left" style="color: #fff; font-size: 1.375em; font-weight: 100;"></i>
-				</router-link>
+				</a>
 			</div>
 			<h1 v-if="title!=''">{{title}}</h1>
 			<div v-if="search=='true'" class="fl icon-box_2">

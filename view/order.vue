@@ -9,22 +9,23 @@
 			<ol v-if="empty==false">
 				<li v-for="(value, key) in orders">
 					<ul>
-						<li class="clearfix" v-for="item in value.goods">
+						<li class="clearfix" v-for="item in value">
 							<div class="img_box">
-								<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
+								<img :src="item.goods_img" v-adjust="img_adjust" />
 							</div>
 							<div class="content_box clearfix">
-								<h4>培养摄影眼的4个核心要点</h4>
-								<div class="price">￥{{item.price}}</div>
-								<p>x{{item.nums}}</p>
+								<h4 v-text="limit(item.goods_name)"></h4>
+								<div class="price">￥{{item.goods_price}}</div>
+								<p>x{{item.goods_num}}</p>
 							</div>
 							
 						</li>
 					</ul>
 					<div class="manage_box">
 						<p class="clearfix">
-							合计：￥
-							<mt-button type="danger" size="small" v-on:click="del">删除订单</mt-button>
+							合计：￥{{total[key]}}
+							<mt-button type="danger" size="small" v-on:click="del" v-if="status[key]==4">删除订单</mt-button>
+							<mt-button type="primary" size="small" v-on:click="" v-if="status[key]==0">去付款</mt-button>
 						</p>
 					</div>
 				</li>
@@ -36,6 +37,7 @@
 <script type="es6">
 import headbox from '../components/header'
 import Vue from 'vue'
+import cube from '../router/kuayu.js'
 Vue.directive('adjust', function(el, binding) {
 	//图片自适应
 	var obj = el
@@ -77,48 +79,43 @@ export default {
 		return{
 			empty: false,
 			img_adjust:'',
-			orders: [{
-				goods: [{
-					nums: 1,
-					price: 100,
-					index: 1,
-					total: 100
-				},{
-					nums: 2,
-					price: 200,
-					index: 2,
-					total: 400
-				}]
-			}, {
-				goods: [{
-					nums: 1,
-					price: 100,
-					index: 1,
-					total: 100
-				},{
-					nums: 2,
-					price: 200,
-					index: 2,
-					total: 400
-				},{
-					nums: 3,
-					price: 200,
-					index: 3,
-					total: 600
-				}]
-			}]
-			
+			orders: [],
+			total: [],
+			status: []
 		}
 	},
 	components:{
 		headbox
 	},
 	mounted() {
-		
+		this.init()
 	},
 	methods: {
+		init: function() {
+			let u_id = localStorage.user_id
+			this.$http.jsonp(cube+'/public/api/goods/getOrder', {params:{id:u_id}}).then((rtnD)=>{
+				this.orders = JSON.parse(JSON.stringify(rtnD.body.goods_attr))
+				for(let i = 0; i < rtnD.body.goods_attr.length; i ++) {
+					this.total[i] = rtnD.body.attr_list[i].total_price
+					this.status[i] = rtnD.body.attr_list[i].order_status
+					for(let j = 0; j < rtnD.body.goods_attr[i].length; j ++) {
+						let img = rtnD.body.goods_attr[i][j].goods_img
+						if(this.orders[i][j].goods_img.indexOf(cube) < 0) {
+							this.orders[i][j].goods_img = cube + img
+						}
+					}
+				}
+				console.log(this.total)
+			})
+		},
 		del: function() {
-			
+		},
+		limit: function(txt) {
+			if(txt.length > 20) {
+				var str = txt
+				str = str.substr(0, 20) + '...'
+			}
+			return str
 		}
 	}
 }
@@ -163,7 +160,7 @@ export default {
 			height: 50px; line-height: 50px; background-color: #fff; border-top: 1px solid #999;
 			p{
 				text-align: left; text-indent: 5%; font-size: 1.5em;
-				button{width: 20%; height: 30px; color: #fff; float: right; margin: 10px 5% 0 0;}
+				button{width: 25%; height: 35px; color: #fff; float: right; margin: 10px 5% 0 0; font-size: 1em;}
 			}
 		}
 	}

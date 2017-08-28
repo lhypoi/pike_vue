@@ -51,6 +51,11 @@ const router = new Router({
       component: require('@/view/cart')
     },
     {
+      path: '/cart/confirm/:sn',
+      name: 'Confirm',
+      component: require('@/view/confirm')
+    },
+    {
       path: '/order',
       name: 'Order',
       component: require('@/view/order')
