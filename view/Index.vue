@@ -11,7 +11,7 @@
 		<div class="nav" id="nav">
 			<ul class="clearfix" v-touchmmh="slide" style="transition:all 0.1s linear">
 				<li>
-					<router-link v-bind:to="'/works/' + classify">
+					<router-link to="/works">
 						<img src="../assets/img/menu_icon_1.jpg" />
 						<p>作品</p>
 					</router-link>

@@ -7,7 +7,8 @@ const store = new Vuex.Store({
     cartList: [],
     buyList: [],
     classify: '分类',
-    classifyHasEvent: false
+    classifyHasEvent: false,
+    worksContent: null
   },
   mutations: {
     setClassify (state, classify) {
@@ -30,8 +31,8 @@ const store = new Vuex.Store({
         state.cartList.push(info)
       }
     },
-    setBuyList (state, info) {
-      state.buyList.push(...info)
+    setWorksContent (state, info) {
+      state.worksContent = info
     }
   },
   actions: {
