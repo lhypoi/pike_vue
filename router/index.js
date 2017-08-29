@@ -46,7 +46,7 @@ const router = new Router({
       component: require('@/view/detail')
     },
     {
-      path: '/article',
+      path: '/article/:id',
       name: 'Article',
       component: require('@/view/article')
     },
