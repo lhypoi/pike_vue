@@ -9,8 +9,8 @@
 		<img src="../assets/img/more1.png" class="more" @click="moreInfo()" v-if="self">
 		<!-- 用户信息轮播图 -->
 		<div class="info">
-			<router-link to="#"><img src="../assets/img/userimg.jpg" height="11.2%" width="20%" class="userimg"></router-link>
-			<div class="wenzi">{{this.curUserInfo.user_name}}</div>
+			<router-link to=""><img v-bind:src="curUserInfo.user_photo ? 'http://localhost:82' + curUserInfo.user_photo : defaultUserPhoto" height="11.2%" width="20%" class="userimg"></router-link>
+			<div class="wenzi">{{this.curUserInfo.user_name}}&nbsp;<mt-button type="primary" size="small" v-show="!self">关注</mt-button></div>
 			<!-- 用户关注 -->
 			<div class="about">
 				<img src="../assets/img/gendar1.png">
@@ -42,13 +42,21 @@
                 <!-- 作品 -->
                 <mt-tab-container-item id="0" :class="{'works_allload' : !allLoaded}">
                     <div class="worksList clearfix">
-                      <router-link v-bind:to="'works/work/'+photo.works_id" v-for="photo in worksInfo"  :key="photo.works_id">
+                      <router-link v-bind:to="'/works/work/'+photo.works_id" v-for="photo in worksInfo"  :key="photo.works_id">
                           <img v-lazy="'http://localhost:82'+photo.works_src" alt="">
                           <br>
                           <br>
                           <p>发于： {{new Date(parseInt(photo.update_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ')}}</p>
                           <p>浏览数： {{photo.works_browse ? photo.works_browse : 0}}</p>
                       </router-link>
+                    </div>
+                </mt-tab-container-item>
+                <!-- 关注 -->
+                <mt-tab-container-item id="1" :class="{'works_allload' : !allLoaded}">
+                    <div class="worksList clearfix">
+                          <router-link to="" v-for="item in curFollower"  :key="item.user_id">
+                              <p>{{item.user_name}}</p>
+                          </router-link>
                     </div>
                 </mt-tab-container-item>
             </mt-tab-container>
@@ -59,11 +67,11 @@
 		<!-- 弹出框 -->
 		<mt-popup v-model="popupVisible" position="bottom" popup-transition="popup-fade" class="actionsheet" style="z-index: 2025;">
 	        <div class="actionsheet-list">
-	       		<router-link to="#" @click.native="alertSet">
+	       		<router-link to="" @click.native="alertSet">
 					<img src="../assets/img/set.jpg" height="56" width="56">
 					<div class="title">设置</div>
 				</router-link>
-				<router-link to="#" @click.native="alertEdit">
+				<router-link to="" @click.native="alertEdit">
 					<img src="../assets/img/edit_data.jpg" height="56" width="56">
 					<div class="title">编辑资料</div>
 				</router-link>
@@ -89,7 +97,9 @@ Vue.use(iosAlertView)
                 self: false,
                 curUserInfo: {},
                 worksInfo: [],
+                curFollower: [],
                 selected: '0',
+                defaultUserPhoto: require('../assets/img/head_photo.jpg'),
                 allLoaded: false
 			}
 		},
@@ -196,6 +206,18 @@ Vue.use(iosAlertView)
                     this.allLoaded  = true
                 })
             },
+            getFollower: function() {
+                this.$http.get("/api/follwer/:id", {
+                    params: {
+                        user_id: this.$route.params.uid
+                    }
+                }).then(function (rtnD) {
+                    this.curFollower.push(...rtnD.data.rearray)
+                    console.log(rtnD.data.rearray)
+                    this.$refs.loadmore.onBottomLoaded()
+                    this.allLoaded  = true
+                })
+            },
             loadBottom: function () {
                 console.log(2)
                 // this.$refs.loadmore.onBottomLoaded()
@@ -217,11 +239,13 @@ Vue.use(iosAlertView)
                 })
             }
             this.getWorks()
+            this.getFollower()
         },
         computed: {
 
         },
     	beforeRouteEnter (to, from, next) {
+            // scrollTo(0, 0)
     		if (!localStorage.getItem('userInfo')) {
     			next('/preview')
     		} else {
