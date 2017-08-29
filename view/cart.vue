@@ -137,7 +137,7 @@ export default {
 	methods: {
 		...mapMutations(['setBuyList']),
 		init: function() {
-			let u_id = localStorage.user_id
+			let u_id = JSON.parse(localStorage.getItem('userInfo')).user_id
 			this.$http.jsonp(cube+'/public/api/goods/getCartInfo', {params:{id:u_id}}).then((rtnD)=>{
 				this.cartList = rtnD.body.goods_attr
 				this.imgList = JSON.parse(JSON.stringify(this.cartList))
@@ -249,7 +249,7 @@ export default {
 							flag += 1
 						}
 					}
-					
+
 					if(flag == this.cartList.length) {
 						this.llo = true
 						this.select_all_color = '#4876FF'

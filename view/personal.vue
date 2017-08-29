@@ -1,6 +1,6 @@
 <template>
 <div>
-	<div class="personal_head">
+	<div class="personal_head" id="personal_head">
 		<!-- 背景图 -->
 		<img src="../assets/img/perhead.jpg" height="100%" width="100%" class="bg">
         <a @click="$router.go(-1)" class="back">
@@ -37,7 +37,22 @@
 		</div>
 		<!-- 作品列表 -->
 		<div class="list">
-
+          <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+            <mt-tab-container v-model="selected">
+                <!-- 作品 -->
+                <mt-tab-container-item id="0" :class="{'works_allload' : !allLoaded}">
+                    <div class="worksList clearfix">
+                      <router-link v-bind:to="'works/work/'+photo.works_id" v-for="photo in worksInfo"  :key="photo.works_id">
+                          <img v-lazy="'http://localhost:82'+photo.works_src" alt="">
+                          <br>
+                          <br>
+                          <p>发于： {{new Date(parseInt(photo.update_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ')}}</p>
+                          <p>浏览数： {{photo.works_browse ? photo.works_browse : 0}}</p>
+                      </router-link>
+                    </div>
+                </mt-tab-container-item>
+            </mt-tab-container>
+          </mt-loadmore>
 		</div>
 		<!-- 底部 -->
 		<footbox active=3  v-if="self"></footbox>
@@ -48,7 +63,7 @@
 					<img src="../assets/img/set.jpg" height="56" width="56">
 					<div class="title">设置</div>
 				</router-link>
-				<router-link to="#">
+				<router-link to="#" @click.native="alertEdit">
 					<img src="../assets/img/edit_data.jpg" height="56" width="56">
 					<div class="title">编辑资料</div>
 				</router-link>
@@ -66,13 +81,16 @@ import iosAlertView from 'vue-ios-alertview'
 
 Vue.use(iosAlertView)
 	export default{
+        name: 'personal_head',
 		data(){
 			return{
+                selected: '0',
 				popupVisible: false,
                 self: false,
                 curUserInfo: {},
                 worksInfo: [],
-                selected: '0'
+                selected: '0',
+                allLoaded: false
 			}
 		},
 		components: {
@@ -105,14 +123,82 @@ Vue.use(iosAlertView)
                   ]
                 });
             },
+            alertEdit: function(e){
+                let _this = this
+                _this.$iosAlertView({
+                  title: '编辑资料',
+                  buttons: [
+                    {
+                      text: '更换昵称',
+                      onClick: function(){
+                         _this.$iosPrompt({
+                          text: '修改昵称',
+                          placeholder: '请输入新昵称'
+                        }).then(function (value) {
+                            console.log(value)
+                            _this.$http.get("/api/quser/useredit", {
+                                params: {
+                                    user_id: _this.$route.params.uid,
+                                    user_name: value
+                                }
+                            }).then(function (rtnD) {
+                                console.log(rtnD)
+                                localStorage.setItem('userInfo', JSON.stringify(rtnD.data.rearray))
+                                this.curUserInfo = rtnD.data.rearray
+                                _this.$iosAlert(rtnD.data.msg)
+                            })
+                        });
+                      }
+                    },
+                    {
+                      text: '更换密码',
+                      onClick: function(){
+                        _this.$iosPrompt({
+                          text: '修改密码',
+                          placeholder: '请输入新密码'
+                        }).then(function (value) {
+                            console.log(value)
+                            _this.$http.get("/api/quser/useredit", {
+                                params: {
+                                    user_id: _this.$route.params.uid,
+                                    user_pwd: value
+                                }
+                            }).then(function (rtnD) {
+                                console.log(rtnD)
+                                localStorage.setItem('userInfo', JSON.stringify(rtnD.data.rearray))
+                                this.curUserInfo = rtnD.data.rearray
+                                _this.$iosAlert(rtnD.data.msg)
+                            })
+                        });
+                      }
+                    },
+                    {
+                      text: '修改头像',
+                      onClick: function(){
+                        _this.$iosRemind({
+                          text: '此功能内测中',
+                          remindDuration: 1000
+                        });
+                      }
+                    }
+                  ]
+                });
+
+            },
             getWorks: function() {
                 this.$http.get("/api/quser/userworks", {
                     params: {
                         user_id: this.$route.params.uid
                     }
                 }).then(function (rtnD) {
-                    this.worksInfo =rtnD.data.rearray
+                    this.worksInfo.push(...rtnD.data.rearray)
+                    this.$refs.loadmore.onBottomLoaded()
+                    this.allLoaded  = true
                 })
+            },
+            loadBottom: function () {
+                console.log(2)
+                // this.$refs.loadmore.onBottomLoaded()
             }
     	},
         mounted () {
@@ -131,6 +217,9 @@ Vue.use(iosAlertView)
                 })
             }
             this.getWorks()
+        },
+        computed: {
+
         },
     	beforeRouteEnter (to, from, next) {
     		if (!localStorage.getItem('userInfo')) {
@@ -184,6 +273,35 @@ Vue.use(iosAlertView)
     }
     .list{
         margin-top:3px;
+          .works_allload{
+            margin-bottom: 1rem;
+          }
+        width: 100%;
+          .worksList{
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            flex-flow: row wrap;
+            display: flex;
+            align-items: center;
+            a{
+              flex: 1 1 40%;
+              display:block;
+              padding: 0.5rem;
+              margin: 0.5rem;
+              border: 1px solid #000;
+              img{
+                width: 100%;
+              }
+              p{
+                color: #222;
+                text-align: left;
+              }
+            }
+          }
+          .mint-tab-container-item > div:nth-child(2) {
+            margin-top: -1rem;
+          }
     }
     .mt-swipe{
         position: absolute;

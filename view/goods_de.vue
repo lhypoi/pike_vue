@@ -52,7 +52,7 @@
 			<div v-for="img in img_list" class="intro_img">
 				<img :src="root_p+'/'+img"  width="100%"> <!-- v-adjust="img_adjust"-->
 			</div>
-			
+
 		</div>
 		<div class="bott">
 			<mt-button type="primary" @click="addCart()">加入购物车</mt-button>
@@ -67,7 +67,7 @@
 					<div class="version">已选：{{spec_list[0].goods_name}}</div>
 					<div class="num" >{{cart}}件</div>
 		        </div>
-				
+
 				<!-- <div class="kuang_choose">
 					<b>版本</b>
 					<span>D3400 M3</span>
@@ -107,7 +107,7 @@ export default {
 		}
 	},
 	created(){
-		
+
 	},
 	computed:{
 		totalprice:function () {
@@ -170,13 +170,15 @@ export default {
 		},
 		addCart:function  () {
 			// 当前属性
+			let user_id = JSON.parse(localStorage.getItem('userInfo')).user_id
 			let cartInfo={
 				// cur_color_attr:this.cur_color_attr,
 				// cur_size_attr:this.cur_size_attr,
 				// cur_attr_info:this.cur_attr_info,
 				goods_info:this.spec_list,
 				totPrice:this.zPrice,
-				nums:this.cart
+				nums:this.cart,
+				user_id
 			}
 			console.log(cartInfo);
 			this.$http.jsonp(cube+'/public/api/goods/addCart',{params:{cartdata:cartInfo}})
@@ -184,7 +186,7 @@ export default {
 					if (rtnData.data.status==1) {
 						Toast(rtnData.data.msg);
 					}
-					
+
 				})
 		}
 	}
