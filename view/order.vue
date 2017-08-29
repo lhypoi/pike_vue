@@ -105,7 +105,6 @@ export default {
 						}
 					}
 				}
-				console.log(this.total)
 			})
 		},
 		del: function() {

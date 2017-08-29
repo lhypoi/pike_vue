@@ -94,7 +94,7 @@ export default {
 		totalNum:function  () {
 			let tNum=0
 			this.checkGoods.forEach((item)=>{
-					tNum+=Number(item.num)
+				tNum+=Number(item.num)
 			})
 			return tNum
 		},

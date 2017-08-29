@@ -135,7 +135,7 @@ export default {
 		this.init()
 	},
 	methods: {
-		...mapMutations(['setBuyList']),
+		//...mapMutations(['setBuyList']),
 		init: function() {
 			let u_id = JSON.parse(localStorage.getItem('userInfo')).user_id
 			this.$http.jsonp(cube+'/public/api/goods/getCartInfo', {params:{id:u_id}}).then((rtnD)=>{
@@ -294,10 +294,9 @@ export default {
 				data.total_price = total_price
 				data.time = time
 				data.receive_id = user_id
-				console.log(check_goods)
-				this.$http.post(cube+'/public/api/goods/submitOrder', {data: data}).then((rtnD)=>{
+				this.$http.jsonp(cube+'/public/api/goods/submitOrder', {params:{data: data}}).then((rtnD)=>{
 					if(rtnD.body.result) {
-						this.$http.post(cube+'/public/api/goods/submitOrderGoods', {data: check_goods, sn: sn}).then((rtn)=>{
+						this.$http.jsonp(cube+'/public/api/goods/submitOrderGoods', {params:{data: check_goods, sn: sn}}).then((rtn)=>{
 							this.$router.push({path: '/cart/confirm/' + sn})
 						})
 					}
@@ -307,8 +306,8 @@ export default {
 			}
 		},
 		limit: function(txt) {
-			if(txt.length > 20) {
-				var str = txt
+			var str = txt
+			if(str.length > 20) {
 				str = str.substr(0, 20) + '...'
 			}
 			return str

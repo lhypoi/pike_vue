@@ -1,17 +1,7 @@
 <template>
 	<div id="detail_main">
 		<!-- 顶部返回和图标固定栏 -->
-		<mt-header title="商品详情" class="mt_header">
-			<a @click="$router.go(-1)" slot="left">
-				<mt-button icon="back"></mt-button>
-			</a>
-			<router-link to="/order" slot="right">
-				<i class="fa fa-calendar" aria-hidden="true"></i>
-			</router-link>
-			<router-link to="/cart" slot="right">
-				<i class="fa fa-shopping-basket" aria-hidden="true"></i>
-			</router-link>
-		</mt-header>
+		<headbox title="商品详情" shop="true" back="true"></headbox>
 		<!-- 详情页 -->
 		<!-- <div :class="[detail_box, isfix ? detail_box_fix : '']"> -->
 		<div class="detail_box">
@@ -88,6 +78,7 @@ import Vue from 'vue'
 import cube from '../router/kuayu.js'
 import {mapMutations,mapState} from 'vuex'
 import {Toast} from 'mint-ui';
+import headbox from '../components/header'
 
 export default {
 	data() {
@@ -105,6 +96,9 @@ export default {
 		  	'box_fix': false
 		  }
 		}
+	},
+	components:{
+		headbox
 	},
 	created(){
 

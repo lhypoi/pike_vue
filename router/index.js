@@ -21,6 +21,16 @@ const router = new Router({
       component: require('@/view/message')
     },
     {
+      path: '/message/noticeList/:from_user',
+      name: 'Message',
+      component: require('@/components/noticeList')
+    },
+    {
+      path: '/message/msgList/:from_user',
+      name: 'Message',
+      component: require('@/components/msgList')
+    },
+    {
       path: '/search',
       name: 'Search',
       component: require('@/view/search')

@@ -14,7 +14,7 @@
 					<notice></notice>
 				</li>
 				<li>
-					<notice></notice>
+					<private_msg></private_msg>
 				</li>
 			</ul>
 		</div>
@@ -25,6 +25,7 @@
 <script type="es6">
 import footbox from '../components/footer'
 import notice from '../components/notice'
+import private_msg from '../components/private_msg'
 export default {
   data(){
     return {
@@ -36,7 +37,7 @@ export default {
     }
   },
   components: {
-    notice, footbox
+    notice, private_msg, footbox
   },
   methods: {
     on_active: function(num) {

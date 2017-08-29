@@ -47,10 +47,10 @@
 					</a>
 				</li>
 				<li>
-					<a>
+					<router-link to="/goods_list">
 						<img src="../assets/img/menu_icon_7.jpg" />
 						<p>商城</p>
-					</a>
+					</router-link>
 				</li>
 			</ul>
 		</div>
