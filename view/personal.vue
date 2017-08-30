@@ -59,6 +59,18 @@
                           </router-link>
                     </div>
                 </mt-tab-container-item>
+                <!-- 收藏 -->
+                <mt-tab-container-item id="2" :class="{'works_allload' : !allLoaded}">
+                    <div class="worksList clearfix">
+                      <router-link v-bind:to="'/works/work/'+photo.works_id" v-for="photo in curCollect"  :key="photo.works_id">
+                          <img v-lazy="'http://localhost:82'+photo.works_src" alt="">
+                          <br>
+                          <br>
+                          <p>发于： {{new Date(parseInt(photo.update_time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ')}}</p>
+                          <p>浏览数： {{photo.works_browse ? photo.works_browse : 0}}</p>
+                      </router-link>
+                    </div>
+                </mt-tab-container-item>
             </mt-tab-container>
           </mt-loadmore>
 		</div>
@@ -98,6 +110,7 @@ Vue.use(iosAlertView)
                 curUserInfo: {},
                 worksInfo: [],
                 curFollower: [],
+                curCollect: [],
                 selected: '0',
                 defaultUserPhoto: require('../assets/img/head_photo.jpg'),
                 allLoaded: false
@@ -218,6 +231,18 @@ Vue.use(iosAlertView)
                     this.allLoaded  = true
                 })
             },
+            getCollect: function() {
+                this.$http.get("/api/collect", {
+                    params: {
+                        user_id: this.$route.params.uid
+                    }
+                }).then(function (rtnD) {
+                    this.curCollect.push(...rtnD.data.rearray)
+                    console.log(rtnD.data.rearray)
+                    this.$refs.loadmore.onBottomLoaded()
+                    this.allLoaded  = true
+                })
+            },
             loadBottom: function () {
                 console.log(2)
                 // this.$refs.loadmore.onBottomLoaded()
@@ -240,6 +265,7 @@ Vue.use(iosAlertView)
             }
             this.getWorks()
             this.getFollower()
+            this.getCollect()
         },
         computed: {
 
