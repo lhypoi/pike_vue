@@ -36,11 +36,7 @@ export default {
 		return{
 			work_det:{},
 			comment_list:[],
-<<<<<<< HEAD
-=======
-			root_p:'',
 			defaultUserPhoto: require('../assets/img/head_photo.jpg')
->>>>>>> d4d1996a8daa81d2e0c5e25b45aba0f5df8e4a25
 		}
 	},
 	mounted(){
