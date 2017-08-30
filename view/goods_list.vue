@@ -3,10 +3,13 @@
 		<!-- 顶部返回和图标固定栏 -->
 		<headbox title="摄影周边" shop="true" back="true"></headbox>
 	    <!-- 搜索栏 -->
-	    <div class="search-header">
-			<mt-field placeholder="搜索" lable="search">
+	    <div class="search-head">
+			<!-- <mt-field placeholder="搜索" lable="search" @onChange="search_good()" :value="goods_n">
 				<div class="fl icon-box"><i class="fa fa-search" style="color: #999; font-size: 22px; font-weight: 100;"></i></div>
-			</mt-field>
+			</mt-field> -->
+			<input class="search" placeholder="搜索" @oninput="search_good()" :value="goods_n">
+				<i class="fa fa-search" style="color: #999; font-size: 22px; font-weight: 100;position: absolute;top: 48px;right: 25px;"></i>
+			</input>
 		</div>
 		<!-- 商品列表 -->
 		<div class="index_limit_list">
@@ -14,7 +17,7 @@
 				<li class="clearfix" v-for="goods in goods_list">
 					<router-link :to="'/goods_detail/'+goods.goods_id">
 						<div class="img_box">
-							<img :src="root_p+goods.img" height="70" width="70"/>
+							<img :src="root_p+goods.img" height="69" width="69"/>
 						</div>
 						<div class="content_box clearfix">
 							<!-- <h4>尼康（Nikon） D3400 入门单反相机（AF-P DX 尼克尔 18-55mm f/3.5-5.6G） </h4> -->
@@ -42,6 +45,7 @@ export default {
 			goods_list: [],
 			img_list: [],
 			root_p:'',
+			goods_n:''
 		}
 	},
 	components:{
@@ -61,6 +65,9 @@ export default {
 						this.goods_list[i].img=imgString.split(",",1);
 					}
 				})
+		},
+		search_good: function () {
+			console.log(1);
 		}
 	}
 }
@@ -73,15 +80,22 @@ export default {
 			margin: 0 0.3rem 0 1.6rem;
 		}
 	}
-	.search-header{
+	.search-head{
 		width: 98%;
 		margin: 3px auto;
-		border: 1px solid #999;
 		border-radius: 5px;
-		.mint-field{
+		// .mint-field{
+		// 	min-height: 30px;
+		// }
+		// .mint-cell{border: 1px solid #999; border-radius: 5px;}
+		.search{
+			border: 1px solid #999; 
+			border-radius: 5px;
 			min-height: 30px;
+			width: 95%;
+			padding-left: 5px;
+			outline: none;
 		}
-		.mint-cell{border: 1px solid #999; border-radius: 5px;}
 	}
 	.index_limit_list{
 		background-color: #fff;
@@ -89,12 +103,13 @@ export default {
 			padding: 5px 0;
 			li{
 				padding: 5px 2.5%; display: block; width: 95%;
-				.img_box{width: 20%; height: 69px; background-color: #ccc; float: left; overflow: hidden;}
+				border-bottom: 1px solid #ccc;
+				.img_box{width: 20%; height: 69px;float: left; overflow: hidden;}
 				.content_box{
 					width: 76%; float:left; padding: 5px 0 0 10px;
 					h4{font-size: 0.8em; width: 100%; text-align: left; margin-bottom: 6px;color: #000;}
 					.about_good{float: left;}
-					.sold, .gtype{color: #bcbcbc; font-size: 0.75em;display: block;text-align: left;}
+					.sold, .gtype{color: #888; font-size: 0.75em;display: block;text-align: left;}
 					// .sold{color: #bcbcbc; font-size: 0.75em;}
 					.price{float: right; height: 16px; padding-left: 20px; font-size: 0.75em;color: red;}
 				}

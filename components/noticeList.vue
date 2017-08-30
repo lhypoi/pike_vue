@@ -73,7 +73,7 @@ export default {
   methods: {
     init: function() {
       let from = this.$route.params.from_user
-	  let u_id = localStorage.user_id
+	  let u_id = JSON.parse(localStorage.getItem('userInfo')).user_id
 	  this.$http.jsonp(cube+'/public/api/message/getNoticeList', {params:{page: this.pageStart, u_id: u_id, from_id: from}}).then((rtnD)=>{
         this.message = rtnD.body.result
         this.nameList = rtnD.data.name
@@ -83,7 +83,7 @@ export default {
       })
 	},
     getDetail: function() {
-      
+
     },
     limit: function(txt) {
       var str = txt

@@ -15,6 +15,7 @@
 					<p v-on:click="do_edit">{{state}}</p>
 				</div>
 				<ul>
+				{{cartList.length}}
 					<li class="clearfix" v-for="(cart, index) in cartList">
 						<div class="check_box">
 							<input type="checkbox" :id="'checkbox' + (index + 1)" :value="cart"  v-model="select_all" />
@@ -161,7 +162,7 @@ export default {
 				this.state = '完成'
 				this.edit = true
 			}else {
-				let u_id = localStorage.user_id
+				let u_id = JSON.parse(localStorage.getItem('userInfo')).user_id
 				for(let i = 0; i < this.cartList.length; i ++) {
 					let g_id = this.cartList[i].goods_id
 					let nums = this.cartList[i].goods_num
@@ -183,19 +184,24 @@ export default {
 			}
 		},
 		del: function() {
-			for(let i = 0; i <= this.cartList.length; i ++) {
+			for(let i = 0; i < this.cartList.length; i ++) {
 				let index = this.get_index(this.cartList[i])
 				if(index > -1) {
 					let id = 'checkbox' + (i + 1)
 					let box = document.getElementById(id)
 					if(box.checked) {
-						box.parentNode.parentNode.parentNode.removeChild(box.parentNode.parentNode)
-						let u_id = localStorage.user_id
+						// box.parentNode.parentNode.parentNode.removeChild(box.parentNode.parentNode)
+						let u_id = JSON.parse(localStorage.getItem('userInfo')).user_id
 						let g_id = this.cartList[i].goods_id
-						this.$http.jsonp(cube+'/public/api/goods/delGoods', {params:{u_id:u_id, goods_id: g_id}}).then((rtnD)=>{
-							console.log(rtnD)
+						this.$http.jsonp(cube+'/public/api/goods/delGoods', {params:{u_id:u_id, g_id: g_id}}).then((rtnD)=>{
 							if(rtnD) {
-								this.cartList.splice(i-1, 1)
+								this.cartList.splice(i,1)
+								this.imgList.splice(i,1)
+								this.check_list.splice(i,1)
+								this.check_style.splice(i,1)
+								this.check_goods.splice(i,1)
+								console.log(this.cartList)
+								console.log(i)
 								this.total = 0
 								if(this.cartList.length == 0) {
 									this.empty = true

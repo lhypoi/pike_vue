@@ -88,6 +88,11 @@ export default {
 	components:{
 	    headbox
 	},
+	updated() {
+		this.$http.jsonp(cube+'/public/api/works/getSearch', {params:{key_word: key_word}}).then((rtnD)=>{
+			
+		})
+	},
 	methods: {
 		on_active: function(num) {
 			this.isActive = num

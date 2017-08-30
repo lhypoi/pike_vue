@@ -76,7 +76,7 @@ export default {
 	overflow: hidden; width: 100%;
 	ul{
 		width: 200%; position: relative;
-		li{width: 50%; display: block; float: left;}
+		li{width: 50%; min-height: 300px; display: block; float: left;}
 	}
 }
 .empty{padding-top: 50px;}

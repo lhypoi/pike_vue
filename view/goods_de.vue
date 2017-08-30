@@ -6,16 +6,16 @@
 		<!-- <div :class="[detail_box, isfix ? detail_box_fix : '']"> -->
 		<div class="detail_box">
 			<div class="slide_div">
-				<mt-swipe :auto="6000" :show-indicators="false">
+				<mt-swipe :auto="60000" :show-indicators="true" >
 					<mt-swipe-item v-for="img in img_list">
-						<img :src="root_p+'/'+img" height="360px" width="100%"/>
+						<img :src="root_p+'/'+img" height="360px" width="100%" />
 					</mt-swipe-item>
 				</mt-swipe>
-				<div class="page-nub" id="slidePageNub">
-					<em data-slide-num="slideNub">{{img_list.indexOf(img,0)+1}}</em><!--这里还有问题-->
+				<!-- <div class="page-nub" id="slidePageNub">
+					<em data-slide-num="slideNub">0</em>
 					<em class="nub-bg">/</em>
 					<em data-slide-num="slideSum">{{img_list.length}}</em>
-				</div>
+				</div> -->
 			</div>
 			<div class="goods_detail" v-bind:class="generalClsObj">
 				<!-- <h3>尼康（Nikon） D3400 入门单反相机（AF-P DX 尼克尔 18-55mm f/3.5-5.6G）</h3> -->
@@ -30,7 +30,7 @@
 		<div class="choose" @click="choice()">
 			<h4>已选</h4>
 			<div class="version">{{spec_list[0].goods_name}}</div>
-			<div class="num">1件</div>
+			<div class="num">{{cart}}件</div>
 			<i class="fa fa-ellipsis-h" aria-hidden="true" style="float:right;margin:10px;"></i>
 		</div>
 		<!-- 介绍 -->
@@ -78,6 +78,7 @@ import Vue from 'vue'
 import cube from '../router/kuayu.js'
 import {mapMutations,mapState} from 'vuex'
 import {Toast} from 'mint-ui';
+
 import headbox from '../components/header'
 
 export default {
@@ -92,9 +93,10 @@ export default {
 		  img_list:[],
 		  root_p:'',
 		  apage:'',
+		  pages:[],
 		  generalClsObj: {
 		  	'box_fix': false
-		  }
+		  }		
 		}
 	},
 	components:{
@@ -174,11 +176,15 @@ export default {
 				nums:this.cart,
 				user_id
 			}
-			console.log(cartInfo);
+			// console.log(cartInfo);
 			this.$http.jsonp(cube+'/public/api/goods/addCart',{params:{cartdata:cartInfo}})
 				.then((rtnData)=>{
 					if (rtnData.data.status==1) {
-						Toast(rtnData.data.msg);
+						Toast({
+						  	message: rtnData.data.msg,
+						  	iconClass: 'icon icon-success'
+						  });
+						// Toast(rtnData.data.msg);
 					}
 
 				})
