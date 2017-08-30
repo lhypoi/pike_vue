@@ -20,12 +20,6 @@ Vue.prototype.$http = Axios
 
 Vue.use(VueResource)
 
-if (process.env.NODE_ENV === 'development') {
-  Axios.defaults.baseURL = 'http://localhost:8080'
-} else {
-  Axios.defaults.baseURL = 'http://p.lidty.com/pickpa/'
-}
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
