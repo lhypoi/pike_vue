@@ -29,7 +29,7 @@
         <!-- 热门栏目 -->
         <mt-tab-container-item id="0" :class="{'works_allload' : !allLoaded}">
             <div class="worksList clearfix" v-show="seeType.first">
-              <router-link v-bind:to="'works/work/'+photo.works_id" v-for="photo in photoList.first"  :key="photo.works_id">
+              <router-link v-bind:to="'/works/work/'+photo.works_id" v-for="photo in photoList.first"  :key="photo.works_id">
                   <img v-lazy="'http://localhost:82'+photo.works_src" alt="">
                   <br>
                   <br>
@@ -44,7 +44,7 @@
         <!-- 最新栏目 -->
         <mt-tab-container-item id="1" :class="{'works_allload' : !allLoaded}">
             <div class="worksList clearfix" v-show="seeType.second">
-              <router-link v-bind:to="'works/work/'+photo.works_id" v-for="photo in photoList.second" :key="photo.works_id">
+              <router-link v-bind:to="'/works/work/'+photo.works_id" v-for="photo in photoList.second" :key="photo.works_id">
                 <img v-lazy="'http://localhost:82'+photo.works_src" alt="">
                 <br>
                 <br>

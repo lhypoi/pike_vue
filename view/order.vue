@@ -18,7 +18,7 @@
 								<div class="price">￥{{item.goods_price}}</div>
 								<p>x{{item.goods_num}}</p>
 							</div>
-							
+
 						</li>
 					</ul>
 					<div class="manage_box">
@@ -92,7 +92,7 @@ export default {
 	},
 	methods: {
 		init: function() {
-			let u_id = localStorage.user_id
+			let u_id = JSON.parse(localStorage.getItem('userInfo')).user_id
 			this.$http.jsonp(cube+'/public/api/goods/getOrder', {params:{id:u_id}}).then((rtnD)=>{
 				this.orders = JSON.parse(JSON.stringify(rtnD.body.goods_attr))
 				for(let i = 0; i < rtnD.body.goods_attr.length; i ++) {
@@ -105,7 +105,6 @@ export default {
 						}
 					}
 				}
-				console.log(this.total)
 			})
 		},
 		del: function() {

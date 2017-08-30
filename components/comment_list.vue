@@ -54,7 +54,7 @@ export default {
 .content{
 	padding: 10px; width: 70%; float: left;
 	h5{color: #3175ae; font-size: 16px; text-align: left; height: 20px; line-height: 20px; margin-bottom: 12px;}
-	p{width: 100%; display: block; word-wrap: break-word; word-break: normal; text-align: left; color: #fff; line-height: 20px; font-size: 14px; margin-bottom: 15px;}
+	p{width: 100%; display: block; word-wrap: break-word; word-break: normal; text-align: left; color: #333; line-height: 20px; font-size: 14px; margin-bottom: 15px;}
 	span{display: block; color: #ccc; float: left;}
 }
 

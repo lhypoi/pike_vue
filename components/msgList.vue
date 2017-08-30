@@ -1,14 +1,10 @@
 <template>
 	<div>
+		<headbox :title="nameList[0][0]" back="true"></headbox>
 		<ul>
-			<li class="list clearfix" v-for='(value,key) in message' v-on:click="getMsgList(value.from_user)">
-				<div class="left_box">
-					<div class="head_photo">
-						<img :src="imgList[key].head_photo" v-adjusted="img_adjust" />
-					</div>
-					<span>{{newMsg[key]}}</span>
-				</div>
+			<li class="list" v-for='(value,key) in message' v-on:click="getDetail">
 				<div class="content">
+					<b v-if="value.status==0"></b>
 					<h5>{{nameList[key][0]}}</h5>
 					<p v-text="limit(value.content)"></p>
 					<span>{{value.time}}</span>
@@ -22,6 +18,7 @@
 import Vue from 'vue'
 import cube from '../router/kuayu.js'
 import axios from 'axios'
+import headbox from '../components/header'
 Vue.directive('adjusted', function(el, binding) {
 	//图片自适应
 	var obj = el
@@ -64,33 +61,29 @@ export default {
 	  img_adjust:'',
 	  pageStart: 1,
 	  message: [],
-	  imgList: [],
 	  nameList: [],
-	  newMsg: []
     }
+  },
+  components:{
+    headbox
   },
   mounted() {
 	this.init()
   },
   methods: {
     init: function() {
+      let from = this.$route.params.from_user
 	  let u_id = localStorage.user_id
-	  this.$http.jsonp(cube+'/public/api/message/getNotice', {params:{page: this.pageStart, u_id: u_id}}).then((rtnD)=>{
-        this.message = rtnD.data.result.data
-		this.nameList = rtnD.data.name
-		this.newMsg = rtnD.body.new_msg
-        this.imgList = JSON.parse(JSON.stringify(this.message))
-		for(let i = 0; i < this.message.length; i ++) {
-          this.message[i].time = new Date(parseInt(this.imgList[i].time) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ")
-          let img = this.message[i].head_photo
-          if(this.imgList[i].head_photo.indexOf(cube) < 0) {
-            this.imgList[i].head_photo = cube + img
-          }
-		}
+	  this.$http.jsonp(cube+'/public/api/message/getMsgList', {params:{page: this.pageStart, u_id: u_id, from_id: from}}).then((rtnD)=>{
+        this.message = rtnD.body.result
+        this.nameList = rtnD.data.name
+        for(let i = 0; i < this.message.length; i ++) {
+          this.message[i].time = new Date(parseInt(this.message[i].time) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ")
+        }
       })
 	},
-    getMsgList: function(from_user) {
-      this.$router.push({path: '/message/noticeList/' + from_user})
+    getDetail: function() {
+      
     },
     limit: function(txt) {
       var str = txt
@@ -108,15 +101,9 @@ export default {
 *{margin: 0; padding: 0;}
 .clearfix:after{content:"."; display:block; height:0; clear:both; visibility:hidden;}
 .list{height: 130px; padding: 10px; border-bottom: 1px solid #666; background-color: #fff;}
-.left_box{
-	position: relative; width: 56px; height: 120px; float: left;
-	.head_photo{
-		width: 36px; height: 36px; border-radius: 50px; margin: 10px; overflow: hidden; border: 1px solid #666;
-	}
-	span{position: absolute; background-color: #f00; padding: 1px 2px; border-radius: 10px; color: #fff; display: block; z-index: 2; top: -1px; right: -2px; font-size: 12px;}
-}
 .content{
-	padding: 10px; width: 70%; float: left;
+	padding: 10px; width: 95%; margin: 0 auto; height: 110px; position: relative;
+	b{width: 5px; height: 5px; background-color: #f00; border-radius: 5px; position: absolute; top: 10px; left: 20%;}
 	h5{color: #3175ae; font-size: 16px; text-align: left; height: 20px; line-height: 20px; margin-bottom: 12px;}
 	p{width: 100%; display: block; word-wrap: break-word; word-break: normal; text-align: left; color: #333; line-height: 20px; font-size: 14px; height: 40px; overflow: hidden; margin-bottom: 15px;}
 	span{display: block; color: #ccc; float: left;}

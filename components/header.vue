@@ -12,6 +12,14 @@
 					<i class="fa fa-search" style="color: #fff; font-size: 1.375em; font-weight: 100;"></i>
 				</router-link>
 			</div>
+			<div v-if="shop=='true'" class="fl icon-box_2">
+				<router-link to="/order" slot="right">
+	        		<i class="fa fa-calendar" aria-hidden="true" style="color: #fff; font-size: 1.375em; font-weight: 100;"></i>
+	      		</router-link>
+	      		<router-link to="/cart" slot="right">
+	      			<i class="fa fa-shopping-basket" aria-hidden="true" style="color: #fff; font-size: 1.375em; font-weight: 100; margin-left: 20%;"></i>
+	      		</router-link>
+			</div>
 		</div>
 		<div class="empty"></div>
 	</div>
@@ -19,7 +27,7 @@
 
 <script type="es6">
 export default{
-  props:['title','search','back']
+  props:['title','search','back','shop']
 }
 </script>
 
@@ -28,7 +36,7 @@ export default{
 	width: 100%; height: 50px; background-color: #222222; text-align: center; position: relative; position: fixed; z-index: 999;
 	h1{height: 50px; line-height: 50px; color: #fff; font-size: 1.2em;}
 	.icon-box_1{position: absolute; top: 15px; left: 10px;}
-	.icon-box_2{position: absolute; top: 15px; right: 10px;}
+	.icon-box_2{text-align: right; width: 20%; position: absolute; top: 15px; right: 10px;}
 }
 .empty{padding-top: 50px;}
 </style>

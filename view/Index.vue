@@ -47,10 +47,10 @@
 					</a>
 				</li>
 				<li>
-					<a>
+					<router-link to="/goods_list">
 						<img src="../assets/img/menu_icon_7.jpg" />
 						<p>商城</p>
-					</a>
+					</router-link>
 				</li>
 			</ul>
 		</div>
@@ -77,37 +77,17 @@
 			</h3>
 			<div class="index_limit_list">
 				<ul>
-					<li class="clearfix">
+					<li class="clearfix" v-for="(value, key) in articleList">
 						<router-link to="/article">
 							<div class="img_box">
-								<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
+								<img :src="imgList[key].cover" v-adjust="img_adjust" />
 							</div>
 							<div class="content_box clearfix">
-								<h4>培养摄影眼的4个核心要点</h4>
-								<div class="date">2017-08-08</div>
-								<div class="view">97674</div>
+								<h4>{{value.title}}</h4>
+								<div class="date">{{value.date}}</div>
+								<div class="view">{{value.read_count}}</div>
 							</div>
 						</router-link>
-					</li>
-					<li class="clearfix">
-						<div class="img_box">
-							<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						</div>
-						<div class="content_box clearfix">
-							<h4>培养摄影眼的4个核心要点</h4>
-							<div class="date">2017-08-08</div>
-							<div class="view">97674</div>
-						</div>
-					</li>
-					<li class="clearfix">
-						<div class="img_box">
-							<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						</div>
-						<div class="content_box clearfix">
-							<h4>培养摄影眼的4个核心要点</h4>
-							<div class="date">2017-08-08</div>
-							<div class="view">97674</div>
-						</div>
 					</li>
 				</ul>
 			</div>
@@ -117,21 +97,11 @@
 			</h3>
 			<div class="index_impress_list">
 				<ul class="clearfix" v-touchmmh="slide" style="transition:all 0.1s linear">
-					<li>
-						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						<span>手机摄影月赛|未成文的诗</span>
-					</li>
-					<li>
-						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						<span>手机摄影月赛|未成文的诗</span>
-					</li>
-					<li>
-						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						<span>手机摄影月赛|未成文的诗</span>
-					</li>
-					<li class="last">
-						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						<span>手机摄影月赛|未成文的诗</span>
+					<li v-for="(value, key) in articleList">
+						<router-link :to="{name: 'Article', params: {id: value.id}}">
+						<img :src="imgList[key].cover" v-adjust="img_adjust" />
+						<span>{{value.title}}</span>
+						</router-link>
 					</li>
 				</ul>
 			</div>
@@ -141,21 +111,15 @@
 			</h3>
 			<div class="index_impress_list">
 				<ul class="clearfix" v-touchmmh="slide" style="transition:all 0.1s linear">
-					<li>
+					<!--<li>
 						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
 						<span>细节决定成败之二--微距中的“余弦定理”</span>
-					</li>
-					<li>
-						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						<span>细节决定成败之二--微距中的“余弦定理”</span>
-					</li>
-					<li>
-						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						<span>细节决定成败之二--微距中的“余弦定理”</span>
-					</li>
-					<li class="last">
-						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						<span>细节决定成败之二--微距中的“余弦定理”</span>
+					</li>-->
+					<li v-for="(value, key) in articleList">
+						<router-link :to="{name: 'Article', params: {id: value.id}}">
+						<img :src="imgList[key].cover" v-adjust="img_adjust" />
+						<span>{{value.title}}</span>
+						</router-link>
 					</li>
 				</ul>
 			</div>
@@ -165,21 +129,15 @@
 			</h3>
 			<div class="index_impress_list">
 				<ul class="clearfix" v-touchmmh="slide" style="transition:all 0.1s linear">
-					<li>
+					<!--<li>
 						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
 						<span>他把世间色彩都收入囊中</span>
-					</li>
-					<li>
-						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						<span>他把世间色彩都收入囊中</span>
-					</li>
-					<li>
-						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						<span>他把世间色彩都收入囊中</span>
-					</li>
-					<li class="last">
-						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						<span>他把世间色彩都收入囊中</span>
+					</li>-->
+					<li v-for="(value, key) in articleList">
+						<router-link :to="{name: 'Article', params: {id: value.id}}">
+						<img :src="imgList[key].cover" v-adjust="img_adjust" />
+						<span>{{value.title}}</span>
+						</router-link>
 					</li>
 				</ul>
 			</div>
@@ -189,21 +147,15 @@
 			</h3>
 			<div class="index_impress_list">
 				<ul class="clearfix" v-touchmmh="slide" style="transition:all 0.1s linear">
-					<li>
+					<!--<li>
 						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
 						<span>他把世间色彩都收入囊中</span>
-					</li>
-					<li>
-						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						<span>他把世间色彩都收入囊中</span>
-					</li>
-					<li>
-						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						<span>他把世间色彩都收入囊中</span>
-					</li>
-					<li class="last">
-						<img src="../assets/img/photo.jpg" v-adjust="img_adjust" />
-						<span>他把世间色彩都收入囊中</span>
+					</li>-->
+					<li v-for="(value, key) in articleList">
+						<router-link :to="{name: 'Article', params: {id: value.id}}">
+						<img :src="imgList[key].cover" v-adjust="img_adjust" />
+						<span>{{value.title}}</span>
+						</router-link>
 					</li>
 				</ul>
 			</div>
@@ -218,6 +170,7 @@ import headbox from '../components/header'
 import footbox from '../components/footer'
 import {mapState, mapMutations} from 'vuex'
 import axios from 'axios'
+import cube from '../router/kuayu.js'
 
 Vue.directive('adjust', function(el, binding) {
 	//图片自适应
@@ -249,7 +202,7 @@ Vue.directive('adjust', function(el, binding) {
 				el.style.width = (parent.clientWidth * rate) + 'px'
 				el.style.marginLeft = (-(parent.clientWidth - parent.clientWidth) / 2) + 'px'
 			}else{
-				el.style.height = height * rate
+				el.style.height = height * rate + 'px'
 				el.style.marginTop = (-(height * rate - parent.clientHeight) / 2) + 'px'
 			}
 		}
@@ -264,7 +217,9 @@ export default {
 			img_adjust:'',
 			swapData:[],
 			width: '',
-			height: ''
+			height: '',
+			articleList: [],
+			imgList: []
 		}
 	},
 	components:{
@@ -317,7 +272,18 @@ export default {
 				}
 			}, 7000)
 		})
-
+		
+		this.$http.jsonp(cube+'/public/api/article/getArticleList').then((rtnD)=>{
+			this.articleList = rtnD.body.result
+			this.imgList = JSON.parse(JSON.stringify(this.articleList))
+			for(let i = 0; i < this.articleList.length; i ++) {
+				this.articleList[i].date = new Date(parseInt(this.articleList[i].date) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ")
+				let img = this.articleList[i].cover
+				if(this.imgList[i].cover.indexOf(cube) < 0) {
+					this.imgList[i].cover = cube + img
+				}
+			}
+		})
 	},
 	methods: {
 
@@ -403,10 +369,10 @@ export default {
 		ul{
 			padding: 10px 0; width: 860px; position: relative; left: 0;
 			li{
-				width: 200px; height: 115px; background-color: #ccc; float: left; margin-right: 20px; position: relative; overflow: hidden;
+				width: 200px; height: 115px; background-color: #ccc; float: left; margin-right: 15px; position: relative; overflow: hidden;
 				span{font-size: 0.9em; color: #fff; display: block; position: absolute; left: 10px; bottom: 10px; text-align: left;}
+				a{width: 200px; height: 115px; display: block; position: relative; overflow: hidden;}
 			}
-			li.last{margin-right: 0;}
 		}
 	}
 }

@@ -1,17 +1,7 @@
 <template>
 	<div id="list_main">
 		<!-- 顶部返回和图标固定栏 -->
-	    <mt-header title="摄影周边" class="mt_header">
-	      <a @click="$router.go(-1)" slot="left">
-				<mt-button icon="back"></mt-button>
-			</a>
-	      <router-link to="/order" slot="right">
-	        <i class="fa fa-calendar" aria-hidden="true"></i>
-	      </router-link>
-	      <router-link to="/cart" slot="right">
-	      	<i class="fa fa-shopping-basket" aria-hidden="true"></i>
-	      </router-link>
-	    </mt-header>
+		<headbox title="摄影周边" shop="true" back="true"></headbox>
 	    <!-- 搜索栏 -->
 	    <div class="search-head">
 			<!-- <mt-field placeholder="搜索" lable="search" @onChange="search_good()" :value="goods_n">
@@ -47,6 +37,7 @@
 <script type="es6">
 import Vue from 'vue'
 import cube from '../router/kuayu.js'
+import headbox from '../components/header'
 
 export default {
 	data () {
@@ -56,6 +47,9 @@ export default {
 			root_p:'',
 			goods_n:''
 		}
+	},
+	components:{
+		headbox
 	},
 	mounted(){
 		this.init();

@@ -75,13 +75,13 @@ export default {
   methods: {
     init: function() {
 	  let u_id = localStorage.user_id
-	  this.$http.jsonp(cube+'/public/api/message/getNotice', {params:{page: this.pageStart, u_id: u_id}}).then((rtnD)=>{
+	  this.$http.jsonp(cube+'/public/api/message/getPrivateMsg', {params:{page: this.pageStart, u_id: u_id}}).then((rtnD)=>{
         this.message = rtnD.data.result.data
 		this.nameList = rtnD.data.name
 		this.newMsg = rtnD.body.new_msg
         this.imgList = JSON.parse(JSON.stringify(this.message))
 		for(let i = 0; i < this.message.length; i ++) {
-          this.message[i].time = new Date(parseInt(this.imgList[i].time) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ")
+          this.message[i].time = new Date(parseInt(this.imgList[i].time) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
           let img = this.message[i].head_photo
           if(this.imgList[i].head_photo.indexOf(cube) < 0) {
             this.imgList[i].head_photo = cube + img
@@ -89,8 +89,8 @@ export default {
 		}
       })
 	},
-    getMsgList: function(from_user) {
-      this.$router.push({path: '/message/noticeList/' + from_user})
+	getMsgList: function(from_user) {
+      this.$router.push({path: '/message/msgList/' + from_user})
     },
     limit: function(txt) {
       var str = txt
