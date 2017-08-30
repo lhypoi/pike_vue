@@ -78,7 +78,7 @@
 			<div class="index_limit_list">
 				<ul>
 					<li class="clearfix" v-for="(value, key) in articleList">
-						<router-link to="/article">
+						<router-link :to="{name: 'Article', params: {id: value.id}}">
 							<div class="img_box">
 								<img :src="imgList[key].cover" v-adjust="img_adjust" />
 							</div>
