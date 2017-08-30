@@ -3,13 +3,14 @@
 		<headbox title="作品详情" back="true"></headbox>
 		<list v-bind:items="work_det"></list>
 		<div class="comment_box">
-			<ul>
-				<li class="comment_content clearfix" v-for="comment_li in comment_list">
-
+			<ul v-for="comment_li in comment_list">
+				<li class="comment_content clearfix">
+				<div class="user_head">
 					<div class="title">
 						<router-link to="/personal"><img :src="cube + comment_li.user_photo" /></router-link>
 					</div>
 					<h3>{{comment_li.user_name}}</h3>
+				</div>
 					<div class="comment_detail clearfix">{{comment_li.comment}}</div>
 				</li>
 			</ul>
@@ -35,6 +36,11 @@ export default {
 		return{
 			work_det:{},
 			comment_list:[],
+<<<<<<< HEAD
+=======
+			root_p:'',
+			defaultUserPhoto: require('../assets/img/head_photo.jpg')
+>>>>>>> d4d1996a8daa81d2e0c5e25b45aba0f5df8e4a25
 		}
 	},
 	mounted(){
@@ -79,20 +85,24 @@ export default {
 			min-height: 80px;
 			height: 20%;
 			color: #fff;
-			height: 50px;
 			border-bottom: 1px solid #ccc;
-			.title{
+			.user_head{
+				width: 100%;
 				float: left;
-				margin: 5px 5%;
-				width: 36px;
-				height: 36px;
-				overflow: hidden;
-				border-radius: 50%;
+				.title{
+					float: left;
+					margin: 5px 5%;
+					width: 36px;
+					height: 36px;
+					overflow: hidden;
+					border-radius: 50%;
+				}
+				h3{float: left;line-height: 36px;}
 			}
-			h3{float: left;line-height: 36px;}
 			.comment_detail{
-				height: 80px;
-				padding: 0 8px 0 19%;
+				float: left;
+				width: 78%;
+    			padding: 0 17% 10px 19%;
 				text-align: left;
 			}
 		}
