@@ -77,6 +77,10 @@ const router = new Router({
       component: require('@/view/works')
     },
     {
+      path: '/works/work/:works_id',
+      component: require('@/view/work')
+    },
+    {
       path: '/classify',
       component: require('@/view/classify')
     },
